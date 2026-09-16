@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ads Fundamentals — Learning Roadmap & Recap</title>
+<style>
+  body { font-family: -apple-system, Helvetica, Arial, sans-serif; max-width: 860px; margin: 40px auto; padding: 0 20px; color: #1a1a1a; line-height: 1.5; }
+  h1 { font-size: 22px; border-bottom: 2px solid #1a1a1a; padding-bottom: 8px; }
+  .phase-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; color: #888; margin-top: 26px; }
+  .subnote { font-size: 12.5px; color: #666; margin: 2px 0 10px 0; }
+  .item { padding: 9px 12px; margin: 6px 0; border-radius: 5px; border: 1px solid #e0e0e0; font-size: 14px; cursor: default; display: flex; justify-content: space-between; align-items: center; }
+  .item.done { background: #f2faf5; border-color: #cfe8d8; }
+  .item.current { background: #fdf7ea; border-color: #f0dfa8; }
+  .item.todo { background: #fafafa; border-color: #e5e5e5; color: #888; }
+  .item.cross { background: #eef2fb; border-color: #c9d6f0; }
+  .item.parked { background: #f5f0fa; border-color: #ddd0ee; }
+  .item.done, .item.current { cursor: pointer; }
+  .item.done:hover, .item.current:hover { filter: brightness(0.97); }
+  .item b { margin-right: 6px; }
+  .openbtn { font-size: 12px; color: #555; border: 1px solid #ccc; background: #fff; padding: 2px 8px; border-radius: 4px; white-space: nowrap; margin-left: 10px; }
+  .item.todo .openbtn { visibility: hidden; }
+
+  /* modal */
+  .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); align-items: center; justify-content: center; z-index: 100; }
+  .overlay.active { display: flex; }
+  .modal { background: #fff; max-width: 720px; width: 90%; max-height: 82vh; overflow-y: auto; border-radius: 8px; padding: 24px 28px; position: relative; }
+  .modal h2 { margin-top: 0; font-size: 18px; }
+  .modal h3 { font-size: 14.5px; margin: 18px 0 4px; color: #222; }
+  .modal p, .modal li { font-size: 13.8px; }
+  .modal .box { background: #fafafa; border-left: 3px solid #888; padding: 8px 12px; margin: 8px 0; font-size: 13.5px; }
+  .modal table { border-collapse: collapse; width: 100%; margin: 10px 0; font-size: 13.3px; }
+  .modal td, .modal th { border: 1px solid #ddd; padding: 6px 10px; text-align: left; }
+  .modal th { background: #eee; }
+  .modal .key { font-weight: 600; }
+  .closebtn { position: absolute; top: 14px; right: 18px; font-size: 20px; border: none; background: none; cursor: pointer; color: #666; }
+</style>
+</head>
+<body>
+
+<h1>Advertising Fundamentals — Roadmap & Recap</h1>
+<p style="font-size:13px; color:#666;">
+Click any <b>green/yellow</b> item to open its detail recap. Grey items are not yet covered. Scope is deliberately kept wide and unbiased — no category is assumed more "relevant to you" than another until we explicitly map it to your company later.
+</p>
+
+<h2>Roadmap</h2>
+
+<div class="phase-label">Phase 0 — Foundations (done)</div>
+<div class="item done" onclick="openModal('m-step1')"><span><b>Step 1</b> — First principles: attention marketplace + pricing mechanism</span><span class="openbtn">open</span></div>
+<div class="item done" onclick="openModal('m-step1b')"><span><b>Step 1B</b> — Pre-digital media economics</span><span class="openbtn">open</span></div>
+
+<div class="phase-label">Phase 1 — Business models & channels</div>
+<p class="subnote">Sequenced roughly auction-priced → negotiation-priced → listing-fee priced.</p>
+<div class="item done" onclick="openModal('m-2a')"><span><b>2a</b> — Why digital replaced rate cards with auctions</span><span class="openbtn">open</span></div>
+<div class="item done" onclick="openModal('m-2b')"><span><b>2b</b> — Closed 1P auction vs. Open exchange programmatic</span><span class="openbtn">open</span></div>
+<div class="item done" onclick="openModal('m-2c')"><span><b>2c</b> — Retail Media Networks as a third model</span><span class="openbtn">open</span></div>
+<div class="item done" onclick="openModal('m-2d')"><span><b>2d</b> — Offline / in-store / trade marketing</span><span class="openbtn">open</span></div>
+<div class="item done" onclick="openModal('m-2e')"><span><b>2e</b> — OOH & DOOH</span><span class="openbtn">open</span></div>
+<div class="item done" onclick="openModal('m-2f')"><span><b>2f</b> — Audio: radio, podcast, streaming audio</span><span class="openbtn">open</span></div>
+<div class="item done" onclick="openModal('m-2g')"><span><b>2g</b> — Print & direct mail</span><span class="openbtn">open</span></div>
+<div class="item done" onclick="openModal('m-2h')"><span><b>2h</b> — Classifieds: merged into 2b/2c as a variant, not a standalone model</span><span class="openbtn">open</span></div>
+<div class="item done" onclick="openModal('m-2i')"><span><b>2i</b> — CTV / Streaming</span><span class="openbtn">open</span></div>
+<div class="item done" onclick="openModal('m-2j')"><span><b>2j</b> — Search vs. Social as distinct intent models</span><span class="openbtn">open</span></div>
+<div class="item done" onclick="openModal('m-2k')"><span><b>2k</b> — Affiliate & performance marketing</span><span class="openbtn">open</span></div>
+<div class="item done" onclick="openModal('m-2l')"><span><b>2l</b> — Events, sponsorship & experiential</span><span class="openbtn">open</span></div>
+<div class="item done" onclick="openModal('m-2m')"><span><b>2m</b> — Influencer/creator marketing</span><span class="openbtn">open</span></div>
+<div class="item done" onclick="openModal('m-2n')"><span><b>2n</b> — Native advertising / sponsored content</span><span class="openbtn">open</span></div>
+<div class="item done" onclick="openModal('m-2o')"><span><b>2o</b> — Owned channels (SMS/push/WhatsApp)</span><span class="openbtn">open</span></div>
+<div class="item done" onclick="openModal('m-2p')"><span><b>2p</b> — Gaming ads</span><span class="openbtn">open</span></div>
+<div class="item done" onclick="openModal('m-2q')"><span><b>2q</b> — Local/hyperlocal advertising</span><span class="openbtn">open</span></div>
+<div class="item done" onclick="openModal('m-2r')"><span><b>2r</b> — B2B advertising as a cross-cutting axis</span><span class="openbtn">open</span></div>
+<div class="item done" onclick="openModal('m-phase1recap')"><span><b>Phase 1 recap</b> — full taxonomy consolidated</span><span class="openbtn">open</span></div>
+
+<div class="phase-label">Phase 2 — Cross-cutting themes</div>
+<p class="subnote">Recur at every stage — flagged so they don't get attached to only one era.</p>
+<div class="item done" onclick="openModal('m-3a')"><span><b>3a</b> — Regulation as a recurring force</span><span class="openbtn">open</span></div>
+<div class="item done" onclick="openModal('m-3b')"><span><b>3b</b> — Measurement, fraud & ad-blocking arms race</span><span class="openbtn">open</span></div>
+<div class="item done" onclick="openModal('m-3c')"><span><b>3c</b> — Creative/production industry structure</span><span class="openbtn">open</span></div>
+<div class="item done" onclick="openModal('m-3d')"><span><b>3d</b> — Market research & consumer insights</span><span class="openbtn">open</span></div>
+<div class="item done" onclick="openModal('m-3e')"><span><b>3e</b> — The finance/valuation lens</span><span class="openbtn">open</span></div>
+
+<div class="phase-label">Phase 3 — Evolution & causality</div>
+<div class="item done" onclick="openModal('m-step4')"><span><b>Step 4</b> — Historical arc with causality</span><span class="openbtn">open</span></div>
+
+<div class="phase-label">Phase 4 — Current landscape</div>
+<div class="item done" onclick="openModal('m-step5')"><span><b>Step 5</b> — What's working now, and why</span><span class="openbtn">open</span></div>
+<div class="item done" onclick="openModal('m-step6')"><span><b>Step 6</b> — Major players mapped to the taxonomy</span><span class="openbtn">open</span></div>
+<div class="item done" onclick="openModal('m-step7')"><span><b>Step 7</b> — Market sizing</span><span class="openbtn">open</span></div>
+<div class="item current" onclick="openModal('m-step8')"><span><b>Step 8 (NEXT)</b> — India-specific market dynamics</span><span class="openbtn">open</span></div>
+
+<div class="phase-label">Phase 5 — Deep dive (parked)</div>
+<div class="item todo parked"><span><b>Step 9</b> — Retail Media Networks, full depth (incl. Flipkart Ads)</span></div>
+
+<!-- MODALS -->
+
+<div class="overlay" id="m-step1">
+  <div class="modal">
+    <button class="closebtn" onclick="closeModal('m-step1')">&times;</button>
+    <h2>Step 1 — First Principles</h2>
+    <div class="box">Advertising = an <span class="key">attention marketplace</span> with a <span class="key">pricing mechanism</span>. Three problems every ad business must solve:
+    <ol><li><b>Attention aggregation</b> — get an audience (via a non-ad core product)</li><li><b>Targeting/relevance</b> — match right ad to right attention</li><li><b>Measurement/attribution</b> — prove it worked, so advertiser pays again</li></ol></div>
+    <p><b>Key rule:</b> the ad business's moat = the strength of the underlying consumer product. If core-product attention declines, no ad-product trick saves ad revenue.</p>
+    <h3>Case study — Twitter/X ad revenue fell faster than usage</h3>
+    <table><tr><th>Mechanism</th><th>Effect</th></tr>
+    <tr><td>Fewer/less time-spent users</td><td>Fewer impressions to sell</td></tr>
+    <tr><td>Brand safety concerns</td><td>Big brands pull spend → CPM drops</td></tr>
+    <tr><td>Noisier engagement data (bots)</td><td>Targeting models degrade → worse ROI</td></tr>
+    <tr><td>Herd behavior among CMOs/agencies</td><td>Social proof to cut spend</td></tr></table>
+    <p><b>Takeaway:</b> ad revenue is a <i>leveraged</i> signal of product health — not linear with user metrics.</p>
+  </div>
+</div>
+
+<div class="overlay" id="m-step1b">
+  <div class="modal">
+    <button class="closebtn" onclick="closeModal('m-step1b')">&times;</button>
+    <h2>Step 1B — Pre-digital Media Economics</h2>
+    <h3>Attention aggregation — bundled, not individual</h3>
+    <div class="box">Couldn't target individuals → sold audience <b>composition</b> (WSJ = wealthy readers, MTV = young viewers), not identity.</div>
+    <h3>Measurement — third-party proxies, self-reporting isn't trusted</h3>
+    <div class="box">Nielsen (TV/radio), ABC (print), Arbitron (radio) exist because publishers had incentive to inflate numbers. Direct lineage to today's "walled garden won't let us audit their numbers" complaint.</div>
+    <h3>Pricing — rate cards + human negotiation</h3>
+    <div class="box">Price driven by reach, composition/prestige, negotiated deals — human ad reps and media planners, not algorithms.</div>
+    <h3>The agency 15% commission model</h3>
+    <div class="box">Agency paid ~15% commission by the <b>publisher</b>, scaled to <b>media spend</b>, not results. <span class="key">Conflict of interest:</span> incentive = spend more, not perform better. This misalignment is why performance/pay-per-result advertising was later so disruptive.</div>
+    <h3>Reach & Frequency</h3>
+    <table><tr><th>Term</th><th>Meaning</th></tr>
+    <tr><td>Reach</td><td>Unique people who saw the ad at least once</td></tr>
+    <tr><td>Frequency</td><td>Avg. times each person saw it</td></tr>
+    <tr><td>"Effective frequency" (Krugman)</td><td>~3 exposures needed for brand impact — still in Meta/Google frequency-cap defaults</td></tr></table>
+    <h3>Brand Advertising vs. Direct Response</h3>
+    <table><tr><th></th><th>Brand</th><th>Direct Response</th></tr>
+    <tr><td>Goal</td><td>Long-term awareness/recall</td><td>Immediate trackable action</td></tr>
+    <tr><td>Measurement</td><td>Surveys, brand lift</td><td>Direct attribution (codes, clicks)</td></tr>
+    <tr><td>Pre-digital examples</td><td>TV, billboards, magazines</td><td>Direct mail, infomercials</td></tr>
+    <tr><td>Digital descendant</td><td>CTV, YouTube pre-roll, social brand</td><td>Google Ads, performance marketing</td></tr></table>
+    <div class="box"><b>Use this lens going forward:</b> for any ad product/company, ask — is this fundamentally a brand play or a DR play?</div>
+  </div>
+</div>
+
+<div class="overlay" id="m-2a">
+  <div class="modal">
+    <button class="closebtn" onclick="closeModal('m-2a')">&times;</button>
+    <h2>2a — Rate Cards → Real-Time Auctions</h2>
+    <div class="box">Individual-impression addressability → every impression is a unique product → needs continuous price discovery, not a fixed bulk rate.</div>
+    <p><b>Auction flow:</b> bid request → ad exchange broadcasts to DSPs → each DSP predicts value (click/conversion probability × value) → auction resolves → ad served. All in ~100-200ms.</p>
+    <p><b>First-price vs second-price:</b> second-price (Vickrey: winner pays $0.01 above 2nd bid) was original standard; industry (led by Google, 2019) shifted to first-price (winner pays exactly their bid) — a major revenue-mechanics shift, not a technicality.</p>
+  </div>
+</div>
+
+<div class="overlay" id="m-2b">
+  <div class="modal">
+    <button class="closebtn" onclick="closeModal('m-2b')">&times;</button>
+    <h2>2b — Closed 1P Auction vs. Open Exchange Programmatic</h2>
+    <table><tr><th></th><th>Closed 1P Auction</th><th>Open Exchange</th></tr>
+    <tr><td>Who controls it</td><td>Single platform (Google Search, Meta) — inventory, rules, data, auction all one entity</td><td>No single controller — publisher→SSP, advertiser→DSP, exchange matches them</td></tr>
+    <tr><td>Data</td><td>First-party only, proprietary</td><td>Mixed/third-party, historically cookie-based</td></tr>
+    <tr><td>Intermediary cuts</td><td>None — vertically integrated</td><td>SSP + Exchange + DSP each take a cut — ~50% of spend leaks before reaching publisher (ISBA/PwC 2020)</td></tr>
+    <tr><td>Brand safety/fraud risk</td><td>Strong control — platform guarantees real, viewable impressions</td><td>Weaker — no single party controls both ends</td></tr></table>
+    <p><b>Correction on "open":</b> not "any publisher/advertiser freely meet" — both sides go through mandatory broker platforms (SSP, DSP) to even reach the exchange. The openness is at the infrastructure level, not a direct marketplace.</p>
+  </div>
+</div>
+
+<div class="overlay" id="m-2c">
+  <div class="modal">
+    <button class="closebtn" onclick="closeModal('m-2c')">&times;</button>
+    <h2>2c — Retail Media Networks as a Structurally Distinct Model</h2>
+    <div class="box">Closed & 1st-party like a walled garden, BUT the data is <b>deterministic purchase history</b>, not inferred behavior — the highest-fidelity commercial intent signal that exists.
+    <ul>
+    <li><b>Conversion:</b> bottom-of-funnel, ads shown mid-purchase-session → premium CPC/CPM</li>
+    <li><b>Privacy-proof:</b> never relied on 3rd-party cookies → untouched by GDPR/ATT/cookie deprecation → budget flowed here post-2021</li>
+    <li><b>Margin profile:</b> near-zero incremental cost to show sponsored vs organic listing → unusually high margin vs core retail margins</li>
+    </ul></div>
+    <p><i>Full mechanics + company-specific mapping deliberately parked for Phase 5 — scope not yet decided.</i></p>
+  </div>
+</div>
+
+<div class="overlay" id="m-2d">
+  <div class="modal">
+    <button class="closebtn" onclick="closeModal('m-2d')">&times;</button>
+    <h2>2d — Offline / In-Store / Trade Marketing</h2>
+    <p>Physical shelf position has always been paid placement — an old, slow, opaque form of the same "pay for placement" logic seen everywhere else.</p>
+    <h3>Mechanisms</h3>
+    <ul>
+      <li><b>Slotting fees:</b> manufacturer pays retailer to get a new product onto the shelf at all — a listing fee crossed with a risk premium. Smaller brands without capital can be structurally locked out regardless of product quality (has drawn antitrust/FTC scrutiny in the US).</li>
+      <li><b>Endcap / eye-level placement fees:</b> separate ongoing payment for best physical position — a rate card for square footage, negotiated annually.</li>
+      <li><b>Category captain arrangements:</b> largest manufacturer in a category influences shelf layout for the whole category — a built-in conflict of interest, same pattern as the agency-commission problem.</li>
+      <li><b>In-store audio & digital signage:</b> same logic as OOH but hyperlocal to point of purchase.</li>
+      <li><b>Sampling/demo stations:</b> buying physical dwell-time in front of a product, priced per day/store.</li>
+    </ul>
+    <h3>The 3 core problems, solved physically</h3>
+    <div class="box">
+    <b>Attention</b> = foot traffic (retailer's core product creates it).<br>
+    <b>Targeting</b> = positional/category-level only, not individual — same bundled-composition constraint as Step 1B.<br>
+    <b>Measurement</b> = historically weak — inferred sales-lift studies, not individual-level attribution. A largely unsolved attribution problem even today.
+    </div>
+    <p><b>Budget-pool note:</b> physical trade marketing spend and any digital equivalent typically draw from the same "trade/shopper marketing" budget line — controlled by sales/trade teams, distinct from a brand's general advertising budget. Relevant to who the actual buyer is in any pitch.</p>
+  </div>
+</div>
+
+<div class="overlay" id="m-2e">
+  <div class="modal">
+    <button class="closebtn" onclick="closeModal('m-2e')">&times;</button>
+    <h2>2e — Out-of-Home (OOH) & Digital Out-of-Home (DOOH)</h2>
+    <p>Billboards, transit, street furniture, mall/cinema screens — oldest mass-ad format outside print; no publication or broadcast license needed.</p>
+    <div class="box"><b>Pricing:</b> audience-composition-selling again — sold on <b>traffic count</b>, verified by third-party audit (Geopath/formerly Traffic Audit Bureau in the US) — same trust-problem lineage as Nielsen. India's OOH measurement is far less standardized, a live drag on premium pricing there.</div>
+    <p><b>Durable advantage:</b> immune to ad-blocking, cookie deprecation, app-switching — cannot be skipped. This is why brand budgets keep OOH allocations even as digital dominates overall spend.</p>
+    <p><b>Targeting ceiling:</b> location + time-of-day only, never individual — composition targeting exactly like Step 1B print.</p>
+    <h3>DOOH — the auction-ification pattern repeats</h3>
+    <ul>
+      <li><b>Dynamic creative (context-aware, not person-aware):</b> screens change creative by time/weather/live data (e.g., BA's plane-tracker billboard, cold-drink ads triggered by temperature).</li>
+      <li><b>Programmatic DOOH (pDOOH):</b> real auction-based buying of screen-slots via DSPs — the same rate-card-to-auction shift as 2a, replaying in physical space ~15 years later. Still a minority of total OOH spend globally.</li>
+    </ul>
+    <div class="box"><b>Important limitation:</b> even fully programmatic DOOH can't do individual targeting — multiple people see the same creative at once. DOOH stays a <b>brand-advertising</b> format structurally, regardless of how "programmatic" the buying mechanism becomes. Clean counterexample to assuming "programmatic = performance."</div>
+  </div>
+</div>
+
+<div class="overlay" id="m-2f">
+  <div class="modal">
+    <button class="closebtn" onclick="closeModal('m-2f')">&times;</button>
+    <h2>2f — Audio: Radio, Podcast, Streaming Audio</h2>
+    <p>Contains a genuine counter-example to the "everything becomes an auction" pattern seen everywhere else so far.</p>
+    <h3>Radio</h3>
+    <div class="box">Sold on reach/frequency within a geographic broadcast radius, measured by third-party panels (Nielsen Audio/Arbitron). Priced via <b>dayparts</b> ("drive time" = highest rates, same logic as TV prime time). No individual targeting — audience-composition only. Persisted because it captures "dead time" attention (commuting) screens cannot.</div>
+    <h3>Podcast — host-read vs. programmatic</h3>
+    <div class="box">
+    <b>Host-read ads:</b> value being sold is the host's personal credibility/trust, not a swappable impression. Can't be auctioned in real time — requires the specific host's time and reputational buy-in. Priced via negotiated CPM against guaranteed downloads, often <i>higher</i> effective CPM than programmatic display because trust-transfer converts better.<br><br>
+    <b>Programmatic podcast ads:</b> dynamically inserted, machine/generic spots — cheaper, more scalable, worse-converting. Coexists with host-read in the same medium.
+    </div>
+    <div class="box"><b>The big idea:</b> auction-vs-negotiation isn't "digital vs analog" — it's whether what's sold is a statistically-targetable impression (auction-able) or a trust/credibility transfer (stays relationship-priced no matter how modern the distribution tech gets). Resurfaces directly in influencer marketing (2m).</div>
+    <h3>Streaming audio (Spotify etc.)</h3>
+    <p>Behaves like standard digital display: logged-in users, real individual data, sold via closed 1P auction (same category as 2b's Google/Meta model). Free tier = ad-supported, same freemium-to-ads pattern as YouTube.</p>
+  </div>
+</div>
+
+<div class="overlay" id="m-2g">
+  <div class="modal">
+    <button class="closebtn" onclick="closeModal('m-2g')">&times;</button>
+    <h2>2g — Print & Direct Mail</h2>
+    <h3>Why print declined in the West</h3>
+    <div class="box"><b>1. Classifieds disintermediation:</b> classifieds (jobs/real estate/cars/for-sale) were often 30-40%+ of total newspaper ad revenue, and near-zero editorial cost = very high margin. Craigslist and specialized verticals (Naukri, CarDekho, 99acres) moved this online for free/near-free — surgically removing the newspaper's most profitable, least-defensible line while leaving the expensive part (journalism) intact. A general pattern: disruption often hits the most profitable, least-defended segment, not the weakest one.</div>
+    <div class="box"><b>2. Measurability gap:</b> print can't prove a click/conversion the way digital display or search can — display/brand budgets migrated for this reason, per the Brand vs DR lens from Step 1B.</div>
+    <h3>Why India (and some other markets) diverged</h3>
+    <ul>
+      <li>Vernacular/regional-language newspapers kept growing readership through 2010s-20s — regional digital content/ad infra lagged English-language digital, and print retained a trust edge in smaller towns.</li>
+      <li>Lower historical urban broadband/smartphone penetration meant the "digital substitute" wasn't fully available outside metros — delaying disintermediation.</li>
+      <li>Real estate and BFSI direct mail/print classifieds remain functionally relevant in India — partly regulatory, partly trust/legitimacy-driven.</li>
+    </ul>
+    <div class="box"><b>Watch for this bias:</b> global "digital ad market" reports implicitly describe a US/UK/China-centric trajectory. India's actual media mix does not fully mirror it — revisited explicitly in Step 8.</div>
+    <h3>Direct mail — why it never fully died</h3>
+    <p>Retained one advantage nothing else matched until digital retargeting: <b>addressable, individual-level targeting</b>, decades before digital could do it — mailing lists built from purchase history/subscription records/data brokers. Response tracked via unique codes/personalized URLs per segment — direct-response logic, decades before "performance marketing" was a phrase. Undercuts the assumption that individual targeting is a digital invention — digital just made it fast, cheap, and real-time.</p>
+  </div>
+</div>
+
+<div class="overlay" id="m-2h">
+  <div class="modal">
+    <button class="closebtn" onclick="closeModal('m-2h')">&times;</button>
+    <h2>2h — Classifieds: Correction, Not a Standalone 4th Model</h2>
+    <p>Originally pitched as a distinct model ("pay to exist" vs "pay to be seen"). On inspection this is <b>not structurally different</b> from a seller paying an e-commerce marketplace a commission/listing fee, then separately paying for sponsored placement (RMN/2c) — same two-part "pay to exist + pay to be seen" pattern.</p>
+    <div class="box">
+    <b>Concrete comparison:</b><br>
+    <b>OLX (classifieds):</b> pay a flat listing fee to have your car exist in OLX's catalog at all → optionally pay more for a featured/boosted listing.<br>
+    <b>Flipkart seller (e-commerce marketplace):</b> pay a commission/listing fee to have your product exist in Flipkart's catalog → separately pay Flipkart Ads for sponsored rank boost.<br>
+    Structurally identical two-part model.
+    </div>
+    <div class="box"><b>Where the real (minor) difference lives:</b> seller type & transaction frequency, not economic structure. Classifieds historically = one-off/peer-to-peer sellers (individual selling one car), priced as a flat per-listing fee. E-commerce marketplace = recurring commercial sellers with catalog-scale, continuous SKUs, priced as a % commission per transaction. The "classifieds" label is mostly a historical/lineage artifact — these products were built as direct digital replacements for the newspaper classifieds section (jobs, real estate, cars, matrimony), not a genuinely separate economic law.</div>
+    <p><b>Corrected framing:</b> "pay to exist + pay to be seen" is a general marketplace-monetization pattern. Classifieds, e-commerce seller ads, job portals, real-estate portals are <b>instances of the same pattern</b> — a sub-variant of the closed 1P auction model (2b/2c), distinguished by a separate, non-auction "existence" fee layered underneath the auction layer. Not worth treating as a separate category going forward.</p>
+    <div class="box"><b>Also worth noting (from the original 2h pass):</b> mature vertical marketplaces (Naukri, 99acres, CarDekho, Bumble) often evolve past the listing fee entirely — the real long-term business becomes selling the <i>qualified lead/intent data</i> generated by the listing to adjacent services (e.g. a home loan company paying far more for a verified property-shopper lead than any listing fee). These businesses (e.g. Info Edge/Naukri) are also often extremely high-margin and capital-efficient — zero content cost (users generate listings), strong local network effects, frequent quasi-monopoly per category/region — yet largely invisible in "ads industry" conversations that focus only on Google/Meta/Amazon.</div>
+  </div>
+</div>
+
+<div class="overlay" id="m-2i">
+  <div class="modal">
+    <button class="closebtn" onclick="closeModal('m-2i')">&times;</button>
+    <h2>2i — CTV / Streaming</h2>
+    <p><b>CTV</b> = Connected TV — ads delivered to a TV screen via internet apps (smart TV apps, Roku, Fire TV, casting), not broadcast/cable. Includes ad-supported streaming (Netflix ads tier, Hulu, Prime Video, Hotstar) and fully ad-funded FAST channels (Pluto TV, Samsung TV Plus — live-TV-like, no subscription).</p>
+    <h3>Why it's a genuine hybrid, not just "TV over internet"</h3>
+    <div class="box"><b>Inherited from TV:</b> big-budget brand advertiser base (auto, FMCG, pharma, telecom), bought via the same media agencies, measured via brand lift not clicks. Expensive licensed content → premium ad experience expected (few ads/break, high creative bar, strict brand safety).</div>
+    <div class="box"><b>Inherited from digital:</b> logged-in accounts enable individual/household-level targeting and confirmed impression delivery — impossible for broadcast TV (Nielsen panels only ever estimate). Enables frequency capping per household, retargeting, and (for Amazon specifically) closed-loop measurement tying Prime Video ad exposure to actual Amazon.com purchases — a deliberate strategic bet most competitors can't match.</div>
+    <p><b>Best framing:</b> TV's budget/buyer/brand economics + digital's addressability/measurement. Neither pure brand (like OOH) nor pure DR (like search) — genuinely in between, attracting both brand budgets fleeing linear TV and performance marketers who've never had TV-quality addressable inventory before.</p>
+    <h3>Two monetization models — don't conflate them</h3>
+    <table><tr><th>Subscription + ads</th><th>Fully ad-funded (FAST)</th></tr>
+    <tr><td>Ads = incremental/secondary revenue on a subscription business (Netflix ads tier, Hulu). Core content doesn't depend on ads to exist.</td><td>Ads = entire business model (FAST channels, YouTube, much of Hotstar's non-subscription content). Same stakes as the Twitter/X case — if ad revenue falls, content strategy is directly threatened.</td></tr></table>
+    <div class="box"><b>Still unsolved:</b> cross-platform CTV measurement standardization. Nielsen, Comscore, VideoAmp, iSpot each report different numbers for the same campaign — no single trusted "currency" yet. A direct continuation of Step 1B's Nielsen trust-problem thread, just in an unresolved new form.</div>
+  </div>
+</div>
+
+<div class="overlay" id="m-2j">
+  <div class="modal">
+    <button class="closebtn" onclick="closeModal('m-2j')">&times;</button>
+    <h2>2j — Search vs. Social as Distinct Intent Models</h2>
+    <p>Both are closed 1P auctions (2b) — same mechanic underneath. The difference is entirely about <b>where intent comes from.</b></p>
+    <div class="box"><b>Search = pull.</b> User typed a query — self-declared intent, right now. Advertiser's job: be there when asked. Highest-converting format at scale because you intercept already-existing desire at its most explicit (textual) moment.</div>
+    <div class="box"><b>Social = push.</b> User was scrolling for entertainment/connection, not shopping. Ad must interrupt and surface/create latent interest inferred from behavior (follows, engagement, demographics) — probabilistic, not declared. Fundamentally harder, more speculative targeting.</div>
+    <h3>How this changes pricing & buying</h3>
+    <ul>
+      <li><b>Search CPC reflects proximity to purchase</b> — "buy iPhone 15" bid far higher than "iPhone 15 review." CPCs can vary 10-50x across query types in the same category — the market pricing intent-proximity, not noise.</li>
+      <li><b>Social pricing reflects predicted engagement/conversion from behavioral signal</b>, no query to anchor on — inherently noisier/lower-certainty. Why social typically converts lower than search dollar-for-dollar, and why marketers use search to "harvest" existing demand, social to "create" it/top-of-funnel.</li>
+      <li><b>Brand-vs-DR split maps unevenly:</b> search skews structurally DR (easy to measure click-to-purchase). Social can do both DR (retargeting/catalog ads) and brand (awareness video) — a search results page is almost entirely DR-shaped by nature; a feed is flexible enough for either job.</li>
+    </ul>
+    <div class="box"><b>Strategic consequence:</b> search captures existing demand, social creates/surfaces it — complements, not substitutes, in a media plan. Social/CTV/OOH spend often shows up later as increased <i>branded search volume</i> — a real technique advertisers use to indirectly measure upper-funnel spend's impact, partially solving Step 1B's brand-measurement problem by tracking its downstream footprint instead of measuring it directly.</div>
+  </div>
+</div>
+
+<div class="overlay" id="m-2k">
+  <div class="modal">
+    <button class="closebtn" onclick="closeModal('m-2k')">&times;</button>
+    <h2>2k — Affiliate & Performance Marketing</h2>
+    <div class="box"><b>Core mechanic:</b> pay only on outcome (CPA — cost per action/acquisition: sale, lead, install), not on exposure (CPC/CPM used everywhere else). Zero risk of paying for a placement that doesn't convert — all risk shifts to the publisher/affiliate. Closest thing in advertising to "no cure, no pay."</div>
+    <h3>How it works</h3>
+    <p>Advertiser sets a commission (e.g. 10% of sale) on an affiliate network (ShareASale, CJ Affiliate, Impact, Rakuten; in India: Cuelinks, EarnKaro, direct brand programs). Publishers get a unique tracking link, place it in content. Click → buy within a tracking window (24hrs-30 days, cookie or server-side) → commission paid.</p>
+    <div class="box"><b>Not a digital invention:</b> mechanically identical to pre-digital coupon-codes/direct-mail attribution (Step 1B) — a unique identifier per channel to attribute a sale back to its source, just automated at internet scale. Unlike auctions (2a), CPA logic never needed digital to exist.</div>
+    <p><b>Structurally:</b> no real-time bid — commission set upfront, publishers self-select in. Closer to a piece-rate sales-commission arrangement than an auction; the "network" is really a matching/trust/reconciliation layer, not a media auctioneer.</p>
+    <h3>Fraud — attacks the attribution logic itself, not impression counts</h3>
+    <div class="box"><b>Cookie stuffing:</b> a shady site silently drops tracking cookies for many brands (via hidden iframes/popups) on visitors who never clicked a real affiliate link. Days later, if that person independently buys on, say, Flipkart, the stuffed cookie claims credit and the fraudster gets paid for a sale they had zero role in.</div>
+    <div class="box"><b>Brand bidding:</b> an affiliate bids on Google Ads for the advertiser's own brand name (e.g. "Nike") without permission, intercepting people who were already going to buy directly. Advertiser pays a commission for a sale that would've happened anyway, and may also inflate its own search-ad costs by now bidding against its own affiliate.</div>
+    <h3>Where influencer marketing connects back to 2f</h3>
+    <p>Many modern influencer deals are hybrid: flat fee (trust-transfer payment, same logic as podcast host-reads in 2f) + affiliate/CPA commission (discount code/tracked link) on top — because pure flat-fee puts all conversion risk on the brand, while pure-affiliate undervalues creator trust when followers buy later without using the tracked link (a known measurement gap). Sets up 2m.</p>
+  </div>
+</div>
+
+<div class="overlay" id="m-2l">
+  <div class="modal">
+    <button class="closebtn" onclick="closeModal('m-2l')">&times;</button>
+    <h2>2l — Events, Sponsorship & Experiential</h2>
+    <div class="box"><b>Why it breaks the auction pattern:</b> no standardized, repeatable, priceable unit exists (unlike an impression/click/listing slot). Each sponsorship is a bespoke negotiated contract — closer to Step 1B's original rate-card-and-negotiation logic than anything else covered, with no exchange, auction, or programmatic layer.</div>
+    <h3>Three things bundled and priced separately in one deal</h3>
+    <ul>
+      <li><b>Media/exposure value:</b> logo visibility, jersey branding, stadium signage — roughly priceable via traditional reach/frequency logic (equivalent-ad-spend modeling).</li>
+      <li><b>Association/halo value:</b> buying cultural relevance/excitement (e.g. IPL) — priced almost entirely on brand judgment, not any measurable unit. Same measurement-trust weakness brand advertising has always had (Step 1B) — often internally hard to defend with hard ROI.</li>
+      <li><b>Access/rights value:</b> exclusive category rights (locks out competitors), hospitality access, fan-database/CRM data rights — behaves like a licensing/exclusivity contract, not an ad buy.</li>
+    </ul>
+    <div class="box"><b>Budget-competition point:</b> a large sponsorship (₹100+ crore for top IPL properties) is frequently justified/challenged directly against what the same money could buy in performance/digital media — sponsorship's unmeasurable brand-halo value vs. digital's measurable-but-less-resonant reach. A direct rerun of the Brand-vs-DR tension (Step 1B), fought at the budget-committee level.</div>
+    <h3>Experiential marketing</h3>
+    <p>Same bespoke, negotiated, association-value-driven logic as sponsorship, at local/one-off scale (pop-ups, branded festival experiences, launch events). Increasingly measured (imperfectly) via social amplification of the event — a modern attempt to graft digital-style measurability onto an inherently unmeasurable format, similar in spirit to "branded search lift" (2j).</p>
+  </div>
+</div>
+
+<div class="overlay" id="m-2m">
+  <div class="modal">
+    <button class="closebtn" onclick="closeModal('m-2m')">&times;</button>
+    <h2>2m — Influencer / Creator Marketing</h2>
+    <div class="box"><b>Distinct from "social media ads":</b> a Meta ad is inventory Meta owns and auctions (2b/2j) — brand pays Meta, Meta keeps it all. An influencer deal is a direct/brokered contract between brand and creator — the platform often gets nothing. The creator sells personal credibility/audience trust, not an auctionable impression — same logic as podcast host-reads (2f), now the 4th recurrence of "trust-transfer → negotiation, not auction" (after agencies/1B, host-read podcasts/2f, sponsorship/2l).</div>
+    <h3>How deals are priced</h3>
+    <ul>
+      <li>Follower count + engagement rate (engagement matters more — "micro-influencers," ~10K-100K followers, often beat mega-influencers on cost-per-conversion).</li>
+      <li>Format: single post vs. story vs. dedicated video vs. long-term ambassador retainer — very different price points.</li>
+      <li><b>Usage rights:</b> priced separately — does the brand get to repurpose creator content as its own paid ad creative? Often costs significantly more; blends into the creative-production theme (3c).</li>
+    </ul>
+    <div class="box"><b>Hybrid pricing (ties to 2k):</b> flat fee (guaranteed trust-transfer) + affiliate/CPA layer (tracked code/link). Exists because pure flat-fee shifts all risk to the brand, while pure-affiliate undercounts real influence (trust-driven purchases often happen later, untracked) — penalizing exactly the creators whose audience acts without needing a coupon nudge.</div>
+    <p><b>Platforms re-inserting themselves:</b> Instagram Creator Marketplace, YouTube BrandConnect, TikTok Creator Marketplace — platforms building matchmaking/payment tooling to take a fee from a transaction they otherwise don't touch. Same institutional instinct as retail media formalizing trade marketing (2d) into an auction layer — different category, same move.</p>
+    <p><b>Budget source:</b> split between brand-marketing and performance-marketing budgets depending on deal structure (flat-fee-heavy = brand budget; CPA-heavy = performance budget) — Brand-vs-DR split (Step 1B) still shaping allocation in the newest category in this map.</p>
+  </div>
+</div>
+
+<div class="overlay" id="m-2n">
+  <div class="modal">
+    <button class="closebtn" onclick="closeModal('m-2n')">&times;</button>
+    <h2>2n — Native Advertising / Sponsored Content / Advertorials</h2>
+    <div class="box"><b>Reframe:</b> not a new marketplace mechanic — a format/disclosure choice layered on top of categories already covered. A native ad can be bought via closed 1P auction (2b), direct negotiation (2l-style), or influencer trust-transfer (2m). What makes it "native" is that it's designed to look like surrounding organic content, not how the money changes hands.</div>
+    <h3>Why it exists: defeats banner blindness</h3>
+    <p>Users learned to visually filter out anything that pattern-matches "ad shape" (banner blindness, Step 1/1B). If an ad is visually indistinguishable from a listicle/feed post/article, that pattern-recognition trigger never fires. This — not better targeting — is why in-feed/native formats outperform traditional banners on engagement.</p>
+    <h3>The regulatory tension — real and ongoing, not theoretical</h3>
+    <div class="box">Blending in enough to defeat ad-blindness is in direct conflict with the legal requirement to be recognizably an ad. FTC (US) native-ad disclosure rules and enforcement actions; ASCI (India, see 3a) has influencer/native disclosure guidelines; platforms enforce disclosure labels partly for compliance, partly to protect themselves from liability for hosting undisclosed ads. Disclosure labels tend to be small/low-contrast/easy-to-miss — a negotiated compromise between the two pulls, right up to (sometimes past) what regulators tolerate.</div>
+    <p>This same "blend in vs. disclose" tension resurfaces in 3a (Regulation) and 3b (Measurement/fraud/ad-blocking arms race) — a recurring flashpoint, not a solved problem.</p>
+  </div>
+</div>
+
+<div class="overlay" id="m-2o">
+  <div class="modal">
+    <button class="closebtn" onclick="closeModal('m-2o')">&times;</button>
+    <h2>2o — Owned Channels (SMS / Push / WhatsApp Business)</h2>
+    <div class="box"><b>Not "advertising" in the Step 1 sense:</b> advertising rents someone else's aggregated attention. Messaging your own existing customer has no auction, no publisher, no rented placement. Practitioners bucket this as "CRM/retention marketing" — different budget line, team, and KPIs (retention/repeat-purchase, not CPM/CPC).</div>
+    <p><b>Why it still belongs here:</b> it's the direct output ads are meant to produce (acquire a customer you then own forever), and acquisition-vs-retention spend is one continuous budget-allocation decision even across different functional teams.</p>
+    <h3>Real economics per channel</h3>
+    <ul>
+      <li><b>SMS:</b> cheap per-message, but hard ceiling on user tolerance; in India, TRAI's DLT spam-control regulation is a unique regulatory layer (see 3a).</li>
+      <li><b>Push notifications:</b> free per-send but a fast-decaying goodwill budget — overuse causes notification-disabling/uninstalls, permanently destroying that acquisition channel (and wasting whatever the original ad spend was to acquire that install).</li>
+      <li><b>WhatsApp Business API:</b> Meta charges per-conversation/message — despite being "owned," it is not free. You own the relationship but rent the pipe, and Meta can unilaterally reprice it. WhatsApp commerce (catalogs, in-chat purchase, order updates) is a major India-specific dynamic given near-universal penetration (flag for Step 8).</li>
+    </ul>
+    <div class="box"><b>The cross-functional trap:</b> paid ads acquire a customer once; owned channels retain them at near-zero marginal cost after. LTV-based justification for aggressive paid acquisition spend depends entirely on owned channels working well post-acquisition. Ad performance measured in isolation can look artificially efficient while the business is actually overpaying for one-time customers — a real blind spot for a PM looking only at the ads side.</div>
+  </div>
+</div>
+
+<div class="overlay" id="m-2p">
+  <div class="modal">
+    <button class="closebtn" onclick="closeModal('m-2p')">&times;</button>
+    <h2>2p — Gaming Ads</h2>
+    <div class="box"><b>Why it's distinct:</b> the user is in an active, effortful, high-attention state — not passively scrolling/viewing. This changes what ad formats are tolerable and splits into genuinely different consent models.</div>
+    <h3>Three sub-models</h3>
+    <ul>
+      <li><b>Programmatic in-game banners/interstitials:</b> standard display, bought/sold exactly like open-web programmatic (2b) — same SSP/DSP/exchange chain, same fraud problems. Most in-game mobile ad spend is this, unglamorous as it is.</li>
+      <li><b>Rewarded video:</b> user explicitly opts in ("watch this ad, get 50 coins") — inverts the entire "interruption" premise behind every other format. Genuine value exchange, not interruption. Dramatically higher completion/attention quality (no ad-avoidance reflex to fight, unlike banner blindness/2n) → commands premium CPMs. Arguably the cleanest real example of "ad as value exchange" that the rest of the industry only aspires to.</li>
+      <li><b>Brand in-game placements/"advergaming":</b> billboards inside a game, branded skins/items, real products as in-game objects. Not auction-priced — negotiated directly with the game studio, closer to sponsorship (2l) or product placement (2d) logic. Some engines allow static in-game billboards to be dynamically swapped post-launch — negotiated placement rights + programmatic-style dynamic creative on top, same pattern as DOOH (2e).</li>
+    </ul>
+    <div class="box"><b>Regulatory flashpoint (ties to 3a):</b> gaming skews young, triggering children's-advertising regulation (COPPA and equivalents) more directly than most categories — restrictions on minor data collection, how aggressively rewarded/interstitial ads target child users, and live scrutiny (EU, increasingly India) over whether loot-box/ad-reward loops constitute manipulative design aimed at children. One of the more legally unsettled areas in the whole landscape right now.</div>
+  </div>
+</div>
+
+<div class="overlay" id="m-2q">
+  <div class="modal">
+    <button class="closebtn" onclick="closeModal('m-2q')">&times;</button>
+    <h2>2q — Local / Hyperlocal Advertising</h2>
+    <div class="box"><b>Distinct buyer segment, not just smaller-scale search/social:</b> neighborhood dentist, restaurant, plumber — no marketing team, no agency, tiny budget, low digital literacy. A structurally different buyer, which cascades into everything about how the category works.</div>
+    <h3>Core products</h3>
+    <ul>
+      <li><b>Google Business Profile:</b> free listing (location/hours/reviews) — the foundation paid local ads sit on top of.</li>
+      <li><b>Local search ads / Local Services Ads:</b> same auction as 2j, geo-fenced tightly. Uses a "Google Guaranteed/Screened" trust badge for high-risk categories (plumber, electrician, lawyer) — you're inviting a stranger into your home, higher trust bar than e-commerce search.</li>
+      <li><b>Yelp-style platforms:</b> blend sponsored ranking (2b) with lead-gen fees (2h/2k logic) in one product.</li>
+      <li><b>India-specific:</b> JustDial (paid listings + lead-gen calls); hyperlocal ads bundled inside super-apps (a restaurant paying for visibility in Swiggy/Zomato, a kirana store in a quick-commerce app) — a fast-evolving hyperlocal-retail-media hybrid (flag for Step 8).</li>
+    </ul>
+    <h3>Why buyer segment changes the whole sales motion, not just price</h3>
+    <ul>
+      <li><b>Telesales/feet-on-street sales teams</b> — a real, large, overlooked cost center, unlike self-serve/API-scaled enterprise ad sales.</li>
+      <li><b>Simplified/templated campaign products</b> ("Smart Campaigns," auto-optimized) — abstracting the same underlying auction (2a/2j) for a less sophisticated buyer.</li>
+      <li><b>High price sensitivity/churn</b> — thin margins, first to cut spend, hardest to retain → high-volume, low-margin-per-account business rather than concentrated enterprise-account model.</li>
+    </ul>
+    <div class="box"><b>Easy to underestimate:</b> Google's local search/Local Services Ads are believed to be a large, rarely broken-out share of total ad revenue. Recurring pattern in this whole map: the most-discussed players (Google/Meta/Amazon) are disproportionately framed around their large-advertiser business, while a substantial share of actual revenue comes from this long-tail, high-volume, low-sophistication segment — same overlooked-profitability pattern as classifieds/Info Edge (2h).</div>
+  </div>
+</div>
+
+<div class="overlay" id="m-2r">
+  <div class="modal">
+    <button class="closebtn" onclick="closeModal('m-2r')">&times;</button>
+    <h2>2r — B2B Advertising as a Cross-Cutting Axis</h2>
+    <div class="box"><b>Not a channel — a buyer-type lens</b> cutting across almost every channel already covered (LinkedIn = social/2j logic, Google search = 2j, conferences = 2l logic, account-based direct mail = 2g logic). Same channels as B2C; fundamentally different meaning of "conversion" and "targeting."</div>
+    <h3>Core structural difference: the buying committee</h3>
+    <div class="box">B2C: viewer of the ad is usually the decider, often within days. B2B: a buying committee (often 6-10 people per Gartner research — end-user, technical evaluator, procurement/finance, legal, executive sponsor) decides over months to years.</div>
+    <ul>
+      <li><b>Attribution breaks down</b> — not from worse tracking, but because a single click→purchase model doesn't match how the decision is actually made (the ad may reach the evaluator; the buying signature comes from a CFO who never saw it).</li>
+      <li><b>"Conversion" = a lead, not a purchase</b> — and lead value varies hugely by committee role/company. This is why B2B relies on <b>account-based marketing (ABM)</b>: target the company/account itself, deliberately reaching multiple people at the same target company, because the real conversion unit is the account's collective decision, not one click.</li>
+    </ul>
+    <h3>Why LinkedIn is priced so differently</h3>
+    <p>CPCs often 5-10x Meta/Google's for a similar format — not inefficiency, correctly pricing in that B2B leads are worth far more per conversion (a single enterprise deal = lakhs to crores vs. a few hundred/thousand rupees in e-commerce), same intent-proximity logic as search CPCs (2j). LinkedIn's moat: reliable firmographic/job-title data no consumer platform matches — a distinct first-party data asset, same spirit as retail media's purchase data (2c), for professional identity instead.</p>
+    <p><b>Trade shows/conferences</b> remain a non-declining B2B line item — in-person face time with multiple committee members at once, higher self-selected intent than any digital ad — 2l's sponsorship/experiential logic aimed at a professional audience.</p>
+    <div class="box"><b>Carry forward:</b> B2B invents no new mechanics — it recalibrates what "customer," "conversion," and "attribution" mean because the buyer is an organization, not a person. Useful discipline going forward: ask whether a purchase decision is made by one person quickly or a committee slowly — the answer changes how that ad product should be priced, targeted, and measured.</div>
+  </div>
+</div>
+
+<div class="overlay" id="m-phase1recap">
+  <div class="modal">
+    <button class="closebtn" onclick="closeModal('m-phase1recap')">&times;</button>
+    <h2>Phase 1 Recap — The Full Taxonomy, Consolidated</h2>
+    <p>18 categories reduce to a 3-question diagnostic, usable on any ad product including your own company's.</p>
+    <h3>1. Pricing logic — what's actually being sold?</h3>
+    <table><tr><th>Logic</th><th>What's sold</th><th>Examples</th></tr>
+    <tr><td>Auction</td><td>A statistically-targetable impression/click</td><td>Google/Meta 1P auctions (2b), retail media (2c), pDOOH (2e), streaming audio (2f), CTV programmatic (2i), search & social (2j), in-game programmatic (2p), local search (2q)</td></tr>
+    <tr><td>Negotiation</td><td>Trust, credibility, association, exclusivity</td><td>Pre-digital rate cards (1B), trade marketing/slotting (2d), traditional OOH (2e), host-read podcasts (2f), print/mail deals (2g), sponsorship (2l), influencer flat-fees (2m), in-game brand placements (2p), B2B trade shows (2r)</td></tr>
+    <tr><td>Outcome-based fee</td><td>A completed action, not exposure</td><td>Affiliate/CPA (2k), influencer CPA layer (2m), classifieds success fees (2h), lead-gen local ads (2q)</td></tr></table>
+    <p><b>Diagnostic:</b> most bad ad-strategy comes from misapplying one logic where another belongs — auctioning a trust-transfer undervalues it; negotiating something auction-able leaves money on the table and invites opacity.</p>
+    <h3>2. Data ownership — does the format survive privacy regulation?</h3>
+    <table><tr><th>Data type</th><th>Survives regulation?</th><th>Examples</th></tr>
+    <tr><td>First-party, deterministic</td><td>Yes — untouched</td><td>Retail media (2c), closed 1P search/social (2j), WhatsApp Business (2o), B2B firmographic (2r)</td></tr>
+    <tr><td>First-party, inferred/behavioral</td><td>Partially — degraded by ATT/cookie deprecation</td><td>Social feed targeting (2j), programmatic streaming/CTV (2i)</td></tr>
+    <tr><td>Third-party, cross-site</td><td>No — structurally broken</td><td>Open-web programmatic (2b)</td></tr>
+    <tr><td>No individual data (composition-only)</td><td>N/A — never depended on tracking</td><td>OOH (2e), radio (2f), print (2g), sponsorship (2l)</td></tr></table>
+    <h3>3. Brand vs. Direct-Response — which job is this format doing?</h3>
+    <p>Not binary — some formats are purely one (search=DR, OOH=brand), some flexibly serve either (social, CTV, influencer). Formats that can serve both roles tend to attract more total budget over time, since they can absorb spend from multiple parts of a marketing org simultaneously.</p>
+    <div class="box"><b>Going forward:</b> every subsequent step (evolution, current landscape, eventual company mapping) gets run through this same 3-question lens rather than treated as a disconnected new fact.</div>
+  </div>
+</div>
+
+<div class="overlay" id="m-3a">
+  <div class="modal">
+    <button class="closebtn" onclick="closeModal('m-3a')">&times;</button>
+    <h2>3a — Regulation as a Recurring Force</h2>
+    <div class="box"><b>Core point:</b> regulation is a permanent structural pressure, not a one-off event (GDPR/ATT aren't "the" story, just the latest instance). Pattern: regulators intervene when a format (a) targets a vulnerable population, (b) enables deception at scale, or (c) creates a public-health/safety externality. Regulation doesn't remove the underlying commercial incentive — it forces a compliant-looking proxy (see surrogate advertising below).</div>
+    <h3>Pre-digital lineage</h3>
+    <ul>
+      <li><b>Tobacco/alcohol:</b> US banned cigarette TV/radio ads in 1971 post-Surgeon General report — earliest "format works too well at harm, banned outright" case. <b>India:</b> alcohol ads banned outright → <i>surrogate advertising</i> (Kingfisser "soda"/"mineral water" using identical branding) as an industry workaround.</li>
+      <li><b>Pharma DTC ads:</b> US + New Zealand are the ONLY countries allowing direct-to-consumer prescription drug ads. Explains why "pharma" as a huge ad-spend category is almost entirely a US phenomenon — doesn't generalize globally (India: pharma ads are B2B, marketing to doctors, tightly restricted for consumers).</li>
+      <li><b>Children's advertising:</b> COPPA (US, 1998) restricts data collection from under-13s without parental consent — predates GDPR by two decades, same logic (can't meaningfully consent) now extended to gaming loot-boxes (2p) and teen social media/algorithmic feeds (2023-25 US state laws, EU proposals). Clearest example of a principle set in one narrow context re-invoked decades later for new formats.</li>
+    </ul>
+    <h3>Self-regulatory bodies</h3>
+    <div class="box">ASA (UK), ASCI (India) — industry-funded voluntary bodies reviewing misleading ads, surrogate-ad violations, and (ASCI, since 2021) influencer disclosure ("#ad"/"#collab" — the exact tension flagged in 2n). <b>Why they exist:</b> cheaper/faster than government law, and lets industry demonstrate self-policing specifically to pre-empt stricter government regulation — a deliberate strategy, not incidental.</div>
+    <p><b>Digital privacy era, correctly framed:</b> GDPR/ATT/cookie deprecation are the same regulatory instinct as tobacco/COPPA — protecting people from a practice that outpaced their ability to consent/understand — just via data-privacy law instead of content bans.</p>
+    <h3>India-specific bodies to know by name</h3>
+    <ul>
+      <li><b>ASCI</b> — content/claims/disclosure self-regulation</li>
+      <li><b>TRAI</b> — DLT anti-spam framework for SMS/commercial comms (2o)</li>
+      <li><b>MeitY / DPDP Act 2023</b> — India's GDPR-equivalent, still in early implementation — most likely to reshape Indian ad targeting in the next few years</li>
+      <li><b>CCPA (Central Consumer Protection Authority)</b> — dark-patterns and endorsement/influencer disclosure guidelines, distinct from ASCI's</li>
+    </ul>
+  </div>
+</div>
+
+<div class="overlay" id="m-3b">
+  <div class="modal">
+    <button class="closebtn" onclick="closeModal('m-3b')">&times;</button>
+    <h2>3b — Measurement, Fraud & the Ad-Blocking Arms Race</h2>
+    <div class="box"><b>Unifying frame:</b> one continuous arms race, not three separate problems — the industry proving/protecting ad value vs. bad actors (fake value) and users (want their attention back). Every measurement solution gets a countermeasure — structurally permanent, no endpoint.</div>
+    <h3>Fraud — three species, each attacking a different link</h3>
+    <ul>
+      <li><b>Impression/click fraud (bots):</b> automated traffic (botnets) generates fake ad revenue, or burns a competitor's daily budget with fake clicks (real, documented competitive sabotage). Mostly an open-web programmatic (2b) problem — no single party controls both sides, hardest to catch centrally.</li>
+      <li><b>Attribution fraud:</b> cookie-stuffing/brand-bidding (2k) — real traffic, falsely claimed credit. Doesn't fabricate anything, just misattributes something real.</li>
+      <li><b>Domain spoofing / viewability fraud:</b> fraudulent site spoofs its bid request to claim it's premium inventory while serving cheap content-farm placements; separately, "viewability fraud" = an ad counted as served but never actually on-screen (stacked, 1px iframe, never scrolled to). Led to "viewability" (IAB standard: ~50%+ pixels, 1+ second) becoming an audited industry metric.</li>
+    </ul>
+    <h3>Ad-blocking — the user-side half</h3>
+    <p>Ad-blockers (uBlock, Adblock Plus, Safari ITP) = users opting out of the attention-marketplace premise (Step 1) entirely for blockable formats. Real revenue impact, mostly on open-web display; much harder to selectively block closed 1P app-native feed ads (Meta/Instagram) without breaking the app.</p>
+    <div class="box"><b>Direct cause of native ad dominance (2n) and the walled-garden shift:</b> a third-party-script banner is trivially blockable; an ad rendered as a native part of an app's own feed code is architecturally hard to block. The walled-garden trend (Step 2 taxonomy) is partly an "un-blockability" story, not just privacy/data — multiple independent forces (privacy law, ad-blocking, fraud risk) all pushed the same direction.</div>
+    <h3>Closing the loop to Step 1B's trust lineage</h3>
+    <div class="box">Fraud and ad-blocking are modern, faster versions of Nielsen/ABC's original problem — self-reported numbers aren't trusted. Same historical response: independent third-party verification. <b>MRC (Media Rating Council)</b> accredits viewability/fraud measurement vendors; <b>IAS (Integral Ad Science)</b> and <b>DoubleVerify</b> are the dominant independent verification vendors advertisers pay to sit between them and platforms — the 21st-century descendant of Nielsen/ABC.</div>
+    <p><b>Practical relevance:</b> "how do we know your numbers are real?" is a first-order commercial trust question, not a solved technical detail — determines whether sophisticated advertisers (who run their own fraud/measurement checks) will scale spend with you. Newer categories like retail media lack decades of established trust (unlike Nielsen-audited TV or MRC-accredited display) and have to actively build third-party verification credibility — a real, current strategic gap.</p>
+  </div>
+</div>
+
+<div class="overlay" id="m-3c">
+  <div class="modal">
+    <button class="closebtn" onclick="closeModal('m-3c')">&times;</button>
+    <h2>3c — Creative/Production Industry Structure</h2>
+    <div class="box"><b>The chain:</b> Client → Creative agency (idea/concept) → Production house (shoots/produces the asset) → Media agency (decides where/how much to spend) → Platform. Historically bundled as one full-service agency, paid via Step 1B's 15% commission.</div>
+    <p><b>Why it unbundled:</b> the commission model's conflict of interest (agency profits more when client spends more, regardless of quality/efficiency) led advertisers to hire creative and media buying as separate, more transparent, individually-accountable vendors — a direct structural consequence of Step 1B's incentive problem reaching all the way forward.</p>
+    <h3>What each layer monetizes</h3>
+    <ul>
+      <li><b>Creative agencies</b> (Ogilvy, W+K, BBDO, DDB; India: Taproot Dentsu, Lowe Lintas) — sell ideas/craft, hard to price objectively (same measurement-difficulty as brand advertising itself), paid via retainer/project fee.</li>
+      <li><b>Production houses</b> — sell execution capacity (crews, editing, VFX), a specialized service business, paid fixed budget per shoot, commoditized/quote-competitive unlike creative's harder-to-compare "idea quality."</li>
+      <li><b>Media agencies</b> (GroupM, Publicis Media, Dentsu, Omnicom Media Group) — sell buying expertise/scale leverage, aggregate spend across clients for better rates, operate the campaign-optimization layer. <b>Note:</b> most major creative and media agency brands are owned by just six holding companies — WPP, Omnicom, Publicis, IPG, Dentsu, Havas — "independent" agencies are very often sister companies under one of these.</li>
+    </ul>
+    <div class="box"><b>Why "creative quality lowers CPCs" is a real paid lever:</b> auctions rank on bid × predicted relevance/quality (Step 1), so better creative can win against a higher bidder. Creative agency output has a measurable, monetizable effect on media efficiency — a mediocre asset makes the media agency pay a "quality tax" in the auction. This is why creative-effectiveness measurement is a growing sub-discipline, and why tight creative/media coordination matters despite organizational separation.</div>
+    <p><b>Current disruption:</b> generative AI is compressing the <i>production house</i> layer specifically — brands can generate many creative variants without a full shoot, feeding directly into AI-automated buying tools (Performance Max, Advantage+) that test variants automatically. Doesn't eliminate the creative agency's strategic/idea layer, but is actively reshaping how holding companies restructure and price their production subsidiaries — unresolved, ongoing.</p>
+  </div>
+</div>
+
+<div class="overlay" id="m-3d">
+  <div class="modal">
+    <button class="closebtn" onclick="closeModal('m-3d')">&times;</button>
+    <h2>3d — Market Research & Consumer Insights</h2>
+    <div class="box"><b>Why it belongs here:</b> answers a prior question to everything else covered — what should the ad even say, to whom, and did it work, when direct attribution (Step 1) is impossible? This is the feedback loop solving brand advertising's oldest problem.</div>
+    <h3>Two distinct jobs — don't conflate</h3>
+    <ul>
+      <li><b>Audience measurement</b> (Nielsen/ABC/Arbitron/MRC, already covered in 1B/3b) — how many saw it, who are they. Tells you delivery, not impact.</li>
+      <li><b>Consumer insights & brand tracking</b> — did it change what people think/feel/intend:
+        <ul>
+          <li><b>Brand lift studies:</b> exposed vs. control-group surveys measuring recall/favorability/purchase intent. Google/Meta offer built-in tools because brand advertisers demand proof beyond clicks.</li>
+          <li><b>Continuous brand tracking</b> (Kantar, GfK): ongoing syndicated surveys tracking brand health (awareness, consideration, NPS) across a category over time, independent of any single campaign — answers "is our brand getting stronger," which no ad platform dashboard can answer.</li>
+          <li><b>Qualitative research</b> (focus groups, interviews, ethnography): used before a campaign is built, informing creative strategy (3c) — upstream of everything else in this map, where ideas originate.</li>
+        </ul>
+      </li>
+    </ul>
+    <div class="box"><b>Why this industry stays independent of ad platforms:</b> Kantar/Nielsen/GfK/Ipsos are paid by advertisers, not platforms — deliberately, tracing directly to Step 1B's trust lineage. If Meta self-reported your campaign's brand lift, it's the same conflict of interest that justified Nielsen's existence originally. Sophisticated advertisers treat platform-provided brand metrics like a self-graded exam and still commission independent studies as the real scoreboard.</div>
+    <h3>Media Mix Modeling (MMM) — the statistical answer to "which channel worked"</h3>
+    <p>Regression/Bayesian technique estimating each channel's statistical contribution to aggregate sales over time, without individual-level tracking. Predates digital attribution (invented for the TV-only era) and is resurging hard as a <b>direct consequence of the privacy shock</b> (2c/3a) — when individual tracking gets harder, budget and analytical weight shifts back to inferring from the aggregate.</p>
+  </div>
+</div>
+
+<div class="overlay" id="m-3e">
+  <div class="modal">
+    <button class="closebtn" onclick="closeModal('m-3e')">&times;</button>
+    <h2>3e — The Finance/Valuation Lens</h2>
+    <p>Last cross-cutting theme, deliberately sequenced late — requires the full vocabulary built so far. This is how an ads business gets evaluated as genuinely good or not, not just how it works mechanically.</p>
+    <h3>Core metrics and what each diagnoses</h3>
+    <div class="box"><b>Take rate:</b> % of gross spend the platform keeps vs. passes through. The financial expression of the Phase 1 taxonomy — closed 1P models (2b/2c) structurally have higher take rates than intermediated open programmatic, where SSP/exchange/DSP each take a cut (echoes the ~50% leakage stat from 2b). Often the fastest way to size up any ad business's fundamental attractiveness.</div>
+    <div class="box"><b>Ad load:</b> ad density per unit of user experience. The direct lever to grow ad revenue without growing users/engagement — but has a ceiling; push too far and you damage the core product's stickiness (Step 1's central claim). Rising ad load with flat user growth is a "harvesting" signal — a lower-multiple growth story than genuine usage growth.</div>
+    <div class="box"><b>ARPU (ads):</b> revenue per user from ads — lets you compare monetization efficiency independent of scale. A smaller platform can have higher ad ARPU than a bigger one if its intent signal is stronger per user (Google/Amazon's ARPU per user tends to beat general social platforms', because purchase-intent-adjacent traffic monetizes better — direct financial expression of the Brand-vs-DR/intent-proximity themes from 2j).</div>
+    <div class="box"><b>eCPM (effective cost per mille):</b> revenue per 1,000 impressions — compares monetization efficiency over time/competitors independent of total impression volume. Rising eCPM at stable ad load = healthy (better targeting/demand); rising eCPM from falling supply = a different, less durable story — a distinction often glossed over in casual reporting.</div>
+    <h3>Why ad businesses get valued higher than their parent's core business</h3>
+    <div class="box">Ad revenue layered on an existing product (retail media, marketplace ads, in-app ads) has near-zero incremental delivery cost — infrastructure/users/transactions already exist for other reasons. Converts to profit at dramatically higher margin than the core business. This is why Amazon Ads, a fraction of Amazon's total revenue, is valued by investors at a much higher revenue multiple than Amazon's retail segment — and why any company sitting on a large user base (Uber, DoorDash, fintech apps) has a structural incentive to build an ads layer: one of the highest-margin uses of an asset they already paid to acquire for another reason (same insight as 2c, in the language investors/CFOs use).</div>
+    <h3>The tension a PM actually has to manage</h3>
+    <p>Take rate, ad load, and ARPU are often in tension: raising take rate too far suppresses advertiser demand; raising ad load grows revenue short-term while damaging long-term engagement (and the inventory ads depend on). No single metric should be maximized in isolation — a sophisticated ads business explicitly manages the tradeoff between extracting value today and protecting the long-term health of the attention pool it depends on. Financially, this is the same idea as Step 1's opening claim, now expressed as the specific metrics a PM watches to know if the tradeoff is being managed well.</p>
+  </div>
+</div>
+
+<div class="overlay" id="m-step4">
+  <div class="modal">
+    <button class="closebtn" onclick="closeModal('m-step4')">&times;</button>
+    <h2>Step 4 — Historical Arc with Causality</h2>
+    <div class="box"><b>1990s-2000, Banner ads:</b> sold like print (Step 1B), no targeting → banner blindness (2n) collapsed CTRs fast. Industry's first response (more/bigger banners, pop-ups) was an attention arms race (3b) that didn't fix the root cause: no real intent signal behind most impressions.</div>
+    <div class="box"><b>2000, Google AdWords:</b> the causal breakthrough — search query = explicit, textual, real-time user intent (origin of 2j's "pull" logic). Combined with auctions (2a) + Quality Score (bid×relevance, Step 1), solved targeting AND pricing simultaneously → created performance/search marketing as a wholly new category, not just a better banner.</div>
+    <div class="box"><b>2007-2012, Programmatic/RTB:</b> solved a real problem — millions of publishers' unsold remnant inventory, no sales team could sell it 1:1. RTB (2a) auctioned any open-web impression automatically → this is exactly when the SSP-exchange-DSP chain (2b) and the ~50% leakage problem (2b/3e) were born. The inefficiency is the direct cost of connecting disconnected publishers/advertisers with no common owner — not a design flaw.</div>
+    <div class="box"><b>2012-2018, Mobile + Facebook's identity-graph targeting:</b> a second, different intent signal — identity/social-graph/behavior instead of search query. Purest form of 2j's "push" model: infers intent instead of waiting for it, noisier but much higher-volume. Mobile shifted the industry's center of gravity — app-install ads, native/in-app formats (2n) that later doubled as an ad-blocking countermeasure (3b), though that wasn't the original motive.</div>
+    <div class="box"><b>2013-2020, Amazon Ads (retail media prequel):</b> sponsored listings looked like a merchandising feature for years before being recognized as a media business. Deterministic purchase-adjacent intent (2c) converts better than search or social's inferred intent — commercially superior <i>before</i> the privacy shock, which then made it structurally superior too, by degrading competitors' targeting quality.</div>
+    <div class="box"><b>2017-2021, The privacy shock:</b> the third instance of 3a's recurring regulatory pattern (after tobacco, COPPA). Causal chain: 3rd-party cross-site tracking (2b) broke → open-web programmatic targeting collapsed → advertiser ROI fell → budget fled to models not dependent on 3rd-party data (closed 1P platforms, and especially retail media/2c, whose targeting never touched cookies at all). This single mechanism is why retail media boomed post-2021 — not fashion, a direct budget reallocation. Secondary effect: Media Mix Modeling (3d) resurged for the same underlying reason — aggregate inference gets relatively more valuable once individual tracking gets harder.</div>
+    <div class="box"><b>2021-now, AI-automated buying:</b> Performance Max/Advantage+ — advertiser sets a goal/budget, platform's ML decides targeting/placement/creative allocation automatically. Extends Step 1's "ad platforms are giant applied ML systems" — now selling the ML system's output directly as a product, not just using it to rank an auction. Actively compressing 3c's media-buying agency skill and combining with generative-AI production compression (also 3c) — both buying and creative layers being compressed simultaneously, right now, no settled name yet for this era.</div>
+  </div>
+</div>
+
+<div class="overlay" id="m-step5">
+  <div class="modal">
+    <button class="closebtn" onclick="closeModal('m-step5')">&times;</button>
+    <h2>Step 5 — What's Working Now, and Why</h2>
+    <div class="box"><b>Retail media — offsite expansion:</b> beyond onsite sponsored listings (2c), retailers now sell their first-party audience segments to target ads on <i>other</i> platforms (an Amazon "diaper buyer" segment used to run an ad on Instagram, never touching Amazon itself). Turns the data asset into a product independent of the retailer's own inventory — higher-margin, no inventory cap. <i>Caveat (see below): this reintroduces the exact cross-company data-sharing problem onsite retail media was immune to.</i></div>
+    <div class="box"><b>AI-automated buying:</b> Performance Max/Advantage+ win partly because they let platforms capture budget from advertisers who previously couldn't afford/didn't have expertise for manual campaigns (long-tail/local 2q, mid-market without an agency/3c) — real market expansion, not just efficiency for existing sophisticated buyers.</div>
+    <div class="box"><b>CTV ad tiers:</b> Netflix's ads tier used to win price-sensitive subscribers who wouldn't pay full price at all — expanding the subscriber base downward, ads funding the discount. Only works because CTV's addressability (2i) commands a premium advertisers are willing to pay — a genuine, early-stage flywheel.</div>
+    <div class="box"><b>Commerce media replicating the 2c pattern:</b> Uber Ads, DoorDash Ads, Instacart Ads, fintech apps — any company with transaction/intent data has a near-zero-marginal-cost, high-margin option sitting unused (3e). Now a recognized playbook built proactively, not discovered by accident the way Amazon's was.</div>
+    <div class="box"><b>Gaming/rewarded video:</b> growing specifically as a countermeasure to ad-blocking/banner blindness (3b) — an opt-in ad (2p) can't trigger the avoidance reflex the user chose to bypass.</div>
+    <h3>Clean rooms — the technical answer to measurement vs. privacy</h3>
+    <div class="box">Solves: a brand wants to know if people who saw its ad on Platform A later bought via Platform B, without either company handing over raw customer lists (which would recreate the privacy violation GDPR/ATT were built to stop). Mechanism: both parties load data into a locked, neutral-feeling environment; only <b>aggregate query results</b> come out (e.g. "42,000 people"), never row-level records.</div>
+    <div class="box"><b>Trust problem (real, not settled):</b> the room operator is often one of the two parties with data in the room (Amazon/Google/Meta run their own clean rooms) — not a neutral third party. Mitigated by technical controls (only aggregate exports, minimum audience-size thresholds to block re-identification, query auditing) and reputational/regulatory risk — but not equivalent to full independence. Third-party neutral vendors (Habu, InfoSum, Snowflake) exist specifically because advertisers don't fully trust platform-run clean rooms.</div>
+    <div class="box"><b>The "compliant workaround" critique — legitimate, not fringe:</b> clean rooms technically avoid raw-data sharing, but critics/regulators worry that repeated aggregate queries can still build precise cross-platform profiles over time — satisfying the letter of privacy law while eroding its spirit. Same pattern as 3a's surrogate advertising and 2n's native-ad disclosure tension: a designed workaround pushed right up to what regulators currently tolerate, actively watched by EU regulators and India's maturing DPDP Act.</div>
+    <p><b>Offsite retail media's own version of this:</b> targeting a retailer's audience segment on another platform (e.g. Meta) requires matching identities across companies — typically via one-way hashed-identity matching (scrambled emails/phone numbers compared, never raw PII exchanged). Currently treated as compliant since no raw personal data crosses over, but considered a genuine gray area by privacy advocates, since enough matched hashes over time can still reconstruct meaningful cross-platform behavior about a person.</p>
+    <h3>What's declining, and why (mirror image of the above)</h3>
+    <ul>
+      <li>Open-web display/banner — still damaged by fraud/ad-blocking (3b) and the privacy shock (Step 4); budget keeps migrating to closed/addressable alternatives.</li>
+      <li>Linear TV — losing reach (cord-cutting) and now losing its premium-pricing justification as CTV matches production quality with better addressability (2i).</li>
+      <li>Generic, untargeted brand buys — under permanent pressure to prove impact via brand lift/MMM (3d) as budget holders demand accountability even for brand spend.</li>
+      <li>Manual agency-run campaign management as a billable skill — directly compressed by AI-automated buying (Step 4), forcing media agencies (3c) to reposition around strategy/insight over execution.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="overlay" id="m-step6">
+  <div class="modal">
+    <button class="closebtn" onclick="closeModal('m-step6')">&times;</button>
+    <h2>Step 6 — Major Players Mapped to the Taxonomy</h2>
+    <p>Goal: place each player against the 3-question diagnostic (pricing logic / data ownership / brand-vs-DR job) to see why their position is strong or exposed — not just list companies.</p>
+    <div class="box"><b>Google:</b> two structurally different businesses at once. Search = closed 1P auction (2b) on the highest-intent signal that exists (2j pull) — most defensible, highest-margin. Ad-tech stack (DV360/Ad Manager/AdX) = Google as SSP+exchange+DSP across the open web (2b) — far more exposed, the exact structure behind the US DOJ's 2024 ad-tech antitrust loss. YouTube straddles CTV brand economics (2i) and social-style inferred targeting (2j).</div>
+    <div class="box"><b>Meta:</b> pure identity-graph/"push" targeting (2j) at unmatched scale — exactly why ATT hit Meta hardest (depended on cross-app behavioral signal more than Google Search ever needed to). Response: rebuilding around first-party signals (Conversions API, its own clean-room-style tools) — a live case study of "which data-ownership category were you in, and how badly did the privacy shock hit it" (Phase 1 recap axis 2).</div>
+    <div class="box"><b>Amazon:</b> deliberately vertically integrated Prime Video (2i) + Amazon.com (2c) + Amazon Ads specifically for the closed-loop measurement advantage (2i) — almost no one else owns both the video platform and the transaction platform. The clearest example in the map of a company engineering its taxonomy position rather than inheriting it by accident.</div>
+    <div class="box"><b>TikTok/ByteDance:</b> same 2j "push" model as Meta at enormous scale, but with a unique added exposure: national-security/geopolitical regulation (divest-or-ban laws, country bans) — a genuinely different flavor of 3a's regulatory theme (ownership/geopolitical, not privacy or content-safety). Changes the advertiser risk calculus around long-term media planning on the platform.</div>
+    <div class="box"><b>Alibaba/Chinese platforms:</b> Taobao/Tmall ads are arguably the world's largest retail media business by scale, but built around heavier livestream-commerce integration (a hybrid of influencer marketing/2m + direct-response e-commerce) and China-specific data regulation. Reminder that the taxonomy is global but weighted very differently by region — livestream commerce is far bigger in China (and growing via Meesho/Flipkart experiments in India) than a Western-centric account suggests.</div>
+    <div class="box"><b>The Trade Desk:</b> a pure-play independent DSP (2b) betting that open-web programmatic remains valuable specifically as a counterweight to walled gardens controlling both supply and demand — its pitch leans on advertisers' antitrust/independence anxiety (echoes 3e's "who takes the cut"). The map's one major counter-thesis to the walled-garden trend.</div>
+    <p><b>Retail-media-adjacent (Walmart Connect, Instacart, Flipkart Ads):</b> same 2c logic as Amazon, different scale/category focus/offsite-data maturity (Step 5) — deliberately left unmapped in detail here; mapping your own company's position is Phase 5's job, once the rest of this map is solid.</p>
+  </div>
+</div>
+
+<div class="overlay" id="m-step7">
+  <div class="modal">
+    <button class="closebtn" onclick="closeModal('m-step7')">&times;</button>
+    <h2>Step 7 — Market Sizing</h2>
+    <p style="font-size:12px;color:#888;">Verified via live web search, Sept 2026 — see sources at bottom. Goal is understanding market <i>shape</i>, not memorizing numbers that shift yearly.</p>
+    <h3>Headline numbers (2025-26)</h3>
+    <div class="box">
+    Total global ad market (all media): <b>~$1.1-1.27 trillion</b> (WPP Media/GroupM, WARC) — crossed $1T around 2024.<br>
+    Digital share: <b>~69-73%</b> of total global spend; pure digital ad spend <b>~$836B in 2026</b> (GroupM forecast).
+    </div>
+    <h3>Big 3 — current, not historical</h3>
+    <div class="box">
+    <b>Meta projected to overtake Google in worldwide digital ad revenue for the first time</b> (eMarketer, Apr 2026 forecast): Meta $243.5B vs Google $239.5B in 2026. 2025 actuals: Google ~$214B, Meta ~$196B (eMarketer methodology; Statista's broader "digital revenue" scope puts Google closer to $295B — a methodology/scope gap, not a contradiction).<br>
+    Growth rates: Meta +24.1% (2026 proj.) vs Google +11.9% — Meta compounding faster even though Google's Search position remains structurally more defensible (highest-intent signal, 2j).<br>
+    <b>Amazon:</b> ~$68.6B (2025) → ~$82B projected (2026), growing faster than Google in recent quarters (Q4 2025: +23% YoY) — a live, real-time confirmation of Step 5/2c's retail-media thesis, not just historical narrative.<br>
+    <b>Combined Big 3 share:</b> 62.3% of total worldwide digital ad spend projected for 2026 — the precise current power-law concentration figure.<br>
+    <b>Beyond the Big 3:</b> ByteDance (TikTok + Douyin) ~7.9% — clear #4, well ahead of everyone else.
+    </div>
+    <div class="box"><b>Teaching point:</b> structural defensibility and growth rate are different things — Google's Search moat is harder to disrupt, but Meta and Amazon are currently compounding faster. Both can be true at once; don't conflate "most defensible" with "biggest" or "fastest-growing."</div>
+    <h3>What the concentration structurally implies</h3>
+    <ul>
+      <li><b>Regulatory attention is now permanent for the top players</b> — concentration is exactly why Google/Meta/Amazon face sustained antitrust/privacy scrutiny a mid-sized ad-tech company never will (3a's pattern, now targeted at current market leaders).</li>
+      <li><b>For everyone else, the playbook is "own a data/intent signal the Big 3 don't have"</b> — retail media (2c), B2B/LinkedIn (2r), vertical marketplaces (2h) all succeed by owning a different first-party signal, not competing head-on for search/social intent.</li>
+      <li><b>Category growth (retail media, CTV, commerce media) is outpacing the Big 3's core businesses</b> — because these categories expand the total pool of distinct signals being monetized, rather than fighting for share of the same one.</li>
+    </ul>
+    <div class="box"><b>Carry forward to Phase 5:</b> the real question market sizing sets up is — which first-party signal does a given company own that the Big 3 structurally cannot replicate, and how large is the addressable spend pool of advertisers who value that specific signal?</div>
+    <p style="font-size:12px;color:#888;">Sources: eMarketer (Meta/Google/Amazon ad revenue forecasts, Apr 2026), GroupM/WPP Media 2026 Global Ad Forecast, WARC Q3 2025 forecast, Statista digital ad revenue database.</p>
+  </div>
+</div>
+
+<div class="overlay" id="m-step8">
+  <div class="modal">
+    <button class="closebtn" onclick="closeModal('m-step8')">&times;</button>
+    <h2>Step 8 — India-Specific Market Dynamics</h2>
+    <p><i>[In progress — content to be added as this step is covered.]</i></p>
+  </div>
+</div>
+
+<script>
+function openModal(id){ document.getElementById(id).classList.add('active'); }
+function closeModal(id){ document.getElementById(id).classList.remove('active'); }
+document.querySelectorAll('.overlay').forEach(function(o){
+  o.addEventListener('click', function(e){ if(e.target === o) o.classList.remove('active'); });
+});
+</script>
+
+</body>
+</html>
