@@ -171,13 +171,13 @@
         <div class="subtitle">System Sanity Check</div>
 
         <div class="objective">
-            <strong>Context:</strong> Multiple serving issues have been raised by clients. We're solving these proactively to:
+            <strong>Why We're Doing This:</strong> Ad serving issues reported by clients are costing us reputation and engineering cycles. We're running a systematic audit to:
             <ul style="margin-top: 8px; margin-left: 20px;">
-                <li>Maintain best-in-class client experience</li>
-                <li>Build a product free of bandage fixes</li>
-                <li>Free up team bandwidth for feature work instead of on-call firefighting</li>
+                <li>Restore client confidence in our core product</li>
+                <li>Eliminate quick fixes that hide deeper problems</li>
+                <li>Shift team focus from crisis response to feature development</li>
             </ul>
-            <strong style="display: block; margin-top: 12px;">Approach:</strong> Exhaustive system sanity check starting with ad serving. Once serving is validated, we'll move to demand setup, then reporting.
+            <strong style="display: block; margin-top: 12px;">Strategy:</strong> Start with serving health. Once we validate the serving layer is sound, we'll audit demand setup, then reporting accuracy.
         </div>
 
         <h2>Request Flow Health (Last 30 Days)</h2>
@@ -219,20 +219,22 @@
         </div>
 
         <div class="deliverable">
-            <strong>Outcome we're looking at:</strong> Raw counts for each stage + response breakdown %. This tells us if the pipeline is alive.
+            <strong>What We Learn:</strong> Raw counts and percentages for each stage. We'll see where requests leak out — whether at origin, in transit, or after arrival.
         </div>
 
-        <h2>Keyword-Campaign Matching vs. Actual Ad Serving</h2>
+        <h2>Serving Accuracy: Matching vs. Reality</h2>
 
-        <div class="section-intro">Keyword match is necessary but not sufficient for serving. We validate expected behavior against what actually happened.</div>
+        <div class="section-intro">
+            Once we know the pipeline carries requests end-to-end, we check if the system responds <i>correctly</i>. For every search query, we look back at that moment in time and ask: <strong>Did any active campaigns have keywords that should match this query?</strong> Then we compare that to what actually happened.
+        </div>
 
         <div class="setup-text">
-            <strong>Setup:</strong> For each search query, determine: Does an active campaign keyword match it?
+            <strong>How We Check:</strong> For each search event, snapshot the campaigns that were active at that exact moment. Then test: does the query match any of those campaigns' keywords using our match rules?
             <ul style="margin-top: 8px;">
-                <li><strong>Exact match:</strong> Query = keyword</li>
-                <li><strong>Phrase match:</strong> Query contains all keyword words (any order); query can have extra words</li>
+                <li><strong>Exact match:</strong> Query text = keyword text</li>
+                <li><strong>Phrase match:</strong> Query contains all words from the keyword (order doesn't matter); query can have additional words</li>
             </ul>
-            Compare this against: Did an ad actually get served?
+            Next, check the system's actual response. Compare expected (keyword matched) to actual (ad served or not).
         </div>
 
         <table>
@@ -245,57 +247,56 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Yes</td>
-                    <td>Yes</td>
-                    <td>N</td>
-                    <td>Verify serving was correct (bid × relevance × user ranking logic)</td>
-                </tr>
                 <tr style="background: #fff3cd;">
-                    <td>Yes</td>
-                    <td>No</td>
+                    <td><strong>Yes</strong></td>
+                    <td><strong>No</strong></td>
                     <td>N</td>
-                    <td><span class="highlight">First priority.</span> Why didn't ad serve despite keyword match? (See breakdown below)</td>
+                    <td><span class="highlight">CRITICAL:</span> Campaign keyword matched but system failed to serve. Where did the chain break? (See buckets below)</td>
+                </tr>
+                <tr>
+                    <td>Yes</td>
+                    <td>Yes</td>
+                    <td>N</td>
+                    <td>System behaved correctly. Audit: was the right ad chosen based on bid × relevance × user signals?</td>
                 </tr>
                 <tr>
                     <td>No</td>
                     <td>Yes</td>
                     <td>N</td>
-                    <td>Why was ad served when keyword didn't match?</td>
+                    <td>No keyword matched, yet an ad was served. Why did the system return something it shouldn't have?</td>
                 </tr>
                 <tr>
                     <td>No</td>
                     <td>No</td>
                     <td>N</td>
-                    <td>Verify no campaign should've matched this query</td>
+                    <td>Expected behavior. No campaign keyword matched, no ad served.</td>
                 </tr>
             </tbody>
         </table>
 
         <div class="deliverable">
-            <strong>Outcome we're looking at:</strong> Count for each cell + qualitative findings for each.
+            <strong>What We Get:</strong> Count for each scenario. This shows us the scope of each problem and where effort should go.
         </div>
 
-        <h2>Deep Dive — Keyword Matched, Ad NOT Served</h2>
+        <h2>Root Cause Breakdown — When Keywords Match But Ads Don't Serve</h2>
 
-        <div class="section-intro">Why we're doing this: Keyword match alone isn't enough. Ads can fail to serve due to filters, system issues, or data problems.</div>
+        <div class="section-intro">For every query where a campaign keyword should match but no ad was served, we isolate the exact reason. Each bucket is a root cause, not a symptom. Each has a count so we know what to fix first.</div>
 
         <div style="margin-bottom: 16px;">
-            <strong>Possible failure buckets:</strong>
+            <strong>Failure Buckets (in priority order by impact):</strong>
         </div>
 
         <div class="buckets-list">
-            <div><strong>1. Request-level filters</strong> — get_bid API filters (brand filters in user request, category filters applied)</div>
-            <div><strong>2. Brand/Category mismatch</strong> — Product's brand/category doesn't align with query context</div>
-            <div><strong>3. Category classifier error</strong> — Query categorized wrong; ad group for correct category filtered out</div>
-            <div><strong>4. Solr retrieval gap</strong> — Product in campaign but not in Solr pool, or Solr didn't return it</div>
-            <div><strong>5. Query normalization issue</strong> — Case sensitivity, language detection mismatch, spell correction altered query</div>
-            <div><strong>6. Language/transliteration mismatch</strong> — Query language doesn't match keyword language</div>
-            <div><strong>7. Auction ranking loss</strong> — Ad matched and retrieved but lost in bid × relevance × user ranking</div>
+            <div><strong>1. Client catalogue sync issue</strong> — Products in the campaign exist in the client's catalogue but were never synced to our system, or sync is stale. We can't serve what we don't know about.</div>
+            <div><strong>2. Query parsing broke the keyword</strong> — Spell correction, language detection, case normalization, or transliteration altered the query so it no longer matches the keyword in our index.</div>
+            <div><strong>3. Category classification filtered out the ad group</strong> — Query was assigned the wrong category. The correct category ad groups were excluded before retrieval.</div>
+            <div><strong>4. Solr retrieval returned nothing</strong> — Keyword matching rules passed, category passed, but Solr (product or banner group pool) returned zero results for this query.</div>
+            <div><strong>5. Auction ranking loss</strong> — Ad was retrieved and eligible, but lost in the final ranking due to bid amount, relevance score, or user-level signals.</div>
+            <div><strong>6. User-requested filters excluded it</strong> — User applied filters in the search (brand, price range, etc.) that eliminated all matching ads.</div>
         </div>
 
         <div class="deliverable">
-            <strong>Outcome we're looking at:</strong> For all queries where keyword matched but no ad served, bucket them by failure reason. Count per bucket. This pinpoints the exact step where the chain breaks.
+            <strong>What We Get:</strong> Each bucket gets a count of affected queries. Each count tells us the magnitude of the problem and what to tackle first. Each bucket is concrete (a root cause we can fix), not vague.
         </div>
 
         <h2>What This Analysis Reveals</h2>
