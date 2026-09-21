@@ -168,15 +168,21 @@
 <body>
     <div class="container">
         <h1>FCC Ads Serving Diagnostics</h1>
-        <div class="subtitle">Action Plan</div>
+        <div class="subtitle">System Sanity Check</div>
 
         <div class="objective">
-            <strong>Objective:</strong> Monitor end-to-end: from searches on Nahdi's website to ad serving. Identify where requests break down and why ads are or aren't served.
+            <strong>Context:</strong> Multiple serving issues have been raised by clients. We're solving these proactively to:
+            <ul style="margin-top: 8px; margin-left: 20px;">
+                <li>Maintain best-in-class client experience</li>
+                <li>Build a product free of bandage fixes</li>
+                <li>Free up team bandwidth for feature work instead of on-call firefighting</li>
+            </ul>
+            <strong style="display: block; margin-top: 12px;">Approach:</strong> Exhaustive system sanity check starting with ad serving. Once serving is validated, we'll move to demand setup, then reporting.
         </div>
 
-        <h2>Phase 1: Request Flow Health (Last 30 Days)</h2>
+        <h2>Request Flow Health (Last 30 Days)</h2>
 
-        <div class="section-intro">Why this matters: Structural breaks in the pipeline (requests not sent, not received, or no response) block everything downstream.</div>
+        <div class="section-intro">Structural breaks in the pipeline block everything downstream. We need to understand the fate of every request.</div>
 
         <table>
             <thead>
@@ -196,18 +202,29 @@
                 </tr>
                 <tr>
                     <td><strong>Response</strong></td>
-                    <td>Breakdown of Ad Server responses: (1) Ad returned, (2) No ad, (3) Invalid request, (4) No response, (5) Other error</td>
+                    <td>Breakdown of Ad Server responses (exhaustive categorization)</td>
                 </tr>
             </tbody>
         </table>
 
-        <div class="deliverable">
-            <strong>Deliverable from tech:</strong> Raw counts for each stage + response breakdown %.
+        <div style="margin-top: 16px;">
+            <strong>Response Breakdown — Every request falls into one of these categories:</strong>
         </div>
 
-        <h2>Phase 2: Keyword-Campaign Matching vs. Actual Ad Serving</h2>
+        <div class="buckets-list">
+            <div>✓ <strong>Ad returned</strong> — System processed query and returned at least one ad</div>
+            <div>✗ <strong>No ad returned</strong> — System processed query but found no matching campaign/ad to serve</div>
+            <div>✗ <strong>Invalid request</strong> — Request malformed, missing required parameters, or failed validation</div>
+            <div>✗ <strong>No response</strong> — Request was received but system didn't respond (timeout, crash, system failure)</div>
+        </div>
 
-        <div class="section-intro">Why this matters: Keyword match is necessary but not sufficient for serving. We need to validate against actual behavior.</div>
+        <div class="deliverable">
+            <strong>Outcome we're looking at:</strong> Raw counts for each stage + response breakdown %. This tells us if the pipeline is alive.
+        </div>
+
+        <h2>Keyword-Campaign Matching vs. Actual Ad Serving</h2>
+
+        <div class="section-intro">Keyword match is necessary but not sufficient for serving. We validate expected behavior against what actually happened.</div>
 
         <div class="setup-text">
             <strong>Setup:</strong> For each search query, determine: Does an active campaign keyword match it?
@@ -256,10 +273,10 @@
         </table>
 
         <div class="deliverable">
-            <strong>Deliverable from tech:</strong> Count for each cell + qualitative findings for each.
+            <strong>Outcome we're looking at:</strong> Count for each cell + qualitative findings for each.
         </div>
 
-        <h2>Phase 2B: Deep Dive — Keyword Matched, Ad NOT Served</h2>
+        <h2>Deep Dive — Keyword Matched, Ad NOT Served</h2>
 
         <div class="section-intro">Why we're doing this: Keyword match alone isn't enough. Ads can fail to serve due to filters, system issues, or data problems.</div>
 
@@ -268,31 +285,30 @@
         </div>
 
         <div class="buckets-list">
-            <div><strong>1. Request-level filters</strong> — get_bid API filters (e.g., brand filters in user request, category filters applied)</div>
+            <div><strong>1. Request-level filters</strong> — get_bid API filters (brand filters in user request, category filters applied)</div>
             <div><strong>2. Brand/Category mismatch</strong> — Product's brand/category doesn't align with query context</div>
             <div><strong>3. Category classifier error</strong> — Query categorized wrong; ad group for correct category filtered out</div>
             <div><strong>4. Solr retrieval gap</strong> — Product in campaign but not in Solr pool, or Solr didn't return it</div>
             <div><strong>5. Query normalization issue</strong> — Case sensitivity, language detection mismatch, spell correction altered query</div>
             <div><strong>6. Language/transliteration mismatch</strong> — Query language doesn't match keyword language</div>
-            <div><strong>7. Other</strong> — Auction ranking loss (bid/relevance/user factors), or other system issue</div>
+            <div><strong>7. Auction ranking loss</strong> — Ad matched and retrieved but lost in bid × relevance × user ranking</div>
         </div>
 
         <div class="deliverable">
-            <strong>Deliverable from tech:</strong> For all queries in Row 2, bucket them by failure reason above. Count per bucket.
+            <strong>Outcome we're looking at:</strong> For all queries where keyword matched but no ad served, bucket them by failure reason. Count per bucket. This pinpoints the exact step where the chain breaks.
         </div>
 
-        <h2>Summary: What We'll See</h2>
+        <h2>What This Analysis Reveals</h2>
 
         <div class="summary-box">
-            <p>After tech delivers data from Phase 1, Phase 2, and Phase 2B:</p>
             <ul>
-                <li><strong>Phase 1</strong> tells us if the pipeline is alive</li>
-                <li><strong>Phase 2</strong> tells us if keyword matching logic aligns with actual serving</li>
-                <li><strong>Phase 2B</strong> tells us why matched keywords didn't result in ads — and which buckets need engineering fixes vs. data cleanup vs. config review</li>
+                <li><strong>Request Flow Health</strong> — Is the pipeline alive? Are requests getting through?</li>
+                <li><strong>Keyword Matching vs. Serving</strong> — Does the system behave as expected when a campaign keyword exists?</li>
+                <li><strong>Root Cause Buckets</strong> — For every failure, we know exactly where it broke: filters, retrieval, ranking, data, or system issue</li>
             </ul>
 
             <div class="next-step" style="margin-top: 20px;">
-                <strong>Next step:</strong> Tech gathers data. We analyze. We prioritize fixes by impact.
+                <strong>Next:</strong> Gather data, analyze patterns, prioritize fixes by impact. Once serving is solid, move to demand setup validation, then reporting metrics.
             </div>
         </div>
     </div>
