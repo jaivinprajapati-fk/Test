@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FCC Ads: Internal Dashboard Metrics</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: #333;
+            line-height: 1.6;
+            background: #fff;
+        }
+        .container { max-width: 800px; margin: 0 auto; padding: 50px 40px; }
+
+        .header { margin-bottom: 40px; padding-bottom: 24px; border-bottom: 2px solid #e0e0e0; }
+        h1 { font-size: 30px; font-weight: 700; color: #1a1a1a; margin-bottom: 6px; }
+        .meta { font-size: 13px; color: #888; }
+
+        .section { margin-top: 40px; }
+        h2 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: #0066cc; margin-bottom: 6px; }
+        h3 { font-size: 13px; font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 0.8px; margin: 20px 0 8px 0; }
+
+        ul { list-style: none; margin: 0; padding: 0; }
+        li { font-size: 14px; padding: 7px 0; border-bottom: 1px solid #f0f0f0; display: flex; gap: 10px; }
+        li:last-child { border-bottom: none; }
+        .name { font-weight: 600; color: #1a1a1a; min-width: 280px; }
+        .note { font-size: 13px; color: #888; }
+        .tbd { font-size: 11px; color: #e65100; font-weight: 600; }
+
+        footer { margin-top: 60px; padding-top: 20px; border-top: 1px solid #e0e0e0; font-size: 12px; color: #aaa; }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="header">
+        <h1>FCC Ads — Internal Dashboard Metrics</h1>
+        <p class="meta">Scope: Nahdi · Product: PLA (CPC) only · Audience: FCC Internal · Status: Draft for discussion</p>
+    </div>
+
+    <!-- SYSTEM HEALTH -->
+    <div class="section">
+        <h2>A. System Health</h2>
+
+        <h3>A1 — Ad Serving</h3>
+        <ul>
+            <li><span class="name">Ad request volume</span></li>
+            <li><span class="name">Ad serving latency</span><span class="note">p50 / p95 / p99</span></li>
+            <li><span class="name">Ad serving error rate</span></li>
+        </ul>
+
+        <h3>A2 — Search & Retrieval Quality</h3>
+        <ul>
+            <li><span class="name">Query language distribution</span><span class="note">English / Arabic / mixed</span></li>
+            <li><span class="name">Spell correction trigger rate</span><span class="note">% of queries where spell correction altered the original query</span></li>
+            <li><span class="name">Queries with no category identified</span></li>
+            <li><span class="name">Queries with multiple categories identified</span></li>
+            <li><span class="name">Zero product_solr result rate</span></li>
+            <li><span class="name">Zero bg_solr result rate</span></li>
+            <li><span class="name">Query type distribution</span><span class="note">Head / torso / long tail</span></li>
+            <li><span class="name">Ad serve rate by query type</span><span class="note">% of head / torso / long tail queries with ≥1 ad served</span></li>
+        </ul>
+
+        <h3>A3 — Campaign & Keyword Inventory</h3>
+        <ul>
+            <li><span class="name">Total keywords across live campaigns</span></li>
+            <li><span class="name">Keyword distribution by query type</span><span class="note">Head / torso / long tail</span></li>
+            <li><span class="name">Total unique products across live campaigns</span></li>
+            <li><span class="name">Active vs. idle keywords</span><span class="note">Idle = configured but triggered no ad in last 7 days</span></li>
+            <li><span class="name">Median CPC — configured keywords</span><span class="note">Planning-level signal; what's been set up</span></li>
+        </ul>
+    </div>
+
+    <!-- BUSINESS GROWTH -->
+    <div class="section">
+        <h2>B. Business Growth</h2>
+
+        <h3>B1 — Revenue</h3>
+        <ul>
+            <li><span class="name">Total ad revenue — Nahdi view</span><span class="note">Gross spend on Nahdi's platform</span></li>
+            <li><span class="name">Total ad revenue — FCC view</span><span class="note">Fixed fee for now (not take-rate based)</span></li>
+            <li><span class="name">Revenue trend</span><span class="note">WoW / MoM</span></li>
+            <li><span class="name">Revenue per 1000 ad requests (RPM)</span><span class="note">Monetization efficiency</span></li>
+        </ul>
+
+        <h3>B2 — Advertiser Base</h3>
+        <ul>
+            <li><span class="name">Brands with at least one active campaign</span></li>
+        </ul>
+
+        <h3>B3 — Campaign Performance</h3>
+        <ul>
+            <li><span class="name">Total impressions served</span></li>
+            <li><span class="name">Total clicks</span></li>
+            <li><span class="name">Platform-wide CTR</span></li>
+            <li><span class="name">Median CPC — triggered keywords</span><span class="note">Actual CPC paid in live auctions; distinct from configured keyword CPC</span></li>
+            <li><span class="name">ROAS (aggregate)</span><span class="note">Methodology TBD pending conversion tracking <span class="tbd">TBD</span></span></li>
+        </ul>
+    </div>
+
+    <footer>Draft · September 2026 · Display metrics to be added at launch</footer>
+
+</div>
+</body>
+</html>
