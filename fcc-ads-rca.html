@@ -224,11 +224,11 @@
         </div>
 
         <div class="flag issue">
-            <strong>Issue:</strong> 17 banner groups have products configured but none of them come back for any keyword. That's <strong>141 product slots</strong> that have zero chance of being served today. Root cause is unknown at this stage — could be catalogue sync, Solr indexing, or keyword setup. This needs to be the first engineering deep dive.
+            <strong>Issue — 17 BGs, 141 product slots, 0% served:</strong> 17 banner groups have products configured but not a single product comes back for any keyword. Root cause unknown — could be catalogue sync, Solr indexing, or keyword mismatch. <strong>Next step: engineering to identify why these 17 BGs return nothing and fix the root cause.</strong>
         </div>
 
         <div class="flag gap">
-            <strong>Note on the 7 partial BGs:</strong> Some products within these BGs aren't reachable via any of their keywords. This is a secondary gap — the BG works for some products but not all. Needs investigation after the 17 zero-coverage BGs are resolved.
+            <strong>Note — 7 BGs, 94 product slots, 28 products unreachable:</strong> These BGs serve some products but 28 slots across them never appear in any keyword search. The BG is partially working. <strong>Next step: investigate after the 17 zero-coverage BGs are resolved.</strong>
         </div>
 
     </div>
@@ -242,12 +242,9 @@
         </div>
 
         <div class="flag issue">
-            <strong>Data gap:</strong> BG configs show 1,819 keyword slots; the quality report covers only 1,571. That's 248 keyword slots unaccounted for. This is not simply explained by deduplication — the report's own BG-count references add up to 1,838, which exceeds 1,819. The two reports are inconsistent. We need to understand why before treating the keyword analysis as complete.
+            <strong>Data gap:</strong> BG configs show 1,819 keyword slots; the quality report covers only 1,571. That's 248 keyword slots unaccounted for. This is not simply explained by deduplication — the report's own BG-count references add up to 1,838, which exceeds 1,819. The two reports are inconsistent. <strong>Next step: engineering to explain the gap and rerun the quality report to cover all configured keywords.</strong>
         </div>
 
-        <div class="flag gap">
-            <strong>Multi-BG keywords:</strong> 201 keywords are configured across more than one BG (one keyword spans up to 11 BGs). When such a keyword is searched, multiple BGs are triggered simultaneously. Whether the serving outcome is correct in these cases needs to be confirmed.
-        </div>
     </div>
 
     <!-- CARD 4: Keyword pipeline analysis -->
@@ -277,7 +274,7 @@
         </div>
 
         <div class="flag issue">
-            <strong>Issue:</strong> 6 keywords are not in the index at all — they will never serve. All 6 are exact-match keywords. Mix of Arabic and English: "EUCERIN SERUM", "THE ORDINARY", "URIAGE", "تونر COXIR", "سيروم يوسيرين", "يورياج". Some are shared across multiple BGs, so the impact spans more than 6 BG-keyword pairs.
+            <strong>Issue:</strong> 6 keywords are not in the index at all — they will never serve. All 6 are exact-match keywords. Mix of Arabic and English: "EUCERIN SERUM", "THE ORDINARY", "URIAGE", "تونر COXIR", "سيروم يوسيرين", "يورياج". Some are shared across multiple BGs, so the impact spans more than 6 BG-keyword pairs. <strong>Next step: engineering to confirm why these 6 are missing from the KWT index and re-index them.</strong>
         </div>
 
         <hr class="sep">
@@ -303,7 +300,7 @@
         </div>
 
         <div class="flag issue">
-            <strong>Issue — largest drop-off in the pipeline:</strong> 1,079 of 1,565 keywords (69%) fail at category classification. Of these, 549 get classified into a wrong category and 530 return no category at all. Both are hard fails — no ad is served. This single step is blocking the majority of keywords from ever reaching retrieval.
+            <strong>Issue — largest drop-off in the pipeline:</strong> 1,079 of 1,565 keywords (69%) fail at category classification. Of these, 549 get classified into a wrong category and 530 return no category at all. Both are hard fails — no ad is served. This single step is blocking the majority of keywords from ever reaching retrieval. <strong>Next step: engineering to audit the classifier — separately for wrong-category cases and no-detection cases — and confirm whether spell correction is a contributing factor before fixing.</strong>
         </div>
 
         <hr class="sep">
@@ -325,7 +322,7 @@
         </div>
 
         <div class="flag issue">
-            <strong>Issue:</strong> 64% of keywords are being modified by spell correction. Several alterations look incorrect — "HAIRFALL" → "hairfal", "MINERAL" → "miner", "AVEENO BODY" → "aveeno bodi". Of the 1,010 altered keywords, only 325 (32%) still pass category matching. Whether spell correction is contributing to the category classification failure needs to be confirmed — but the correlation is significant.
+            <strong>Issue:</strong> 64% of keywords are being modified by spell correction. Several alterations look incorrect — "HAIRFALL" → "hairfal", "MINERAL" → "miner", "AVEENO BODY" → "aveeno bodi". Of the 1,010 altered keywords, only 325 (32%) still pass category matching. Whether spell correction is contributing to the category classification failure needs to be confirmed — but the correlation is significant. <strong>Next step: engineering to validate spell correction accuracy on this keyword set and confirm whether it should be disabled or tuned for brand/product keywords.</strong>
         </div>
 
         <hr class="sep">
@@ -347,7 +344,7 @@
         </div>
 
         <div class="flag issue">
-            <strong>Issue:</strong> 43 keywords pass category classification but Solr returns zero products. Examples: "ACRETIN CREAM", "AVEENO BODY", "BIODERMA TONER", "ECZEMA CREAM". Some have brand signals detected, yet retrieval still fails. Points to either a product catalogue gap or a Solr index issue for these terms.
+            <strong>Issue:</strong> 43 keywords pass category classification but Solr returns zero products. Examples: "ACRETIN CREAM", "AVEENO BODY", "BIODERMA TONER", "ECZEMA CREAM". Some have brand signals detected, yet retrieval still fails. Points to either a product catalogue gap or a Solr index issue for these terms. <strong>Next step: engineering to check whether these products exist in the catalogue and are indexed in Solr — and if not, why.</strong>
         </div>
 
         <hr class="sep">
@@ -373,7 +370,7 @@
         </div>
 
         <div class="flag issue">
-            <strong>Issue:</strong> 20 keywords retrieve products but none belong to the configured BG — the intersection is empty. In some cases extra (unconfigured) BG IDs are present in BG Solr results, suggesting their products may be served instead. In others there are no extra BGs, meaning the intersection simply fails — a product-BG mapping or indexing gap.
+            <strong>Issue:</strong> 20 keywords retrieve products but none belong to the configured BG — the intersection is empty. In some cases extra (unconfigured) BG IDs are present in BG Solr results, suggesting their products may be served instead. In others there are no extra BGs, meaning the intersection simply fails — a product-BG mapping or indexing gap. <strong>Next step: engineering to check product-BG mapping integrity for these 20 keywords and confirm whether any unconfigured BG products were actually served.</strong>
         </div>
 
         <hr class="sep">
@@ -391,7 +388,7 @@
         </div>
 
         <div class="flag gap">
-            <strong>Open question:</strong> Of these 516 cases, how many resulted in actual ad serving from an unconfigured BG? This requires a serving log check — we flag it here as a potential over-serving issue to be confirmed.
+            <strong>Open question:</strong> Of these 516 cases, how many resulted in actual ad serving from an unconfigured BG? <strong>Next step: engineering to cross-check BG Solr over-retrieval against serving logs and confirm how many resulted in actual impressions from unconfigured BGs.</strong>
         </div>
     </div>
 
