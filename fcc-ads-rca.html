@@ -218,7 +218,7 @@
         <div class="flag issue">
             <strong>Issue:</strong> 4 banner groups are live but were not found when searched on the platform — no category, no products. They cannot serve any ad. Gap: we don't know if these are misconfigured campaigns or if there's a sync failure between the campaign setup and the serving system.
         </div>
-        <div class="next-step"><strong>Next step:</strong> Confirm whether these 4 BGs are misconfigured by the client or a system sync failure. Pause them if misconfigured; fix indexing if it's a sync issue.</div>
+        <div class="next-step"><strong>Next step:</strong> Identify whether these 4 BGs have no data due to client misconfiguration or a system sync failure.</div>
     </div>
 
     <!-- CARD 2: Coverage sanity -->
@@ -248,12 +248,12 @@
         <div class="flag issue">
             <strong>Issue — 17 BGs, 141 product slots, 0% served:</strong> 17 banner groups have products configured but not a single product comes back for any keyword. Root cause unknown — could be catalogue sync, Solr indexing, or keyword mismatch.
         </div>
-        <div class="next-step"><strong>Next step:</strong> Engineering to identify why these 17 BGs return nothing — check catalogue sync, Solr indexing, and keyword-product alignment for each. Fix root cause per BG.</div>
+        <div class="next-step"><strong>Next step:</strong> Identify root cause for each of the 17 BGs — is it catalogue sync, Solr indexing, or keyword-product mismatch?</div>
 
         <div class="flag gap" style="margin-top:14px;">
             <strong>Note — 7 BGs, 94 product slots, 28 products unreachable:</strong> These BGs serve some products but 28 slots across them never appear in any keyword search. The BG is partially working.
         </div>
-        <div class="next-step"><strong>Next step:</strong> Investigate after the 17 zero-coverage BGs are resolved.</div>
+        <div class="next-step"><strong>Next step:</strong> Identify root cause for each of the 7 BGs — after item #2 is resolved.</div>
 
     </div>
 
@@ -268,7 +268,7 @@
         <div class="flag issue">
             <strong>Data gap:</strong> BG configs show 1,819 keyword slots; the quality report covers only 1,571. That's 248 keyword slots unaccounted for. This is not simply explained by deduplication — the report's own BG-count references add up to 1,838, which exceeds 1,819. The two reports are inconsistent.
         </div>
-        <div class="next-step"><strong>Next step:</strong> Engineering to explain the discrepancy between the two reports and rerun the keyword quality report to cover all 1,819 configured keyword slots.</div>
+        <div class="next-step"><strong>Next step:</strong> Identify why the keyword quality report covers only 1,571 of 1,819 configured keyword slots and rerun it for full coverage.</div>
 
     </div>
 
@@ -301,7 +301,7 @@
         <div class="flag issue">
             <strong>Issue:</strong> 6 keywords are not in the index at all — they will never serve. All 6 are exact-match. Mix of Arabic and English: "EUCERIN SERUM", "THE ORDINARY", "URIAGE", "تونر COXIR", "سيروم يوسيرين", "يورياج". Some are shared across multiple BGs, so the impact spans more than 6 BG-keyword pairs.
         </div>
-        <div class="next-step"><strong>Next step:</strong> Engineering to confirm why these 6 keywords are missing from the KWT index and re-index them.</div>
+        <div class="next-step"><strong>Next step:</strong> Identify why these 6 keywords are absent from the KWT index despite being configured in active BGs.</div>
 
         <hr class="sep">
 
@@ -328,7 +328,7 @@
         <div class="flag issue">
             <strong>Issue — largest drop-off in the pipeline:</strong> 1,079 of 1,565 keywords (69%) fail at category classification. Of these, 549 get classified into a wrong category and 530 return no category at all. Both are hard fails — no ad is served. This single step is blocking the majority of keywords from ever reaching retrieval.
         </div>
-        <div class="next-step"><strong>Next step:</strong> Engineering to audit the classifier separately for wrong-category (549) and no-detection (530) cases. Confirm whether spell correction is a contributing factor before fixing — these two workstreams may have the same root cause.</div>
+        <div class="next-step"><strong>Next step:</strong> Audit the classifier separately for wrong-category (549) and no-detection (530) cases and identify root cause for each.</div>
 
         <hr class="sep">
 
@@ -351,7 +351,7 @@
         <div class="flag issue">
             <strong>Issue:</strong> 64% of keywords are being modified by spell correction. Several alterations look incorrect — "HAIRFALL" → "hairfal", "MINERAL" → "miner", "AVEENO BODY" → "aveeno bodi". Of the 1,010 altered keywords, only 325 (32%) still pass category matching. The correlation with category failure is significant.
         </div>
-        <div class="next-step"><strong>Next step:</strong> Engineering to validate spell correction accuracy on this keyword set and confirm whether it should be disabled or tuned for brand/product keywords. This should be done in parallel with the category classifier audit (Step 2b).</div>
+        <div class="next-step"><strong>Next step:</strong> Identify what is causing spell correction to alter brand and product keywords incorrectly, and quantify how many of these alterations directly caused category classification failure.</div>
 
         <hr class="sep">
 
@@ -374,7 +374,7 @@
         <div class="flag issue">
             <strong>Issue:</strong> 43 keywords pass category classification but Solr returns zero products. Examples: "ACRETIN CREAM", "AVEENO BODY", "BIODERMA TONER", "ECZEMA CREAM". Some have brand signals detected, yet retrieval still fails. Points to a product catalogue gap or Solr index issue.
         </div>
-        <div class="next-step"><strong>Next step:</strong> Engineering to check whether these 43 keywords' products exist in the catalogue and are indexed in Solr. If missing from catalogue — client to add. If indexed but not returned — Solr retrieval logic issue.</div>
+        <div class="next-step"><strong>Next step:</strong> Identify whether these 43 keywords' products are absent from the catalogue or present in the catalogue but missing from Solr's index.</div>
 
         <hr class="sep">
 
@@ -405,7 +405,7 @@
         <div class="flag issue">
             <strong>Issue:</strong> 20 keywords retrieve products but none belong to the configured BG — the intersection is empty. In some cases extra (unconfigured) BG IDs appear in BG Solr, suggesting their products may have been served instead. In others there are no extra BGs — the intersection simply fails, pointing to a product-BG mapping or indexing gap.
         </div>
-        <div class="next-step"><strong>Next step:</strong> Engineering to check product-BG mapping integrity for these 20 keywords and confirm whether any unconfigured BG products were actually served to users.</div>
+        <div class="next-step"><strong>Next step:</strong> Identify why product Solr and BG Solr are not intersecting for these 20 keywords — check product-BG mapping integrity.</div>
 
         <hr class="sep">
 
@@ -424,7 +424,7 @@
         <div class="flag gap">
             <strong>Open question:</strong> Of these 516 cases, how many resulted in actual ad serving from an unconfigured BG?
         </div>
-        <div class="next-step"><strong>Next step:</strong> Engineering to cross-check BG Solr over-retrieval against serving logs and confirm how many of the 516 resulted in actual impressions from unconfigured BGs.</div>
+        <div class="next-step"><strong>Next step:</strong> Identify what configuration is causing BG Solr to return unconfigured BGs, and confirm how many of the 516 cases resulted in actual impressions.</div>
     </div>
 
     <!-- CARD 5: Action Tracker -->
@@ -448,70 +448,70 @@
                     <td>1</td>
                     <td>4 BGs live with no category or products — not found on platform</td>
                     <td>4 BGs</td>
-                    <td>Confirm misconfiguration vs. sync failure. Pause or fix.</td>
+                    <td>Identify whether no data is due to client misconfiguration or system sync failure.</td>
                     <td><code>NAAIDW2DE3GPL2</code> <code>NABE0ZGQAW805V</code> <code>NAEIABRY069S0O</code> <code>NAEL0GH2CMSJ9S</code></td>
                 </tr>
                 <tr>
                     <td>2</td>
                     <td>17 BGs with 141 product slots returning 0% coverage — no product served for any keyword</td>
                     <td>17 BGs, 141 products</td>
-                    <td>Check catalogue sync, Solr indexing, and keyword-product alignment per BG.</td>
+                    <td>Identify root cause per BG — catalogue sync, Solr indexing, or keyword-product mismatch.</td>
                     <td><code>NA4Q37GU28O5CS</code> <code>NA96IKO236X7TT</code> <code>NA9TKB67HOXGIM</code> <code>NACQ4Z6NI6I4X8</code> <code>NADSX9JW19LJ2H</code> <code>NAF2TGFJ0UDEHD</code> <code>NAF3RDD18H4X7K</code> <code>NAHJW3ZXGIAFGN</code> <code>NAHXYGGPO62UMC</code> <code>NAIG01F9HXU9WV</code> <code>NAKLQZ6DK650LZ</code> <code>NAMHD1DU3P7QWS</code> <code>NAONS34PQE93HY</code> <code>NAP0IAX3UNKXBF</code> <code>NATHJP7B9RO8SE</code> <code>NATJ1RV6N0EV59</code> <code>NAZ6H1EJKKJ218</code></td>
                 </tr>
                 <tr>
                     <td>3</td>
                     <td>7 BGs with partial coverage — 28 of 94 products never retrieved</td>
                     <td>7 BGs, 28 products</td>
-                    <td>Investigate after item #2 is resolved.</td>
+                    <td>Identify root cause per BG — after item #2 is resolved.</td>
                     <td><code>NA7BAK85B4VE6D</code> (16.7%) <code>NA9H17BXYWWIP5</code> (66.7%) <code>NAQ23T9GK1RY8L</code> (66.7%) <code>NAXNWZU12205J4</code> (77.8%) <code>NAABI4V2ZSOOIA</code> (84.2%) <code>NA699AWK5AFTF7</code> (91.7%) <code>NAZNT1Q31JJF6G</code> (94.4%)</td>
                 </tr>
                 <tr>
                     <td>4</td>
                     <td>248 keyword slots missing from keyword quality report — root cause unclear</td>
                     <td>248 keyword slots</td>
-                    <td>Engineering to explain discrepancy and rerun report covering all 1,819 slots.</td>
+                    <td>Identify why 248 slots are missing from the report and rerun for full coverage.</td>
                     <td>—</td>
                 </tr>
                 <tr>
                     <td>5</td>
                     <td>6 keywords missing from KWT index — will never serve</td>
                     <td>6 keywords, multiple BGs</td>
-                    <td>Confirm why missing and re-index.</td>
+                    <td>Identify why these 6 are absent from the KWT index despite being configured in active BGs.</td>
                     <td><code>EUCERIN SERUM</code> <code>THE ORDINARY</code> <code>URIAGE</code> <code>تونر COXIR</code> <code>سيروم يوسيرين</code> <code>يورياج</code></td>
                 </tr>
                 <tr>
                     <td>6</td>
                     <td>1,079 keywords (69%) failing at category classification — hard fail, no ad served</td>
                     <td>549 wrong category, 530 not detected</td>
-                    <td>Audit classifier for both sub-cases. Confirm if spell correction is a contributing factor before fixing.</td>
+                    <td>Identify root cause for wrong-category (549) and no-detection (530) cases separately.</td>
                     <td>—</td>
                 </tr>
                 <tr>
                     <td>7</td>
                     <td>1,010 keywords (64%) altered by spell correction — several look incorrect</td>
                     <td>1,010 keywords</td>
-                    <td>Validate accuracy on this keyword set. Confirm whether to disable or tune for brand/product terms. Run in parallel with item #6.</td>
+                    <td>Identify what is causing incorrect alterations and how many directly caused category classification failures.</td>
                     <td>Examples: HAIRFALL → hairfal, MINERAL → miner, AVEENO BODY → aveeno bodi</td>
                 </tr>
                 <tr>
                     <td>8</td>
                     <td>43 keywords pass category match but Solr returns zero products</td>
                     <td>43 keywords</td>
-                    <td>Check if products exist in catalogue and are indexed in Solr. Split fix: client (catalogue) vs. engineering (indexing).</td>
+                    <td>Identify whether products are absent from the catalogue or present but missing from Solr's index.</td>
                     <td>Examples: ACRETIN CREAM, AVEENO BODY, BIODERMA TONER, ECZEMA CREAM</td>
                 </tr>
                 <tr>
                     <td>9</td>
                     <td>20 keywords retrieve products but none from the configured BG — empty intersection</td>
                     <td>20 keywords</td>
-                    <td>Check product-BG mapping integrity. Confirm whether unconfigured BG products were served.</td>
+                    <td>Identify why product Solr and BG Solr are not intersecting — check product-BG mapping integrity.</td>
                     <td>Examples: ACNE CREAM, BIODERMA MOISTURIZER, INFANT RICE CEREAL</td>
                 </tr>
                 <tr>
                     <td>10</td>
                     <td>516 keywords have unconfigured BGs appearing in BG Solr — potential over-serving</td>
                     <td>516 keywords</td>
-                    <td>Cross-check against serving logs to confirm how many resulted in actual impressions from unconfigured BGs.</td>
+                    <td>Identify what configuration is causing BG Solr to return unconfigured BGs, and quantify actual impressions from those cases.</td>
                     <td>—</td>
                 </tr>
             </tbody>
