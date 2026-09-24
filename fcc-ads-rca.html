@@ -169,12 +169,12 @@
             </div>
             <div class="stat">
                 <div class="stat-val">1,819</div>
-                <div class="stat-label">Keywords configured across all BGs</div>
+                <div class="stat-label">Keyword slots across all BGs</div>
             </div>
         </div>
 
         <div class="flag info">
-            <strong>Note on product count:</strong> 1,071 is the sum of products configured across all banner groups. The same product could appear in multiple BGs, so the unique product count may be lower. We don't have that number yet — <strong>tech team to confirm unique product count across all active banner groups.</strong>
+            <strong>View needed:</strong> Both 1,071 and 1,819 are slot counts — the same product or keyword can appear in multiple BGs. We need the unique product count and unique keyword count across all active BGs to understand the true scope of what's being advertised.
         </div>
 
         <hr class="sep">
@@ -195,7 +195,7 @@
         </div>
 
         <div class="flag issue">
-            <strong>Issue:</strong> 4 banner groups are live with no category or products configured. They will never serve. These should be paused or fixed.
+            <strong>Issue:</strong> 4 banner groups are live but were not found when searched on the platform — no category, no products. They cannot serve any ad. Gap: we don't know if these are misconfigured campaigns or if there's a sync failure between the campaign setup and the serving system.
         </div>
     </div>
 
@@ -203,8 +203,9 @@
     <div class="card">
         <div class="card-step">Sanity Check — Banner Group Coverage</div>
         <div class="card-title">Are the 140 Active BGs Actually Serving?</div>
-        <div class="card-body">
-            For the 140 BGs that have products, we check: when their configured keywords are searched, do the products come back? This is the most basic measure of whether a banner group is working.
+
+        <div class="flag info" style="margin-bottom:18px;">
+            <strong>How coverage is measured:</strong> For each BG, every configured keyword was searched individually. Coverage % = what fraction of the BG's products appeared in results across all those searches. 100% means every product showed up for at least one keyword. 0% means no product appeared for any keyword. <strong>Important: even 100% here doesn't mean everything is fine — it only means products are reachable. Whether the right keyword is serving the right product is a separate question we address next.</strong>
         </div>
 
         <div class="stats">
@@ -230,74 +231,167 @@
             <strong>Note on the 7 partial BGs:</strong> Some products within these BGs aren't reachable via any of their keywords. This is a secondary gap — the BG works for some products but not all. Needs investigation after the 17 zero-coverage BGs are resolved.
         </div>
 
-        <p class="note">Coverage definition: for each BG, we search with each of its configured keywords and check how many of its products appear in results. 100% = all products appeared for at least one keyword. 0% = no product appeared for any keyword.</p>
     </div>
 
-    <!-- CARD 3: Keywords intro -->
+    <!-- CARD 3: Keywords sanity -->
     <div class="card">
         <div class="card-step">Step 2 — Keywords</div>
-        <div class="card-title">Starting the Keyword Analysis</div>
+        <div class="card-title">Keyword Sanity Check</div>
         <div class="card-body">
-            We now look at the 1,819 keywords configured across all BGs. The keyword quality report gives us a row-by-row view of how each keyword behaves when run through the actual serving pipeline. First, a few sanity checks before we get into serving behaviour.
-        </div>
-
-        <hr class="sep">
-
-        <div class="card-title" style="font-size:15px;">Data Gap — 248 Keywords Unaccounted For</div>
-        <div class="card-body" style="margin-top:8px;">
-            Tab 1 (BG configs) shows 1,819 total keywords configured. Tab 2 (keyword quality report) only has 1,571 rows. <strong>248 keywords are missing from the analysis entirely.</strong>
+            1,819 keyword slots across all BGs. The keyword quality report analyses each keyword through the actual serving pipeline — 1,571 rows, covering 1,569 unique keywords. Split: 739 English, 826 Arabic, 6 mixed-language.
         </div>
 
         <div class="flag issue">
-            <strong>Issue:</strong> 248 configured keywords were not analysed. We don't know if these are valid keywords that were missed in the report, or if they point to a deeper indexing/data pipeline issue. <strong>Tech team to explain the gap and include these in the next run.</strong>
-        </div>
-
-        <hr class="sep">
-
-        <div class="card-title" style="font-size:15px;">Language Split</div>
-        <div class="card-body" style="margin-top:8px;">
-            Since language detection is the first step in the serving pipeline, understanding the language composition of keywords is important. A failure here means the keyword never even reaches matching.
-        </div>
-
-        <div class="stats">
-            <div class="stat">
-                <div class="stat-val">739</div>
-                <div class="stat-label">English-only (47%)</div>
-            </div>
-            <div class="stat">
-                <div class="stat-val">826</div>
-                <div class="stat-label">Arabic-only (53%)</div>
-            </div>
-            <div class="stat warn">
-                <div class="stat-val">6</div>
-                <div class="stat-label">Mixed language</div>
-            </div>
+            <strong>Data gap:</strong> BG configs show 1,819 keyword slots; the quality report covers only 1,571. That's 248 keyword slots unaccounted for. This is not simply explained by deduplication — the report's own BG-count references add up to 1,838, which exceeds 1,819. The two reports are inconsistent. We need to understand why before treating the keyword analysis as complete.
         </div>
 
         <div class="flag gap">
-            <strong>Note on mixed keywords:</strong> 6 keywords contain both Arabic and English (e.g., an Arabic word + an English brand name). The system picks language based on the first character. How these are handled in practice — and whether they're being served correctly — needs to be verified.
+            <strong>Multi-BG keywords:</strong> 201 keywords are configured across more than one BG (one keyword spans up to 11 BGs). When such a keyword is searched, multiple BGs are triggered simultaneously. Whether the serving outcome is correct in these cases needs to be confirmed.
+        </div>
+    </div>
+
+    <!-- CARD 4: Keyword pipeline analysis -->
+    <div class="card">
+        <div class="card-step">Step 2 — Keyword Pipeline Analysis</div>
+        <div class="card-title">Where Do Keywords Fail in the Serving Pipeline?</div>
+        <div class="card-body">
+            For each of the 1,571 keywords in the report, we trace how far it gets through the serving pipeline. Each step is a potential drop-off point. Here's the breakdown.
         </div>
 
         <hr class="sep">
 
-        <div class="card-title" style="font-size:15px;">Multi-BG Keywords</div>
+        <div class="card-title" style="font-size:15px;">Step 2a — KWT Index: Is the keyword even indexed?</div>
         <div class="card-body" style="margin-top:8px;">
-            Most keywords are configured in a single banner group. But 201 keywords appear across multiple BGs — meaning the same search query would trigger more than one banner group simultaneously.
+            First check: is the keyword present in the keyword targeting index? If not, it can never match a user query regardless of what was configured.
         </div>
 
         <div class="stats">
             <div class="stat ok">
-                <div class="stat-val">1,370</div>
-                <div class="stat-label">Keywords in a single BG</div>
+                <div class="stat-val">1,565</div>
+                <div class="stat-label">Found in KWT index</div>
+            </div>
+            <div class="stat bad">
+                <div class="stat-val">6</div>
+                <div class="stat-label">Missing from KWT index</div>
+            </div>
+        </div>
+
+        <div class="flag issue">
+            <strong>Issue:</strong> 6 keywords are not in the index at all — they will never serve. All 6 are exact-match keywords. Mix of Arabic and English: "EUCERIN SERUM", "THE ORDINARY", "URIAGE", "تونر COXIR", "سيروم يوسيرين", "يورياج". Some are shared across multiple BGs, so the impact spans more than 6 BG-keyword pairs.
+        </div>
+
+        <hr class="sep">
+
+        <div class="card-title" style="font-size:15px;">Step 2b — Category Classification: Does the query land in the right category?</div>
+        <div class="card-body" style="margin-top:8px;">
+            For the 1,565 indexed keywords, the system runs category classification on the query. Only keywords whose detected category matches the banner group's category proceed. There is no fallback — a mismatch is a hard fail.
+        </div>
+
+        <div class="stats">
+            <div class="stat ok">
+                <div class="stat-val">486</div>
+                <div class="stat-label">Category matched — proceed</div>
+            </div>
+            <div class="stat bad">
+                <div class="stat-val">549</div>
+                <div class="stat-label">Wrong category detected</div>
+            </div>
+            <div class="stat bad">
+                <div class="stat-val">530</div>
+                <div class="stat-label">No category detected at all</div>
+            </div>
+        </div>
+
+        <div class="flag issue">
+            <strong>Issue — largest drop-off in the pipeline:</strong> 1,079 of 1,565 keywords (69%) fail at category classification. Of these, 549 get classified into a wrong category and 530 return no category at all. Both are hard fails — no ad is served. This single step is blocking the majority of keywords from ever reaching retrieval.
+        </div>
+
+        <hr class="sep">
+
+        <div class="card-title" style="font-size:15px;">Step 2c — Spell Correction: Is the query being altered?</div>
+        <div class="card-body" style="margin-top:8px;">
+            Before category classification runs, spell correction processes the raw keyword. This step changes the query text — which can affect both category detection and product retrieval.
+        </div>
+
+        <div class="stats">
+            <div class="stat warn">
+                <div class="stat-val">1,010</div>
+                <div class="stat-label">Keywords altered by spell correction (64%)</div>
+            </div>
+            <div class="stat">
+                <div class="stat-val">555</div>
+                <div class="stat-label">Keywords unchanged</div>
+            </div>
+        </div>
+
+        <div class="flag issue">
+            <strong>Issue:</strong> 64% of keywords are being modified by spell correction. Several alterations look incorrect — "HAIRFALL" → "hairfal", "MINERAL" → "miner", "AVEENO BODY" → "aveeno bodi". Of the 1,010 altered keywords, only 325 (32%) still pass category matching. Whether spell correction is contributing to the category classification failure needs to be confirmed — but the correlation is significant.
+        </div>
+
+        <hr class="sep">
+
+        <div class="card-title" style="font-size:15px;">Step 2d — Product Retrieval: Does Solr return anything?</div>
+        <div class="card-body" style="margin-top:8px;">
+            For the 486 keywords that pass category matching, product Solr is queried. This step should return a ranked list of relevant products.
+        </div>
+
+        <div class="stats">
+            <div class="stat ok">
+                <div class="stat-val">443</div>
+                <div class="stat-label">Solr returned products</div>
+            </div>
+            <div class="stat bad">
+                <div class="stat-val">43</div>
+                <div class="stat-label">Solr returned nothing</div>
+            </div>
+        </div>
+
+        <div class="flag issue">
+            <strong>Issue:</strong> 43 keywords pass category classification but Solr returns zero products. Examples: "ACRETIN CREAM", "AVEENO BODY", "BIODERMA TONER", "ECZEMA CREAM". Some have brand signals detected, yet retrieval still fails. Points to either a product catalogue gap or a Solr index issue for these terms.
+        </div>
+
+        <hr class="sep">
+
+        <div class="card-title" style="font-size:15px;">Step 2e — Intersection: Do retrieved products belong to the configured BG?</div>
+        <div class="card-body" style="margin-top:8px;">
+            Product Solr and BG Solr results are intersected. Only products that appear in both are eligible to be served. This is the final gate before ranking.
+        </div>
+
+        <div class="stats">
+            <div class="stat ok">
+                <div class="stat-val">299</div>
+                <div class="stat-label">100% of BG products covered</div>
             </div>
             <div class="stat warn">
-                <div class="stat-val">201</div>
-                <div class="stat-label">Keywords across multiple BGs (max: 11 BGs)</div>
+                <div class="stat-val">124</div>
+                <div class="stat-label">Partial — some BG products not intersecting</div>
+            </div>
+            <div class="stat bad">
+                <div class="stat-val">20</div>
+                <div class="stat-label">0% — products retrieved but none from configured BG</div>
+            </div>
+        </div>
+
+        <div class="flag issue">
+            <strong>Issue:</strong> 20 keywords retrieve products but none belong to the configured BG — the intersection is empty. In some cases extra (unconfigured) BG IDs are present in BG Solr results, suggesting their products may be served instead. In others there are no extra BGs, meaning the intersection simply fails — a product-BG mapping or indexing gap.
+        </div>
+
+        <hr class="sep">
+
+        <div class="card-title" style="font-size:15px;">Step 2f — BG Solr Over-retrieval: Are unconfigured BGs leaking in?</div>
+        <div class="card-body" style="margin-top:8px;">
+            Separately from the intersection outcome, BG Solr is returning banner group IDs that were not configured for that keyword in 516 cases. This is a potential over-serving signal — if those BGs' products also appear in product Solr, they could be served to users.
+        </div>
+
+        <div class="stats">
+            <div class="stat warn">
+                <div class="stat-val">516</div>
+                <div class="stat-label">Keywords where unconfigured BGs appear in BG Solr results</div>
             </div>
         </div>
 
         <div class="flag gap">
-            <strong>Note:</strong> For a keyword that spans 11 BGs, the system needs to decide which BG's products to serve — or serve from all. Whether this is working correctly, and whether it's intentional campaign setup or overlap, needs to be confirmed.
+            <strong>Open question:</strong> Of these 516 cases, how many resulted in actual ad serving from an unconfigured BG? This requires a serving log check — we flag it here as a potential over-serving issue to be confirmed.
         </div>
     </div>
 
