@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FCC Ads — Serving RCA</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f4f6f9;
+            color: #2c2c2c;
+            line-height: 1.6;
+        }
+
+        .page {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 48px 24px;
+        }
+
+        .page-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a3460;
+            margin-bottom: 4px;
+        }
+
+        .page-sub {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 40px;
+        }
+
+        /* Section */
+        .section {
+            background: white;
+            border-radius: 10px;
+            padding: 28px 32px;
+            margin-bottom: 28px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a3460;
+            margin-bottom: 4px;
+        }
+
+        .section-desc {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        /* Stat tiles */
+        .tiles {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .tile {
+            flex: 1;
+            min-width: 140px;
+            background: #f4f6f9;
+            border-radius: 8px;
+            padding: 16px 20px;
+            border-top: 3px solid #1a3460;
+        }
+
+        .tile.warn { border-top-color: #e07b00; background: #fff8f0; }
+        .tile.ok { border-top-color: #1a8f5a; background: #f0faf5; }
+        .tile.bad { border-top-color: #c0392b; background: #fff5f4; }
+
+        .tile-val {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a3460;
+            line-height: 1.2;
+        }
+
+        .tile.warn .tile-val { color: #e07b00; }
+        .tile.ok .tile-val { color: #1a8f5a; }
+        .tile.bad .tile-val { color: #c0392b; }
+
+        .tile-label {
+            font-size: 12px;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        /* Flag box */
+        .flag {
+            background: #fff8f0;
+            border-left: 4px solid #e07b00;
+            border-radius: 4px;
+            padding: 12px 16px;
+            font-size: 13px;
+            margin-bottom: 12px;
+            color: #5a3a00;
+        }
+
+        .flag.red {
+            background: #fff5f4;
+            border-left-color: #c0392b;
+            color: #5a0a00;
+        }
+
+        .flag strong { font-weight: 600; }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            margin-top: 16px;
+        }
+
+        th {
+            background: #1a3460;
+            color: white;
+            padding: 10px 14px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #eee;
+        }
+
+        tr:last-child td { border-bottom: none; }
+        tr:nth-child(even) td { background: #f9f9f9; }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .badge-ok { background: #d4edda; color: #155724; }
+        .badge-warn { background: #fff3cd; color: #856404; }
+        .badge-bad { background: #f8d7da; color: #721c24; }
+
+        /* Divider label */
+        .step-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #1a3460;
+            background: #e8edf5;
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 4px;
+            margin-bottom: 12px;
+        }
+
+        .note {
+            font-size: 12px;
+            color: #888;
+            margin-top: 12px;
+            font-style: italic;
+        }
+
+        hr.sep {
+            border: none;
+            border-top: 1px solid #eee;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+
+    <div class="page-title">FCC Ads — Serving RCA</div>
+    <div class="page-sub">Nahdi · Analysis as of 23 Sep 2025 · Based on active banner group and keyword data</div>
+
+    <!-- SECTION 1: Banner Groups -->
+    <div class="section">
+        <div class="step-label">Step 1</div>
+        <div class="section-title">Banner Group Health</div>
+        <div class="section-desc">Starting point: what's live, what's configured, and is the basic setup sound.</div>
+
+        <div class="tiles">
+            <div class="tile">
+                <div class="tile-val">144</div>
+                <div class="tile-label">Total active banner groups</div>
+            </div>
+            <div class="tile">
+                <div class="tile-val">140</div>
+                <div class="tile-label">BGs with products configured</div>
+            </div>
+            <div class="tile warn">
+                <div class="tile-val">4</div>
+                <div class="tile-label">BGs with no category & no products</div>
+            </div>
+            <div class="tile">
+                <div class="tile-val">281</div>
+                <div class="tile-label">Unique products across all BGs</div>
+            </div>
+        </div>
+
+        <div class="flag red">
+            <strong>Issue:</strong> 4 banner groups have no category and no products configured. These are live but will never serve any ad. Needs cleanup.
+        </div>
+
+        <hr class="sep">
+
+        <div class="section-title" style="font-size:15px; margin-bottom:8px;">Category Distribution</div>
+        <table>
+            <thead>
+                <tr><th>Category</th><th>Banner Groups</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Bath &amp; Body</td><td>50</td></tr>
+                <tr><td>Baby Care</td><td>45</td></tr>
+                <tr><td>Skin Care</td><td>43</td></tr>
+                <tr><td>Hair Care</td><td>1</td></tr>
+                <tr><td>Vitamin &amp; Supplement</td><td>1</td></tr>
+                <tr><td>Unknown / Not Set</td><td>4</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- SECTION 2: Product Coverage (High Level Sanity) -->
+    <div class="section">
+        <div class="step-label">Step 1 — Sanity Check</div>
+        <div class="section-title">Product Coverage — High Level</div>
+        <div class="section-desc">Of the 281 unique products configured across all banner groups, how many can actually be served by at least one keyword?</div>
+
+        <div class="tiles">
+            <div class="tile ok">
+                <div class="tile-val">276</div>
+                <div class="tile-label">Products covered by ≥1 keyword</div>
+            </div>
+            <div class="tile warn">
+                <div class="tile-val">5</div>
+                <div class="tile-label">Products not covered by any keyword</div>
+            </div>
+            <div class="tile bad">
+                <div class="tile-val">141</div>
+                <div class="tile-label">Products locked in 0%-coverage BGs</div>
+            </div>
+        </div>
+
+        <div class="flag">
+            <strong>Note:</strong> 141 products sit inside banner groups where not a single keyword retrieves any of them. These products have 0% serving probability regardless of how the user searches.
+        </div>
+
+        <hr class="sep">
+
+        <div class="section-title" style="font-size:15px; margin-bottom:8px;">BG-level Coverage Breakdown</div>
+        <div class="tiles">
+            <div class="tile ok">
+                <div class="tile-val">116</div>
+                <div class="tile-label">BGs at 100% coverage</div>
+            </div>
+            <div class="tile warn">
+                <div class="tile-val">7</div>
+                <div class="tile-label">BGs at partial coverage</div>
+            </div>
+            <div class="tile bad">
+                <div class="tile-val">17</div>
+                <div class="tile-label">BGs at 0% coverage (have products, serve nothing)</div>
+            </div>
+        </div>
+
+        <div class="flag red">
+            <strong>Issue:</strong> 17 banner groups have products configured but are returning 0% coverage — none of their products are retrieved by any keyword. Concentrated in Bath &amp; Body (14), Skin Care (2), Baby Care (1). Root cause unknown at this stage — could be catalogue, Solr indexing, or keyword mismatch.
+        </div>
+
+        <p class="note">Coverage here means: when each configured keyword is searched, what % of the BG's products appear in results. A BG at 0% means no product from it was ever retrieved for any of its keywords.</p>
+    </div>
+
+    <!-- SECTION 3: Keywords -->
+    <div class="section">
+        <div class="step-label">Step 2</div>
+        <div class="section-title">Keyword Analysis</div>
+        <div class="section-desc">Moving into the keyword layer. 1,571 keyword rows across all active BGs, with 1,569 unique keywords.</div>
+
+        <div class="tiles">
+            <div class="tile">
+                <div class="tile-val">1,571</div>
+                <div class="tile-label">Total keyword configurations</div>
+            </div>
+            <div class="tile">
+                <div class="tile-val">1,569</div>
+                <div class="tile-label">Unique keywords</div>
+            </div>
+            <div class="tile">
+                <div class="tile-val">1,370</div>
+                <div class="tile-label">Keywords in exactly 1 BG</div>
+            </div>
+            <div class="tile">
+                <div class="tile-val">201</div>
+                <div class="tile-label">Keywords shared across multiple BGs (max: 11)</div>
+            </div>
+        </div>
+
+        <hr class="sep">
+
+        <div class="section-title" style="font-size:15px; margin-bottom:8px;">Language Split — Sanity Check</div>
+        <div class="section-desc" style="margin-bottom:16px;">Understanding language composition matters because language detection is step one of the serving pipeline. Failures here cascade downstream.</div>
+
+        <div class="tiles">
+            <div class="tile">
+                <div class="tile-val">739</div>
+                <div class="tile-label">English-only keywords (47%)</div>
+            </div>
+            <div class="tile">
+                <div class="tile-val">826</div>
+                <div class="tile-label">Arabic-only keywords (53%)</div>
+            </div>
+            <div class="tile warn">
+                <div class="tile-val">6</div>
+                <div class="tile-label">Mixed language keywords</div>
+            </div>
+        </div>
+
+        <div class="flag">
+            <strong>Note:</strong> Arabic keywords form the majority. The 6 mixed-language keywords (e.g., Arabic + brand name in English) are an edge case the system handles by defaulting to the first character's language — their behaviour in the serving pipeline needs to be verified.
+        </div>
+
+        <hr class="sep">
+
+        <div class="section-title" style="font-size:15px; margin-bottom:8px;">Keywords by BG Configuration</div>
+        <div class="section-desc" style="margin-bottom:16px;">How many banner groups is each keyword configured in?</div>
+
+        <table>
+            <thead>
+                <tr><th>Configuration</th><th>Keywords</th><th>Observation</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Single BG</td>
+                    <td>1,370</td>
+                    <td><span class="badge badge-ok">Expected</span></td>
+                </tr>
+                <tr>
+                    <td>Multiple BGs</td>
+                    <td>201</td>
+                    <td><span class="badge badge-warn">Needs review</span> — same keyword triggering multiple BGs; intersection outcome unclear</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="note">The keyword with the highest BG spread is configured across 11 banner groups. This could be intentional (same keyword, different products), but the serving logic for these cases — which BG wins, or do all get a chance — needs to be confirmed.</p>
+    </div>
+
+</div>
+</body>
+</html>
