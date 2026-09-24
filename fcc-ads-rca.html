@@ -357,16 +357,20 @@
         <div class="stats">
             <div class="stat ok">
                 <div class="stat-val">299</div>
-                <div class="stat-label">100% of BG products covered</div>
+                <div class="stat-label">All BG products returned by Solr for this keyword</div>
             </div>
             <div class="stat warn">
                 <div class="stat-val">124</div>
-                <div class="stat-label">Partial — some BG products not intersecting</div>
+                <div class="stat-label">Solr returned some BG products, but not all</div>
             </div>
             <div class="stat bad">
                 <div class="stat-val">20</div>
-                <div class="stat-label">0% — products retrieved but none from configured BG</div>
+                <div class="stat-label">Solr returned products, but none from the configured BG</div>
             </div>
+        </div>
+
+        <div class="flag info" style="margin-bottom: 0;">
+            <strong>How to read these numbers:</strong> Each number is a keyword count, not a product count. For 299 keywords — when searched, every product in that BG appeared in Solr results at least once. For 124 keywords — some BG products came back but others didn't. For example, keyword "EUCERIN DERMOPURIFYER" has 17 products in its BG; Solr only returned 1 of them (5.8% coverage). The other 16 products won't be served when a user searches that term. For 20 keywords — Solr returned products, but none belonged to the configured BG at all.
         </div>
 
         <div class="flag issue">
