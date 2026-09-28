@@ -216,8 +216,8 @@
 <body>
 <div class="page">
 
-    <div class="page-title">FCC Ads — Eval Framework</div>
-    <div class="page-meta">Serving Quality · Sep 2026</div>
+    <div class="page-title">FCC Ads — Serving Eval Framework</div>
+    <div class="page-meta">Sep 2026 · <strong style="color: #666;">Scope:</strong> Ad serving only — campaign setup, attribution, and reporting are out of scope of this document.</div>
 
     <!-- North Star -->
     <div class="card">
@@ -364,6 +364,55 @@
 
         <div class="flag note" style="margin-top: 20px;">
             <strong>On "true negatives":</strong> Queries where no keyword matched are not assumed to be correct. Distinguishing a campaign gap from a genuine no-match requires a catalogue-level relevance check — this is a known open item, deferred to Phase 2 of this eval framework.
+        </div>
+    </div>
+
+    <!-- External Relevance Reviewer -->
+    <div class="card">
+        <div class="card-step">Relevance Reviewer</div>
+        <div class="card-title">External Check on Product Relevance</div>
+        <div class="card-body">
+            The system's internal relevance score is currently a black box. To measure true relevance independently — and push the system to improve — we run an external reviewer offline on served query-product pairs. It uses only catalogue data (product name, description, category) and the search query. Four approaches, layered by confidence and cost.
+        </div>
+
+        <div class="flag info" style="margin-bottom: 20px;">
+            <strong>What this reviewer does:</strong> For a given (query, served product) pair, it answers — is this product genuinely relevant to this query? Independent of what the system internally computed. Over time, gaps between the system's relevance score and this external score pinpoint where the relevance logic needs improvement.
+        </div>
+
+        <div class="step-row">
+            <div class="step-num">1</div>
+            <div class="step-content">
+                <div class="step-title">Lexical Match — Baseline filter</div>
+                <div class="step-body">Check if query terms appear in the product name, description, or category. Fast, zero infrastructure. Use as a floor check — if a served product fails this, it's a clear irrelevance signal with no further review needed.</div>
+            </div>
+        </div>
+
+        <div class="step-row" style="margin-top: 16px;">
+            <div class="step-num">2</div>
+            <div class="step-content">
+                <div class="step-title">Embedding Similarity — Primary signal</div>
+                <div class="step-body">Convert query and product text into vectors using a multilingual model (handles Arabic + English). Compute similarity score. Pairs above threshold = relevant; below threshold = flagged. Use as the main automated relevance signal running on sampled served pairs weekly.</div>
+            </div>
+        </div>
+
+        <div class="step-row" style="margin-top: 16px;">
+            <div class="step-num">3</div>
+            <div class="step-content">
+                <div class="step-title">LLM-as-Judge — Ambiguous case review</div>
+                <div class="step-body">For pairs that score low or borderline on embedding similarity, pass them to an LLM with query + product metadata and ask for a structured relevance rating (1–3) with a one-line reason. Use on the flagged subset from Approach 2 — not on everything.</div>
+            </div>
+        </div>
+
+        <div class="step-row" style="margin-top: 16px;">
+            <div class="step-num">4</div>
+            <div class="step-content">
+                <div class="step-title">Golden Set + NDCG — Trend metric</div>
+                <div class="step-body">A fixed set of ~100 high-traffic queries with human-labelled correct products. Run your system against this weekly. NDCG@5 score tells you whether the right products are coming back in the right order. This is the only metric that shows whether the system is improving or degrading over time.</div>
+            </div>
+        </div>
+
+        <div class="flag note" style="margin-top: 20px;">
+            <strong>Output:</strong> A weekly irrelevance rate (% of served ads that fail the external check) and a weekly NDCG score on the golden set. Together these give you both a snapshot and a trend line on relevance quality.
         </div>
     </div>
 
