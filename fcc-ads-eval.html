@@ -366,8 +366,11 @@
             </div>
         </div>
 
-        <div class="flag note" style="margin-top: 20px;">
-            <strong>On "true negatives":</strong> Queries where no keyword matched are not assumed to be correct. Distinguishing a campaign gap from a genuine no-match requires a catalogue-level relevance check — this is a known open item, deferred to Phase 2 of this eval framework.
+        <div class="flag info" style="margin-top: 20px;">
+            <strong>Where each Level 3 bucket goes next</strong><br><br>
+            <strong>Keyword should have matched → no ad served (confirmed false negative):</strong> Serving pipeline RCA — retrieval, filters, ranking, or request path. Do <em>not</em> use the Relevance Reviewer below; there was no served ad to evaluate.<br><br>
+            <strong>No keyword matched:</strong> Either a campaign gap (keyword not configured) or a true negative (no relevant product in catalogue). For <em>this Level 3 subset only</em>, a later phase applies the same catalogue-based methods as the Relevance Reviewer (lexical → embedding → LLM) to the query plus candidate catalogue products — not to a served ad, because none was shown.<br><br>
+            <strong>Bridge to Relevance Reviewer (next section) — served ads:</strong> Level 3 is about queries with <em>no</em> ad. The main Relevance Reviewer workflow is for when ads <em>were</em> served but CTR is low. After <strong>Level 2</strong> identifies which served segments drive low CTR (e.g. head-tier, exact match, or a position), run the reviewer on a <strong>weekly sample of (query, served product) pairs from those Level 2 segments only</strong>. Confirmed false negatives from Level 3 are excluded — no ad was served to judge.
         </div>
     </div>
 
@@ -376,7 +379,7 @@
         <div class="card-step">Relevance Reviewer</div>
         <div class="card-title">External Check on Product Relevance</div>
         <div class="card-body">
-            The system's internal relevance score is currently a black box. To measure true relevance independently — and push the system to improve — we run an external reviewer offline on served query-product pairs. It uses only catalogue data (product name, description, category) and the search query. Four approaches, layered by confidence and cost.
+            Enter here from <strong>Level 2</strong> when CTR is the ROAS lever — sample <strong>(query, served product)</strong> pairs from the low-CTR segments Level 2 flagged. From <strong>Level 3</strong>, only the <strong>no keyword matched</strong> bucket eventually uses these same methods (Phase 2), on query–catalogue candidates where no ad was served — not on confirmed false negatives. The system's internal relevance score is currently a black box. To measure true relevance independently — and push the system to improve — we run this reviewer offline. It uses only catalogue data (product name, description, category) and the search query. Four approaches, layered by confidence and cost.
         </div>
 
         <div class="flag info" style="margin-bottom: 20px;">
