@@ -263,14 +263,17 @@
                 <div class="stat-val">CTR drops</div>
                 <div class="stat-label">Serving frequently but wrong ads — users see them and don't act. Relevance problem upstream in the pipeline.</div>
             </div>
-            <div class="stat warn">
+            <div class="stat">
                 <div class="stat-val">Conv. Rate drops</div>
-                <div class="stat-label">Clicks are happening but not converting. Landing page, product-query mismatch, or pricing issue. Outside serving scope but tracked here as a guardrail.</div>
+                <div class="stat-label">Clicks are happening but not converting. Post-click problem — landing page, product-query fit, or pricing. <strong>Not covered in this framework.</strong></div>
             </div>
         </div>
 
         <div class="flag info" style="margin-top: 8px;">
-            <strong>Serving scope boundary:</strong> Serve Rate and CTR are within the serving engine's control. Conversion Rate and AOV are advertiser-side signals — we track them as ROAS guardrails, not as serving metrics to fix.
+            <strong>What this framework covers:</strong> Serve Rate and CTR — the two levers the serving engine controls. These are actively monitored and diagnosed in Level 2 and Level 3 below.
+        </div>
+        <div class="flag note" style="margin-top: 8px;">
+            <strong>What is deferred:</strong> Conversion Rate is the third lever in the ROAS equation and the one closest to advertiser value. It is explicitly out of scope — post-click analysis sits outside the serving layer. This means the framework will not surface a scenario where serving is healthy but ROAS drops purely due to poor conversion. That gap is known and accepted for now.
         </div>
     </div>
 
