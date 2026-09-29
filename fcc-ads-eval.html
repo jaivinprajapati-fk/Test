@@ -232,10 +232,6 @@
             <div class="sub">Return on Ad Spend — the single number that captures advertiser value. A drop means either we're not serving enough, serving irrelevant ads, or clicks aren't converting.</div>
         </div>
 
-        <div class="flag info">
-            <strong>Why ROAS and not Ad Click Rate:</strong> A click is a necessary but insufficient signal. An ad can generate high CTR and zero conversions — the click-bait failure mode. ROAS closes this loop: if a campaign generates clicks but no purchases, ROAS drops and the problem surfaces. We charge CPC, but the advertiser's goal is the order — ROAS is the metric that aligns our measurement with their actual objective.
-        </div>
-
         <div class="flag note" style="margin-top: 12px;">
             <strong>Incrementality caveat:</strong> ROAS as measured here is <em>attributed</em> ROAS — revenue from orders placed after an ad click. We cannot currently determine if those buyers would have converted without the ad (incrementality), as that requires organic conversion data and holdout experiments. This is a known limitation to revisit as measurement matures.
         </div>
@@ -265,15 +261,12 @@
             </div>
             <div class="stat">
                 <div class="stat-val">Conv. Rate drops</div>
-                <div class="stat-label">Clicks are happening but not converting. Post-click problem — landing page, product-query fit, or pricing. <strong>Not covered in this framework.</strong></div>
+                <div class="stat-label">Clicks are happening but not converting — landing page, product-query fit, or pricing. Post-click; not covered in Levels 2–3 below.</div>
             </div>
         </div>
 
         <div class="flag info" style="margin-top: 8px;">
             <strong>What this framework covers:</strong> Serve Rate and CTR — the two levers the serving engine controls. These are actively monitored and diagnosed in Level 2 and Level 3 below.
-        </div>
-        <div class="flag note" style="margin-top: 8px;">
-            <strong>What is deferred:</strong> Conversion Rate is the third lever in the ROAS equation and the one closest to advertiser value. It is explicitly out of scope — post-click analysis sits outside the serving layer. This means the framework will not surface a scenario where serving is healthy but ROAS drops purely due to poor conversion. That gap is known and accepted for now.
         </div>
     </div>
 
@@ -459,8 +452,8 @@
                 </tr>
                 <tr>
                     <td><strong>Conversion Rate</strong></td>
-                    <td>Whether clicks are resulting in orders (guardrail, not a serving metric)</td>
-                    <td>Drops while CTR is stable — signals post-click / product issue</td>
+                    <td>Whether clicks result in orders. Post-click — outside Levels 2–3. If ROAS drops while Serve Rate and CTR stay stable, conversion is likely the cause; monitor weekly but this framework does not drill into that path.</td>
+                    <td>Drops while Serve Rate and CTR are stable</td>
                 </tr>
                 <tr>
                     <td><strong>False Negative Rate</strong></td>
