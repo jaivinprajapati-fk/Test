@@ -224,45 +224,53 @@
         <div class="card-step">North Star</div>
         <div class="card-title">What Are We Measuring?</div>
         <div class="card-body">
-            The end objective of the ads engine is: a user searches → a relevant ad is served → user clicks → advertiser pays. Every eval metric traces back to this chain. We don't start by measuring individual components — we start by measuring the outcome and drill into components only when the outcome shows a gap.
+            The end objective of the ads engine is: a user searches → a relevant ad is served → user clicks → user converts. Every eval metric traces back to this chain. We don't start by measuring individual components — we start by measuring the outcome and drill into components only when the outcome shows a gap.
         </div>
 
         <div class="formula-box">
-            Ad Click Rate = Clicks on served ads / Total searches
-            <div class="sub">This is the single number that captures everything. A drop here means either we're not serving enough, or what we're serving isn't relevant.</div>
+            ROAS = Revenue attributed to ad clicks / Ad spend
+            <div class="sub">Return on Ad Spend — the single number that captures advertiser value. A drop means either we're not serving enough, serving irrelevant ads, or clicks aren't converting.</div>
         </div>
 
         <div class="flag info">
-            <strong>Why a click is the right relevance signal:</strong> In a CPC model, a click is the market's verdict. The user searched, saw the ad, and chose to act. No external oracle or human label is needed — the click itself is the proof of relevance. This is the fundamental contract of a performance ads business.
+            <strong>Why ROAS and not Ad Click Rate:</strong> A click is a necessary but insufficient signal. An ad can generate high CTR and zero conversions — the click-bait failure mode. ROAS closes this loop: if a campaign generates clicks but no purchases, ROAS drops and the problem surfaces. We charge CPC, but the advertiser's goal is the order — ROAS is the metric that aligns our measurement with their actual objective.
+        </div>
+
+        <div class="flag note" style="margin-top: 12px;">
+            <strong>Incrementality caveat:</strong> ROAS as measured here is <em>attributed</em> ROAS — revenue from orders placed after an ad click. We cannot currently determine if those buyers would have converted without the ad (incrementality), as that requires organic conversion data and holdout experiments. This is a known limitation to revisit as measurement matures.
         </div>
     </div>
 
     <!-- Decomposition -->
     <div class="card">
         <div class="card-step">Decomposition</div>
-        <div class="card-title">When Ad Click Rate Shows a Gap — Where to Look</div>
+        <div class="card-title">When ROAS Shows a Gap — Where to Look</div>
         <div class="card-body">
-            Ad Click Rate breaks into two independent components. When the number drops, this decomposition tells you which problem you have.
+            ROAS breaks into three independent levers. When the number drops, this tells you which problem you have.
         </div>
 
         <div class="formula-box">
-            Ad Click Rate = Serve Rate × CTR
-            <div class="sub">Serve Rate = ads served / total searches &nbsp;|&nbsp; CTR = clicks / ads served</div>
+            ROAS = Serve Rate × CTR × Conversion Rate × AOV / CPC
+            <div class="sub">Serve Rate = ads served / total searches &nbsp;|&nbsp; CTR = clicks / ads served &nbsp;|&nbsp; Conv. Rate = orders / clicks &nbsp;|&nbsp; AOV = avg order value</div>
         </div>
 
         <div class="stats">
             <div class="stat warn">
-                <div class="stat-val">Serve Rate low, CTR healthy</div>
-                <div class="stat-label">Engine is missing too many queries. Relevant campaigns exist but ads aren't reaching users.</div>
+                <div class="stat-val">Serve Rate drops</div>
+                <div class="stat-label">Engine is missing queries. Relevant campaigns exist but ads aren't reaching users. Fewer impressions means fewer chances to convert.</div>
             </div>
             <div class="stat warn">
-                <div class="stat-val">Serve Rate healthy, CTR low</div>
-                <div class="stat-label">Engine is serving frequently but serving the wrong ads. Relevance problem.</div>
+                <div class="stat-val">CTR drops</div>
+                <div class="stat-label">Serving frequently but wrong ads — users see them and don't act. Relevance problem upstream in the pipeline.</div>
             </div>
-            <div class="stat">
-                <div class="stat-val">Both low</div>
-                <div class="stat-label">Both problems present simultaneously. Prioritise Serve Rate first — you can't measure CTR quality on too small a served set.</div>
+            <div class="stat warn">
+                <div class="stat-val">Conv. Rate drops</div>
+                <div class="stat-label">Clicks are happening but not converting. Landing page, product-query mismatch, or pricing issue. Outside serving scope but tracked here as a guardrail.</div>
             </div>
+        </div>
+
+        <div class="flag info" style="margin-top: 8px;">
+            <strong>Serving scope boundary:</strong> Serve Rate and CTR are within the serving engine's control. Conversion Rate and AOV are advertiser-side signals — we track them as ROAS guardrails, not as serving metrics to fix.
         </div>
     </div>
 
@@ -432,9 +440,9 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><strong>Ad Click Rate</strong></td>
-                    <td>Overall health of the ads engine end-to-end</td>
-                    <td>Drops week-over-week</td>
+                    <td><strong>ROAS</strong></td>
+                    <td>Overall advertiser value — revenue returned per unit of spend</td>
+                    <td>Drops week-over-week; then decompose into Serve Rate, CTR, Conv. Rate</td>
                 </tr>
                 <tr>
                     <td><strong>Serve Rate</strong></td>
@@ -443,8 +451,13 @@
                 </tr>
                 <tr>
                     <td><strong>CTR</strong></td>
-                    <td>Whether served ads are relevant enough for users to act</td>
+                    <td>Whether served ads are relevant enough for users to click</td>
                     <td>Drops — then segment by tier, match type, position</td>
+                </tr>
+                <tr>
+                    <td><strong>Conversion Rate</strong></td>
+                    <td>Whether clicks are resulting in orders (guardrail, not a serving metric)</td>
+                    <td>Drops while CTR is stable — signals post-click / product issue</td>
                 </tr>
                 <tr>
                     <td><strong>False Negative Rate</strong></td>
