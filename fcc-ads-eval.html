@@ -225,23 +225,27 @@
 <div class="page">
 
     <div class="page-title">FCC Ads — Serving Eval Framework</div>
-    <div class="page-meta">Sep 2026 · <strong style="color: #666;">Scope:</strong> Ad serving only — campaign setup, attribution, and reporting are out of scope of this document.</div>
+    <div class="page-meta">Oct 2026 &nbsp;·&nbsp; <strong style="color:#666;">Scope:</strong> Ad serving only — campaign setup, attribution, and reporting are out of scope of this document.</div>
 
     <!-- North Star -->
     <div class="card">
         <div class="card-step">North Star</div>
         <div class="card-title">What Are We Measuring?</div>
         <div class="card-body">
-            The end objective of the ads engine is: a user searches → a relevant ad is served → user clicks → user converts. Every eval metric traces back to this chain. We don't start by measuring individual components — we start by measuring the outcome and drill into components only when the outcome shows a gap.
+            The objective of an ad is to increase monetisation within the limits of relevance. The mechanism is visibility — getting the right ad in front of the right user at the right moment. ROAS is the business outcome that captures whether this is working end-to-end.
         </div>
 
         <div class="formula-box">
             ROAS = Revenue attributed to ad clicks / Ad spend
-            <div class="sub">Return on Ad Spend — the single number that captures advertiser value. A drop means either we're not serving enough, serving irrelevant ads, or clicks aren't converting.</div>
+            <div class="sub">Equivalently: ROAS = CVR &times; ASP / CPC &nbsp;|&nbsp; CVR = conversion rate &nbsp;|&nbsp; ASP = avg selling price &nbsp;|&nbsp; CPC = cost per click</div>
         </div>
 
-        <div class="flag note" style="margin-top: 12px;">
-            <strong>Incrementality caveat:</strong> ROAS as measured here is <em>attributed</em> ROAS — revenue from orders placed after an ad click. We cannot currently determine if those buyers would have converted without the ad (incrementality), as that requires organic conversion data and holdout experiments. This is a known limitation to revisit as measurement matures.
+        <div class="flag info" style="margin-top: 12px;">
+            <strong>FCC's operational metric — Fill Rate:</strong> Of the levers in ROAS (CVR, ASP, CPC), FCC Serving controls none of them directly. What FCC controls is whether an ad is served at all. Fill Rate = ads served / total ad requests. It is the upstream input that determines how many clicks are even possible. This framework tracks ROAS as the business north star and Fill Rate as the primary FCC-owned operational metric beneath it.
+        </div>
+
+        <div class="flag note" style="margin-top: 8px;">
+            <strong>Incrementality caveat:</strong> ROAS here is <em>attributed</em> ROAS — revenue from orders placed after an ad click. Whether those buyers would have converted without the ad requires organic conversion data and holdout experiments. Known limitation, deferred.
         </div>
     </div>
 
@@ -250,31 +254,31 @@
         <div class="card-step">Decomposition</div>
         <div class="card-title">When ROAS Shows a Gap — Where to Look</div>
         <div class="card-body">
-            ROAS breaks into three independent levers. When the number drops, this tells you which problem you have.
+            Clicks — the bridge between serving and revenue — are a function of four factors. FCC Serving directly owns one of them.
         </div>
 
         <div class="formula-box">
-            ROAS = Serve Rate × CTR × Conversion Rate × AOV / CPC
-            <div class="sub">Serve Rate = ads served / total searches &nbsp;|&nbsp; CTR = clicks / ads served &nbsp;|&nbsp; Conv. Rate = orders / clicks &nbsp;|&nbsp; AOV = avg order value</div>
+            # Clicks = Traffic &times; Ad Slots &times; Fill Rate &times; CTR
+            <div class="sub">Traffic &amp; Ad Slots = retailer-controlled (Nahdi) &nbsp;|&nbsp; Fill Rate = FCC Serving &nbsp;|&nbsp; CTR = shared (FCC relevance + advertiser creative)</div>
         </div>
 
         <div class="stats">
+            <div class="stat">
+                <div class="stat-val">Traffic &amp; Slots</div>
+                <div class="stat-label">Set by the retailer. Monitored as context — not a serving fix target.</div>
+            </div>
             <div class="stat warn">
-                <div class="stat-val">Serve Rate drops</div>
-                <div class="stat-label">Engine is missing queries. Relevant campaigns exist but ads aren't reaching users. Fewer impressions means fewer chances to convert.</div>
+                <div class="stat-val">Fill Rate drops</div>
+                <div class="stat-label">FCC is not serving ads for queries it should be serving. Primary FCC-owned metric. Diagnosed in Level 3 below.</div>
             </div>
             <div class="stat warn">
                 <div class="stat-val">CTR drops</div>
-                <div class="stat-label">Serving frequently but wrong ads — users see them and don't act. Relevance problem upstream in the pipeline.</div>
-            </div>
-            <div class="stat">
-                <div class="stat-val">Conv. Rate drops</div>
-                <div class="stat-label">Clicks are happening but not converting — landing page, product-query fit, or pricing. Post-click; not covered in Levels 2–3 below.</div>
+                <div class="stat-label">Ads served but users not clicking. Partially FCC-owned (which product surfaces) and partially advertiser-owned (creative). Diagnosed in Level 2 below.</div>
             </div>
         </div>
 
-        <div class="flag info" style="margin-top: 8px;">
-            <strong>What this framework covers:</strong> Serve Rate and CTR — the two levers the serving engine controls. These are actively monitored and diagnosed in Level 2 and Level 3 below.
+        <div class="flag note" style="margin-top: 8px;">
+            <strong>Conversion Rate — deferred:</strong> Even with Fill Rate and CTR healthy, ROAS can drop if clicks don't convert. CVR is post-click and advertiser-controlled. This framework does not diagnose CVR. If ROAS drops while Fill Rate and CTR are stable, conversion is the likely cause — tracked as a signal but not drilled into here.
         </div>
     </div>
 
@@ -283,14 +287,14 @@
         <div class="card-step">Level 2 — Relevance</div>
         <div class="card-title">Was What We Served Relevant?</div>
         <div class="card-body">
-            When CTR is low, it means we're serving ads but users aren't clicking. The goal is to identify which segment of queries is driving the low CTR — not to audit every served ad.
+            When CTR is low, ads are being served but users aren't clicking. The goal is to identify which segment of queries is driving the low CTR — not to audit every served ad.
         </div>
 
         <div class="step-row">
             <div class="step-num">1</div>
             <div class="step-content">
                 <div class="step-title">Overall CTR — baseline</div>
-                <div class="step-body">Track weekly. This is your single relevance health number. Any sustained drop triggers investigation.</div>
+                <div class="step-body">Track weekly. Any sustained drop triggers investigation.</div>
                 <div class="step-next"><strong>Next:</strong> Segment by query volume tier.</div>
             </div>
         </div>
@@ -300,7 +304,7 @@
             <div class="step-num">2</div>
             <div class="step-content">
                 <div class="step-title">CTR by query volume tier</div>
-                <div class="step-body">Segment queries into head (top 20% by volume), torso, and tail. Head queries drive ~80% of traffic — if CTR is dropping there, it's a systemic problem. If only in tail, it's more contained.</div>
+                <div class="step-body">Segment queries into head (top 20% by volume), torso, and tail. Head queries drive ~80% of traffic — a drop there is systemic. A drop only in tail is more contained.</div>
                 <div class="step-next"><strong>Next:</strong> Break down the flagged tier(s) by match type.</div>
             </div>
         </div>
@@ -310,7 +314,7 @@
             <div class="step-num">3</div>
             <div class="step-content">
                 <div class="step-title">CTR by match type</div>
-                <div class="step-body">Exact match ads should have higher CTR than phrase match. If exact match CTR is low, the served product isn't matching the keyword well. If phrase match CTR is low, the matching is too broad.</div>
+                <div class="step-body">Exact match should have higher CTR than phrase match. If exact match CTR is low, the served product isn't matching the keyword well. If phrase match CTR is low, matching is too broad.</div>
                 <div class="step-next"><strong>Next:</strong> Break down the flagged match type(s) by ad position.</div>
             </div>
         </div>
@@ -320,25 +324,25 @@
             <div class="step-num">4</div>
             <div class="step-content">
                 <div class="step-title">CTR by position</div>
-                <div class="step-body">Position 1 should get significantly more clicks than position 2, 3, etc. If CTR across positions is flat, ranking isn't putting the right product first.</div>
-                <div class="step-next"><strong>Next:</strong> Relevance Reviewer — weekly sample of (query, served product) pairs from the segment(s) you flagged above.</div>
+                <div class="step-body">Position 1 should get significantly more clicks than positions 2, 3, etc. If CTR across positions is flat, ranking isn't putting the right product first.</div>
+                <div class="step-next"><strong>Next:</strong> Relevance Reviewer — weekly sample of (query, served product) pairs from the segment(s) flagged above.</div>
             </div>
         </div>
     </div>
 
-    <!-- Level 3: False Negatives -->
+    <!-- Level 3: False Negatives / Fill Rate -->
     <div class="card">
-        <div class="card-step">Level 3 — False Negatives</div>
+        <div class="card-step">Level 3 — Fill Rate</div>
         <div class="card-title">Should We Have Served Something But Didn't?</div>
         <div class="card-body">
-            When Serve Rate is low, we need to understand: for the queries where nothing was served, was there a relevant campaign that should have matched? This is the false negative rate — the most operationally important gap to track.
+            When Fill Rate is low, the question is: for the queries where nothing was served, was there a relevant campaign that should have matched? This decomposition separates pipeline failures (FCC's problem) from demand gaps (advertiser's problem).
         </div>
 
         <div class="step-row">
             <div class="step-num">1</div>
             <div class="step-content">
                 <div class="step-title">Take all no-ad queries from the query log</div>
-                <div class="step-body">Every search query that returned no served ad is your starting universe for this analysis.</div>
+                <div class="step-body">Every search that returned no served ad is the starting universe. This is the full Fill Rate miss set.</div>
                 <div class="step-next"><strong>Next:</strong> Run offline keyword match against active campaigns.</div>
             </div>
         </div>
@@ -359,10 +363,10 @@
             <div class="step-content">
                 <div class="step-title">Bucket the results</div>
                 <div class="step-body">
-                    <strong>Keyword should have matched, no ad served</strong> — confirmed false negative. The engine had a matching campaign and still did not serve.<br><br>
-                    <strong>No keyword matched</strong> — either a campaign gap (keyword not configured) or no relevant product in catalogue.
+                    <strong>Keyword should have matched, no ad served</strong> — confirmed pipeline failure. Demand existed; FCC did not serve. Volume here is the false negative rate — the primary serving health signal.<br><br>
+                    <strong>No keyword matched</strong> — either a demand gap (advertiser hasn't configured this keyword) or a genuine no-match (no relevant product in catalogue). Distinguishing these requires a catalogue-level relevance check — deferred.
                 </div>
-                <div class="step-next"><strong>Next:</strong> Relevance Reviewer — for confirmed false negatives, judge whether a relevant ad should have been served for that query; for no-keyword-match queries, judge whether the catalogue supports a relevant ad (campaign gap vs true negative).</div>
+                <div class="step-next"><strong>Next:</strong> Relevance Reviewer on confirmed false negatives to validate whether a relevant ad should have been served.</div>
             </div>
         </div>
         <div class="arrow">↓</div>
@@ -371,8 +375,8 @@
             <div class="step-num">4</div>
             <div class="step-content">
                 <div class="step-title">Track false negative rate weekly</div>
-                <div class="step-body">False negative rate = confirmed false negatives / total no-ad queries. An upward trend means the pipeline is dropping queries it should be catching.</div>
-                <div class="step-next"><strong>Next:</strong> Keep sampling into the Relevance Reviewer from step 3 buckets while this rate is elevated.</div>
+                <div class="step-body">False negative rate = confirmed pipeline failures / total no-ad queries. An upward trend means the serving pipeline is dropping queries it should be catching.</div>
+                <div class="step-next"><strong>Next:</strong> Continue sampling into the Relevance Reviewer while this rate is elevated.</div>
             </div>
         </div>
     </div>
@@ -382,7 +386,7 @@
         <div class="card-step">Relevance Reviewer</div>
         <div class="card-title">External Relevance Check</div>
         <div class="card-body">
-            Offline check using the search query and catalogue data (product name, description, category), independent of the system's internal relevance score. It supports two checks: whether a relevant ad <em>should have been served</em> for a query (including no-ad and false-negative cases from Level 3), and whether a <em>served</em> product was relevant (samples from Level 2). Same four approaches below; input pairs differ by case.
+            Offline check using the search query and catalogue data (product name, description, category), independent of the system's internal relevance score. Supports two checks: whether a relevant ad <em>should have been served</em> for a no-ad query (Level 3), and whether a <em>served</em> product was relevant (Level 2). Same four approaches; the input pairs differ by case.
         </div>
 
         <div class="step-row">
@@ -417,7 +421,7 @@
             <div class="step-content">
                 <div class="step-title">Golden set + NDCG — trend metric</div>
                 <div class="step-body">~100 high-traffic queries with human-labelled correct products. Run weekly; NDCG@5 shows whether retrieval and ranking improve over time.</div>
-                <div class="step-next"><strong>Next:</strong> Publish weekly should-serve miss rate (no-ad / false-negative samples), irrelevance rate (served samples), and NDCG@5.</div>
+                <div class="step-next"><strong>Next:</strong> Publish weekly: should-serve miss rate (no-ad / false-negative samples), irrelevance rate (served samples), and NDCG@5.</div>
             </div>
         </div>
     </div>
@@ -432,6 +436,7 @@
             <thead>
                 <tr>
                     <th>Metric</th>
+                    <th>Owner</th>
                     <th>What It Tells You</th>
                     <th>Triggers Investigation When</th>
                 </tr>
@@ -439,27 +444,32 @@
             <tbody>
                 <tr>
                     <td><strong>ROAS</strong></td>
-                    <td>Overall advertiser value — revenue returned per unit of spend</td>
-                    <td>Drops week-over-week; then decompose into Serve Rate, CTR, Conv. Rate</td>
+                    <td>Business</td>
+                    <td>Overall advertiser value — revenue per unit of spend</td>
+                    <td>Drops week-over-week; decompose into Fill Rate, CTR, Conv. Rate</td>
                 </tr>
                 <tr>
-                    <td><strong>Serve Rate</strong></td>
-                    <td>How many searches result in an ad being served</td>
-                    <td>Drops without a corresponding drop in active campaigns</td>
+                    <td><strong>Fill Rate</strong></td>
+                    <td>FCC Serving</td>
+                    <td>Share of ad requests that result in a served ad</td>
+                    <td>Drops — then Level 3 false negative analysis</td>
                 </tr>
                 <tr>
                     <td><strong>CTR</strong></td>
+                    <td>FCC + Advertiser</td>
                     <td>Whether served ads are relevant enough for users to click</td>
-                    <td>Drops — then segment by tier, match type, position</td>
+                    <td>Drops — then segment by tier, match type, position (Level 2)</td>
                 </tr>
                 <tr>
                     <td><strong>Conversion Rate</strong></td>
-                    <td>Whether clicks result in orders. Post-click — outside Levels 2–3. If ROAS drops while Serve Rate and CTR stay stable, conversion is likely the cause; monitor weekly but this framework does not drill into that path.</td>
-                    <td>Drops while Serve Rate and CTR are stable</td>
+                    <td>Advertiser</td>
+                    <td>Whether clicks result in orders. Post-click — outside Levels 2–3. If ROAS drops while Fill Rate and CTR are stable, this is the likely cause.</td>
+                    <td>Drops while Fill Rate and CTR are stable</td>
                 </tr>
                 <tr>
                     <td><strong>False Negative Rate</strong></td>
-                    <td>Queries where a campaign existed but no ad was served</td>
+                    <td>FCC Serving</td>
+                    <td>Share of no-ad queries where a campaign existed and should have matched</td>
                     <td>Rises — pipeline is dropping queries it should be serving</td>
                 </tr>
             </tbody>
