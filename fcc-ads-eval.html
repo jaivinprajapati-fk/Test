@@ -15,7 +15,6 @@
             font-size: 14px;
         }
 
-        /* ── Tab nav ── */
         .tab-nav {
             background: white;
             border-bottom: 2px solid #e0e6f0;
@@ -24,15 +23,12 @@
             z-index: 100;
             box-shadow: 0 1px 4px rgba(0,0,0,0.06);
         }
-
         .tab-nav-inner {
             max-width: 960px;
             margin: 0 auto;
             padding: 0 24px;
             display: flex;
-            gap: 0;
         }
-
         .tab-btn {
             padding: 16px 24px;
             font-size: 13px;
@@ -46,11 +42,9 @@
             transition: color 0.15s, border-color 0.15s;
             white-space: nowrap;
         }
-
         .tab-btn:hover { color: #1a3460; }
         .tab-btn.active { color: #1a3460; border-bottom-color: #1a3460; }
 
-        /* ── Tab content ── */
         .tab-content { display: none; }
         .tab-content.active { display: block; }
 
@@ -59,277 +53,118 @@
             margin: 0 auto;
             padding: 48px 24px 80px;
         }
+        .page-title { font-size: 26px; font-weight: 700; color: #1a3460; margin-bottom: 4px; }
+        .page-meta { font-size: 13px; color: #999; margin-bottom: 40px; }
 
-        .page-title {
-            font-size: 26px;
-            font-weight: 700;
-            color: #1a3460;
-            margin-bottom: 4px;
-        }
-
-        .page-meta {
-            font-size: 13px;
-            color: #999;
-            margin-bottom: 40px;
-        }
-
-        /* ── Cards (Eval tab) ── */
-        .card {
-            background: white;
-            border-radius: 10px;
-            padding: 28px 32px;
-            margin-bottom: 24px;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.07);
-        }
-
-        .card-step {
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            color: #1a3460;
-            background: #e8edf5;
-            display: inline-block;
-            padding: 3px 10px;
-            border-radius: 4px;
-            margin-bottom: 10px;
-        }
-
-        .card-title {
-            font-size: 17px;
-            font-weight: 700;
-            color: #1a3460;
-            margin-bottom: 8px;
-        }
-
-        .card-body {
-            color: #444;
-            margin-bottom: 20px;
-        }
-
-        .formula-box {
-            background: #f4f6f9;
-            border-radius: 8px;
-            padding: 20px 24px;
-            margin: 20px 0;
-            font-size: 15px;
-            color: #1a3460;
-            font-weight: 600;
-            text-align: center;
-            letter-spacing: 0.3px;
-        }
-
-        .formula-box .sub {
-            font-size: 12px;
-            font-weight: 400;
-            color: #666;
-            margin-top: 6px;
-        }
-
-        .stats {
-            display: flex;
-            gap: 14px;
-            flex-wrap: wrap;
-            margin: 18px 0;
-        }
-
-        .stat {
-            flex: 1;
-            min-width: 140px;
-            background: #f4f6f9;
-            border-radius: 8px;
-            padding: 16px 18px;
-            border-top: 3px solid #1a3460;
-        }
-
+        /* ── Eval tab styles ── */
+        .card { background: white; border-radius: 10px; padding: 28px 32px; margin-bottom: 24px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+        .card-step { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #1a3460; background: #e8edf5; display: inline-block; padding: 3px 10px; border-radius: 4px; margin-bottom: 10px; }
+        .card-title { font-size: 17px; font-weight: 700; color: #1a3460; margin-bottom: 8px; }
+        .card-body { color: #444; margin-bottom: 20px; }
+        .formula-box { background: #f4f6f9; border-radius: 8px; padding: 20px 24px; margin: 20px 0; font-size: 15px; color: #1a3460; font-weight: 600; text-align: center; }
+        .formula-box .sub { font-size: 12px; font-weight: 400; color: #666; margin-top: 6px; }
+        .stats { display: flex; gap: 14px; flex-wrap: wrap; margin: 18px 0; }
+        .stat { flex: 1; min-width: 140px; background: #f4f6f9; border-radius: 8px; padding: 16px 18px; border-top: 3px solid #1a3460; }
         .stat.warn { border-top-color: #d97706; background: #fffbf0; }
-
-        .stat-val {
-            font-size: 15px;
-            font-weight: 700;
-            color: #1a3460;
-            line-height: 1.3;
-        }
+        .stat-val { font-size: 15px; font-weight: 700; color: #1a3460; line-height: 1.3; }
         .stat.warn .stat-val { color: #d97706; }
-
-        .stat-label {
-            font-size: 12px;
-            color: #666;
-            margin-top: 4px;
-        }
-
-        .flag {
-            border-radius: 6px;
-            padding: 12px 16px;
-            font-size: 13px;
-            margin-top: 14px;
-            line-height: 1.6;
-        }
-
+        .stat-label { font-size: 12px; color: #666; margin-top: 4px; }
+        .flag { border-radius: 6px; padding: 12px 16px; font-size: 13px; margin-top: 14px; line-height: 1.6; }
         .flag.info { background: #f0f4ff; border-left: 4px solid #4361ee; color: #1a2a60; }
         .flag.note { background: #fffbf0; border-left: 4px solid #d97706; color: #4a2e00; }
         .flag strong { font-weight: 600; }
-
-        .step-row {
-            display: flex;
-            gap: 16px;
-            align-items: flex-start;
-            margin-bottom: 20px;
-        }
-
-        .step-num {
-            flex-shrink: 0;
-            width: 32px;
-            height: 32px;
-            background: #1a3460;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 13px;
-            margin-top: 2px;
-        }
-
+        .step-row { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 20px; }
+        .step-num { flex-shrink: 0; width: 32px; height: 32px; background: #1a3460; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; margin-top: 2px; }
         .step-content { flex: 1; }
-
-        .step-title {
-            font-weight: 700;
-            color: #1a3460;
-            margin-bottom: 4px;
-            font-size: 14px;
-        }
-
+        .step-title { font-weight: 700; color: #1a3460; margin-bottom: 4px; font-size: 14px; }
         .step-body { color: #444; font-size: 13px; line-height: 1.7; }
-
         .step-next { margin-top: 8px; font-size: 13px; color: #1a3460; }
         .step-next strong { font-weight: 600; }
-
         .arrow { text-align: center; font-size: 20px; color: #aaa; margin: 4px 0 4px 40px; }
 
-        table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 16px; }
-
-        th { background: #1a3460; color: white; padding: 10px 14px; text-align: left; font-weight: 600; }
-
-        td { padding: 10px 14px; border-bottom: 1px solid #eee; vertical-align: top; }
-        tr:last-child td { border-bottom: none; }
-        tr:nth-child(even) td { background: #f9f9f9; }
-
-        /* ── Monitoring tab specific ── */
-        .top-metric {
-            background: #1a3460;
-            border-radius: 12px;
-            padding: 28px 36px;
-            margin-bottom: 28px;
-            color: white;
-        }
-
-        .top-metric-label {
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 1.2px;
-            text-transform: uppercase;
-            opacity: 0.65;
-            margin-bottom: 6px;
-        }
-
+        /* ── Monitoring tab styles ── */
+        .top-metric { background: #1a3460; border-radius: 12px; padding: 28px 36px; margin-bottom: 20px; color: white; }
+        .top-metric-label { font-size: 11px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; opacity: 0.65; margin-bottom: 6px; }
         .top-metric-title { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
-
         .top-metric-body { font-size: 13px; opacity: 0.8; line-height: 1.7; max-width: 680px; }
-
         .metric-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+        .chip { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 4px 12px; font-size: 12px; font-weight: 500; }
 
-        .chip {
-            background: rgba(255,255,255,0.12);
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 20px;
-            padding: 4px 12px;
-            font-size: 12px;
-            font-weight: 500;
-        }
-
-        .equation {
-            background: #f4f6f9;
-            border-radius: 8px;
-            padding: 18px 24px;
-            margin: 16px 0;
-            text-align: center;
-            font-size: 15px;
-            font-weight: 600;
-            color: #1a3460;
-        }
-
+        .equation { background: #f4f6f9; border-radius: 8px; padding: 18px 24px; margin: 16px 0; text-align: center; font-size: 15px; font-weight: 600; color: #1a3460; }
         .equation .sub { font-size: 12px; font-weight: 400; color: #666; margin-top: 6px; }
 
-        .if-drops { display: flex; gap: 12px; margin: 16px 0; flex-wrap: wrap; }
-
-        .if-drop-card {
-            flex: 1;
-            min-width: 200px;
-            background: white;
-            border-radius: 8px;
-            padding: 14px 16px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.07);
-            border-top: 3px solid #d97706;
-        }
-
-        .if-drop-title { font-size: 13px; font-weight: 700; color: #92400e; margin-bottom: 4px; }
-        .if-drop-body { font-size: 12px; color: #666; line-height: 1.6; }
-
-        .section-header { display: flex; align-items: center; gap: 12px; margin: 36px 0 14px; }
-
-        .section-tag {
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            padding: 4px 12px;
-            border-radius: 20px;
-        }
-
+        .section-header { display: flex; align-items: center; gap: 12px; margin: 36px 0 10px; }
+        .section-tag { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; }
         .tag-supply { background: #dbeafe; color: #1e40af; }
         .tag-demand { background: #fef3c7; color: #92400e; }
         .tag-motivation { background: #ede9fe; color: #5b21b6; }
         .tag-ability { background: #d1fae5; color: #065f46; }
-
         .section-title { font-size: 17px; font-weight: 700; color: #1a3460; }
-        .section-desc { font-size: 13px; color: #555; margin-bottom: 16px; line-height: 1.7; }
+        .section-desc { font-size: 13px; color: #555; margin-bottom: 14px; line-height: 1.7; }
 
-        .metric-card {
-            background: white;
-            border-radius: 10px;
-            margin-bottom: 16px;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-            overflow: hidden;
-        }
-
-        .metric-card-header {
-            padding: 12px 20px;
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 0.8px;
-            text-transform: uppercase;
-        }
-
+        .metric-card { background: white; border-radius: 10px; margin-bottom: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); overflow: hidden; }
+        .metric-card-header { padding: 12px 20px; font-size: 12px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; }
         .header-supply { background: #eff6ff; color: #1e40af; border-bottom: 1px solid #dbeafe; }
         .header-motivation { background: #f5f3ff; color: #5b21b6; border-bottom: 1px solid #ede9fe; }
         .header-ability { background: #f0fdf4; color: #065f46; border-bottom: 1px solid #d1fae5; }
 
-        .metric-card table { margin-top: 0; }
-        .metric-card th { background: #f8f9fb; color: #666; font-size: 12px; }
-        .metric-card td { padding: 11px 20px; }
+        /* ── Metric rows with expand ── */
+        table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        th { background: #f8f9fb; color: #666; padding: 9px 20px; text-align: left; font-weight: 600; font-size: 12px; border-bottom: 1px solid #eee; }
+        td { padding: 0; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+        tr:last-child td { border-bottom: none; }
 
-        .metric-name { font-weight: 600; color: #1a3460; }
-        .metric-sub { font-size: 12px; color: #888; margin-top: 2px; }
-        .drill-into { font-size: 12px; color: #4361ee; font-style: italic; }
+        .metric-row-main {
+            display: flex;
+            align-items: flex-start;
+            padding: 12px 20px;
+            cursor: pointer;
+            gap: 12px;
+            transition: background 0.1s;
+        }
+        .metric-row-main:hover { background: #fafbfd; }
+
+        .metric-row-main.has-drill .metric-name::after {
+            content: ' ↓';
+            font-size: 11px;
+            color: #4361ee;
+            font-weight: 400;
+        }
+        .metric-row-main.open .metric-name::after { content: ' ↑'; }
+
+        .metric-name { font-weight: 600; color: #1a3460; min-width: 220px; flex-shrink: 0; }
+        .metric-sub { font-size: 12px; color: #888; margin-top: 2px; font-weight: 400; }
+        .metric-desc { font-size: 13px; color: #444; flex: 1; padding-top: 1px; }
+        .metric-ref { font-size: 12px; color: #4361ee; font-style: italic; flex-shrink: 0; min-width: 160px; text-align: right; padding-top: 2px; }
+
+        /* ── Drill panel ── */
+        .drill-panel {
+            display: none;
+            background: #f8f9fb;
+            border-top: 1px solid #e8ecf4;
+            padding: 14px 20px 14px 40px;
+        }
+        .drill-panel.open { display: block; }
+        .drill-panel-title { font-size: 11px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: #888; margin-bottom: 10px; }
+        .drill-item { display: flex; align-items: baseline; gap: 10px; padding: 6px 0; border-bottom: 1px solid #eee; font-size: 13px; }
+        .drill-item:last-child { border-bottom: none; }
+        .drill-item-name { font-weight: 600; color: #1a3460; min-width: 200px; flex-shrink: 0; }
+        .drill-item-sub { font-size: 11px; color: #999; display: block; font-weight: 400; }
+        .drill-item-desc { color: #555; flex: 1; font-size: 12px; }
+        .drill-xref { font-size: 11px; color: #4361ee; font-style: italic; }
 
         .divider { border: none; border-top: 2px solid #eee; margin: 36px 0; }
+
+        /* Eval tab table override */
+        #tab-eval table { margin-top: 16px; }
+        #tab-eval th { background: #1a3460; color: white; padding: 10px 14px; font-size: 13px; }
+        #tab-eval td { padding: 10px 14px; border-bottom: 1px solid #eee; }
+        #tab-eval tr:nth-child(even) td { background: #f9f9f9; }
+        #tab-eval tr:last-child td { border-bottom: none; }
     </style>
 </head>
 <body>
 
-<!-- Tab navigation -->
 <div class="tab-nav">
     <div class="tab-nav-inner">
         <button class="tab-btn active" onclick="switchTab('monitoring', this)">Business Monitoring</button>
@@ -337,21 +172,21 @@
     </div>
 </div>
 
-<!-- ═══════════════════════════════════════════
-     TAB 1 — BUSINESS MONITORING
-═══════════════════════════════════════════ -->
+<!-- ═══════════════════ TAB 1 — BUSINESS MONITORING ═══════════════════ -->
 <div id="tab-monitoring" class="tab-content active">
 <div class="page">
 
     <div class="page-title">FCC Ads — Business Monitoring</div>
-    <div class="page-meta">Oct 2026 &nbsp;·&nbsp; <strong style="color:#666;">Scope:</strong> Business and reporting RCA for FCC and Client (Nahdi) — technical RCA is out of scope of this document.</div>
+    <div class="page-meta">Oct 2026 &nbsp;·&nbsp; <strong style="color:#666;">Scope:</strong> Business and reporting RCA for FCC and Client — technical RCA is out of scope of this document.</div>
 
     <!-- AD REVENUE -->
     <div class="top-metric">
         <div class="top-metric-label">The One Number</div>
         <div class="top-metric-title">Ad Revenue</div>
         <div class="top-metric-body">
-            The top-line outcome of the ads business. Ad Revenue is a function of Supply and Demand — bounded by whichever side is the limiting constraint. High supply with low demand leaves inventory unfilled. High demand with low supply means advertisers can't reach audiences. Growth requires both sides to scale together.
+            Ad Revenue is a function of Supply and Demand — and is bounded by whichever side is the limiting constraint at any given time.<br><br>
+            <strong style="opacity:1;">Supply</strong> is the attention base: the traffic on the platform that creates ad opportunities — searches, page views, sessions.<br>
+            <strong style="opacity:1;">Demand</strong> is advertisers actively buying into that inventory — campaigns running, budgets allocated, keywords configured.
         </div>
         <div class="metric-chips">
             <span class="chip">Total ad revenue — Nahdi platform</span>
@@ -362,19 +197,8 @@
     </div>
 
     <div class="equation">
-        Ad Revenue = f(Supply, Demand)
-        <div class="sub">A drop in Ad Revenue means either supply has contracted, demand has weakened, or both. The sections below diagnose which.</div>
-    </div>
-
-    <div class="if-drops">
-        <div class="if-drop-card">
-            <div class="if-drop-title">If Supply is the constraint</div>
-            <div class="if-drop-body">Traffic exists on the platform but there isn't enough reach for advertisers to buy against. Ad requests are low, impressions available are low. → See Supply section below.</div>
-        </div>
-        <div class="if-drop-card">
-            <div class="if-drop-title">If Demand is the constraint</div>
-            <div class="if-drop-body">Traffic exists but advertisers aren't buying or aren't able to. Could be motivation (low ROAS, low CTR) or ability (low campaigns, idle budgets). → See Demand section below.</div>
-        </div>
+        Ad Revenue = min(Supply, Demand)
+        <div class="sub">A drop means either supply has contracted, demand has weakened, or both. The sections below help you diagnose which.</div>
     </div>
 
     <hr class="divider">
@@ -384,57 +208,76 @@
         <span class="section-tag tag-supply">Supply</span>
         <span class="section-title">Is there enough traffic for ads to run against?</span>
     </div>
+    <div class="section-desc">Supply metrics show the size of the attention base. The drill path starts at platform traffic, then narrows to what FCC sees as ad requests by product type.</div>
 
-    <div class="section-desc">
-        Supply is the attention base — the searches and page views that create ad opportunities. The drill path starts at platform traffic, narrows to what FCC sees (ad requests by product), then to how much of that is being filled.
+    <div class="flag note" style="margin-top: 0; margin-bottom: 16px;">
+        <strong>Partially out of scope:</strong> Total search volume is trackable by FCC. Other upstream supply metrics — page views, sessions, active users — are owned by Nahdi and not currently available to FCC. These should ideally be surfaced here; flagged as a data access dependency.
     </div>
 
-    <div class="flag note" style="margin-top: 0;">
-        <strong>Platform traffic — out of scope for now:</strong> Upstream supply metrics (total search volume, page views, sessions, active users on Nahdi) are not currently trackable by FCC — these are owned by Nahdi. Ideally these would be visible here to give full supply context. Flagged as a data access dependency to resolve.
-    </div>
-
-    <div class="metric-card" style="margin-top: 16px;">
-        <div class="metric-card-header header-supply">Ad Requests — what FCC sees</div>
+    <div class="metric-card">
+        <div class="metric-card-header header-supply">Supply Metrics</div>
         <table>
-            <thead>
-                <tr>
-                    <th>Metric</th>
-                    <th>What it tells you</th>
-                    <th>If it drops, drill into</th>
-                </tr>
-            </thead>
+            <thead><tr><th style="min-width:220px;">Metric</th><th>What it tells you</th><th style="min-width:160px; text-align:right;">Deep dive</th></tr></thead>
             <tbody>
                 <tr>
                     <td>
-                        <div class="metric-name">Total ad requests</div>
-                        <div class="metric-sub">PLA + Display combined</div>
+                        <div class="metric-row-main has-drill" onclick="toggleDrill(this)">
+                            <div class="metric-name">Total search volume<span class="metric-sub">Queries hitting the platform</span></div>
+                            <div class="metric-desc">How many search events are happening on Nahdi. The root supply signal — every ad opportunity starts with a search.</div>
+                            <div class="metric-ref"></div>
+                        </div>
+                        <div class="drill-panel">
+                            <div class="drill-panel-title">If this drops, look at</div>
+                            <div class="drill-item">
+                                <div><span class="drill-item-name">Ad requests — PLA</span><span class="drill-item-sub">Search-triggered ad calls to FCC</span></div>
+                                <div class="drill-item-desc">A proportional drop confirms the search volume fall is real and flowing through to FCC. A disproportionate drop suggests integration or config issue.</div>
+                            </div>
+                            <div class="drill-item">
+                                <div><span class="drill-item-name">Query type distribution</span><span class="drill-item-sub">Head / torso / tail</span></div>
+                                <div class="drill-item-desc">Which tier of queries dropped? A head query drop is more damaging to revenue than a tail drop.</div>
+                            </div>
+                        </div>
                     </td>
-                    <td>Volume of ad opportunities reaching FCC. Best proxy for platform supply when upstream traffic data isn't available.</td>
-                    <td class="drill-into">Split by product type below</td>
                 </tr>
                 <tr>
                     <td>
-                        <div class="metric-name">Ad requests — PLA</div>
-                        <div class="metric-sub">Product Listing Ads (CPC)</div>
+                        <div class="metric-row-main has-drill" onclick="toggleDrill(this)">
+                            <div class="metric-name">Ad requests — PLA<span class="metric-sub">Product Listing Ads (CPC), search-driven</span></div>
+                            <div class="metric-desc">Search events that trigger a PLA ad call to FCC. Proxy for monetisable search supply when full search volume data isn't available.</div>
+                            <div class="metric-ref"></div>
+                        </div>
+                        <div class="drill-panel">
+                            <div class="drill-panel-title">If this drops, look at</div>
+                            <div class="drill-item">
+                                <div><span class="drill-item-name">Total search volume</span></div>
+                                <div class="drill-item-desc">Did overall searches fall? If yes, this is a supply-side contraction. If search volume is stable but PLA requests dropped, the integration or trigger logic is broken.</div>
+                            </div>
+                            <div class="drill-item">
+                                <div><span class="drill-item-name">Fill Rate</span><span class="drill-item-sub">→ see Motivation section</span></div>
+                                <div class="drill-item-desc drill-xref">Shared metric — see Motivation section for full definition and drill-down.</div>
+                            </div>
+                        </div>
                     </td>
-                    <td>Search-driven ad requests. A drop here means fewer searches are triggering PLA calls — either search volume dropped or the integration broke.</td>
-                    <td class="drill-into">Platform search volume (Nahdi-side); serving error rate (Serving Eval tab)</td>
                 </tr>
                 <tr>
                     <td>
-                        <div class="metric-name">Ad requests — Display</div>
-                        <div class="metric-sub">Display Ads (CPM)</div>
+                        <div class="metric-row-main has-drill" onclick="toggleDrill(this)">
+                            <div class="metric-name">Ad requests — Display<span class="metric-sub">Display Ads (CPM), page-view-driven</span></div>
+                            <div class="metric-desc">Page view events that trigger a Display ad call. A drop means fewer page views are generating display impression opportunities — either traffic fell or placement config changed.</div>
+                            <div class="metric-ref"></div>
+                        </div>
+                        <div class="drill-panel">
+                            <div class="drill-panel-title">If this drops, look at</div>
+                            <div class="drill-item">
+                                <div><span class="drill-item-name">Page views / sessions (Nahdi-side)</span><span class="drill-item-sub">Not currently available to FCC</span></div>
+                                <div class="drill-item-desc">Root supply signal for Display. Out of scope today — flagged as data dependency.</div>
+                            </div>
+                            <div class="drill-item">
+                                <div><span class="drill-item-name">Display placement configuration</span></div>
+                                <div class="drill-item-desc">Check whether any placements were disabled or misconfigured on the Nahdi side.</div>
+                            </div>
+                        </div>
                     </td>
-                    <td>Page-view-driven ad requests. A drop here means fewer page views are generating display impression opportunities.</td>
-                    <td class="drill-into">Platform page view volume (Nahdi-side); display placement config</td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="metric-name">Fill Rate</div>
-                        <div class="metric-sub">Ads served / Total ad requests</div>
-                    </td>
-                    <td>Of the requests FCC receives, how many result in a served ad. The bridge between supply and demand — low fill rate means either no matching campaign (demand gap) or pipeline failure (technical).</td>
-                    <td class="drill-into">Demand gap → Demand section. Pipeline failure → Serving Eval tab</td>
                 </tr>
             </tbody>
         </table>
@@ -447,87 +290,155 @@
         <span class="section-tag tag-demand">Demand</span>
         <span class="section-title">Are advertisers buying, and are they able to?</span>
     </div>
-
-    <div class="section-desc">
-        Demand is driven by advertiser behaviour — whether they're motivated to spend and whether they're set up to do so. A drop in demand is either a motivation problem (ads aren't delivering value) or an ability problem (advertisers can't configure or scale campaigns).
-    </div>
+    <div class="section-desc">Demand is driven by advertiser behaviour. A drop in demand is either a motivation problem (ads aren't delivering value, so advertisers pull back) or an ability problem (advertisers want to spend but aren't set up to). Diagnose which before acting.</div>
 
     <!-- MOTIVATION -->
     <div class="section-header" style="margin-top: 4px;">
         <span class="section-tag tag-motivation">Motivation</span>
         <span class="section-title">Are advertisers getting value from their spend?</span>
     </div>
-
-    <div class="section-desc">
-        If motivation is low, advertisers reduce budgets or stop campaigning. The drill path follows the value chain — from top-line return down to the individual components that drive it.
-    </div>
+    <div class="section-desc">If motivation is low, advertisers reduce budgets or stop campaigning. The drill path follows the value chain — from top-line return down to the components that drive it.</div>
 
     <div class="metric-card">
         <div class="metric-card-header header-motivation">Motivation Metrics — drill top-down</div>
         <table>
-            <thead>
-                <tr>
-                    <th>Metric</th>
-                    <th>What it tells you</th>
-                    <th>If it drops, drill into</th>
-                </tr>
-            </thead>
+            <thead><tr><th style="min-width:220px;">Metric</th><th>What it tells you</th><th style="min-width:160px; text-align:right;"></th></tr></thead>
             <tbody>
                 <tr>
                     <td>
-                        <div class="metric-name">ROAS</div>
-                        <div class="metric-sub">Revenue attributed to ad clicks / Ad spend</div>
+                        <div class="metric-row-main has-drill" onclick="toggleDrill(this)">
+                            <div class="metric-name">ROAS<span class="metric-sub">Revenue from ad clicks / Ad spend</span></div>
+                            <div class="metric-desc">Top-line return for advertisers. The primary motivation signal — strong ROAS drives budget increases; weak ROAS causes pullback.</div>
+                            <div class="metric-ref"></div>
+                        </div>
+                        <div class="drill-panel">
+                            <div class="drill-panel-title">If this drops, look at</div>
+                            <div class="drill-item">
+                                <div><span class="drill-item-name">CVR (Conversion Rate)</span></div>
+                                <div class="drill-item-desc">Are clicks converting to orders? A CVR drop with stable CTR points to a post-click issue — product, pricing, or landing experience.</div>
+                            </div>
+                            <div class="drill-item">
+                                <div><span class="drill-item-name">Total Clicks</span><span class="drill-item-sub">→ see below</span></div>
+                                <div class="drill-item-desc drill-xref">Shared metric — see Total Clicks row below for full drill-down.</div>
+                            </div>
+                        </div>
                     </td>
-                    <td>Top-line return for advertisers. The primary motivation signal — strong ROAS drives budget increases; weak ROAS causes pullback.</td>
-                    <td class="drill-into">CVR dropping or Clicks dropping?</td>
                 </tr>
                 <tr>
                     <td>
-                        <div class="metric-name">Incremental Sales</div>
-                        <div class="metric-sub">Sales caused by the ad, above organic baseline</div>
+                        <div class="metric-row-main has-drill" onclick="toggleDrill(this)">
+                            <div class="metric-name">Incremental Sales<span class="metric-sub">Sales caused by the ad above organic baseline</span></div>
+                            <div class="metric-desc">True ad-driven revenue lift — proves causality, not just correlation. Stronger motivation signal than ROAS alone. <em>Not currently being measured.</em></div>
+                            <div class="metric-ref"></div>
+                        </div>
+                        <div class="drill-panel">
+                            <div class="drill-panel-title">Status</div>
+                            <div class="drill-item">
+                                <div><span class="drill-item-name">Measurement not in place</span></div>
+                                <div class="drill-item-desc">Incremental sales requires holdout experimentation — suppressing ads for a random user subset and comparing conversion rates. To be added to the product backlog. Until then, ROAS is the proxy.</div>
+                            </div>
+                        </div>
                     </td>
-                    <td>True ad-driven revenue lift — proves causality, not just correlation. Stronger motivation signal than ROAS alone.</td>
-                    <td class="drill-into">Requires holdout measurement — methodology TBD</td>
                 </tr>
                 <tr>
                     <td>
-                        <div class="metric-name">CVR (Conversion Rate)</div>
-                        <div class="metric-sub">Orders / Clicks</div>
+                        <div class="metric-row-main has-drill" onclick="toggleDrill(this)">
+                            <div class="metric-name">CVR (Conversion Rate)<span class="metric-sub">Orders / Clicks</span></div>
+                            <div class="metric-desc">Are clicks leading to purchases? A drop here with stable CTR means the post-click experience isn't converting — advertiser-side issue.</div>
+                            <div class="metric-ref"></div>
+                        </div>
+                        <div class="drill-panel">
+                            <div class="drill-panel-title">If this drops, look at</div>
+                            <div class="drill-item">
+                                <div><span class="drill-item-name">Product-query relevance</span></div>
+                                <div class="drill-item-desc">Was the right product shown for the query? A mismatch means users click but don't find what they expected.</div>
+                            </div>
+                            <div class="drill-item">
+                                <div><span class="drill-item-name">Pricing / landing page</span></div>
+                                <div class="drill-item-desc">Advertiser-controlled. FCC can surface the signal but cannot fix the root cause.</div>
+                            </div>
+                        </div>
                     </td>
-                    <td>Are clicks leading to purchases? A drop here with stable CTR means the product or landing experience isn't converting — advertiser-side issue.</td>
-                    <td class="drill-into">Product-query relevance, landing page, pricing</td>
                 </tr>
                 <tr>
                     <td>
-                        <div class="metric-name">CTR (Click-Through Rate)</div>
-                        <div class="metric-sub">Clicks / Impressions served</div>
+                        <div class="metric-row-main has-drill" onclick="toggleDrill(this)">
+                            <div class="metric-name">CTR (Click-Through Rate)<span class="metric-sub">Clicks / Impressions served</span></div>
+                            <div class="metric-desc">Are users engaging with the ads shown? A drop here means the served ad isn't relevant or compelling enough to act on.</div>
+                            <div class="metric-ref"></div>
+                        </div>
+                        <div class="drill-panel">
+                            <div class="drill-panel-title">If this drops, look at</div>
+                            <div class="drill-item">
+                                <div><span class="drill-item-name">Total Impressions Served</span><span class="drill-item-sub">→ see below</span></div>
+                                <div class="drill-item-desc drill-xref">Shared metric — if impressions are stable but CTR dropped, it's a relevance problem. See Serving Eval tab for technical drill-down.</div>
+                            </div>
+                            <div class="drill-item">
+                                <div><span class="drill-item-name">CTR by query tier / match type / position</span><span class="drill-item-sub">→ Serving Eval tab, Level 2</span></div>
+                                <div class="drill-item-desc drill-xref">Full segmentation available in the Serving Eval tab.</div>
+                            </div>
+                        </div>
                     </td>
-                    <td>Are users engaging with the ads shown? A drop here means the served ad isn't relevant or compelling enough to act on.</td>
-                    <td class="drill-into">Impressions stable? → relevance problem (Serving Eval tab). Impressions dropped? → fill rate / supply</td>
                 </tr>
                 <tr>
                     <td>
-                        <div class="metric-name">Total Clicks</div>
-                        <div class="metric-sub">PLA + Display</div>
+                        <div class="metric-row-main has-drill" onclick="toggleDrill(this)">
+                            <div class="metric-name">Total Clicks<span class="metric-sub">PLA + Display</span></div>
+                            <div class="metric-desc">Raw click volume. A drop can come from fewer impressions (supply) or lower CTR (relevance) — decompose before concluding.</div>
+                            <div class="metric-ref"></div>
+                        </div>
+                        <div class="drill-panel">
+                            <div class="drill-panel-title">If this drops, look at</div>
+                            <div class="drill-item">
+                                <div><span class="drill-item-name">Total Impressions Served</span><span class="drill-item-sub">→ see below</span></div>
+                                <div class="drill-item-desc drill-xref">Shared metric — if impressions dropped, clicks will fall proportionally. That's a supply or fill rate problem, not a relevance problem.</div>
+                            </div>
+                            <div class="drill-item">
+                                <div><span class="drill-item-name">CTR</span><span class="drill-item-sub">→ see above</span></div>
+                                <div class="drill-item-desc drill-xref">If impressions are stable but clicks dropped, CTR fell. See CTR row above.</div>
+                            </div>
+                        </div>
                     </td>
-                    <td>Raw click volume. A drop can come from fewer impressions (supply) or lower CTR (relevance). Decompose before concluding.</td>
-                    <td class="drill-into">Impressions dropped → supply. CTR dropped → Serving Eval tab</td>
                 </tr>
                 <tr>
                     <td>
-                        <div class="metric-name">Total Impressions Served</div>
-                        <div class="metric-sub">PLA + Display</div>
+                        <div class="metric-row-main has-drill" onclick="toggleDrill(this)">
+                            <div class="metric-name">Total Impressions Served<span class="metric-sub">PLA + Display</span></div>
+                            <div class="metric-desc">Volume of ads actually shown to users. Function of ad requests × fill rate. A drop is either supply falling or fill rate falling.</div>
+                            <div class="metric-ref"></div>
+                        </div>
+                        <div class="drill-panel">
+                            <div class="drill-panel-title">If this drops, look at</div>
+                            <div class="drill-item">
+                                <div><span class="drill-item-name">Ad requests (PLA / Display)</span><span class="drill-item-sub">→ Supply section above</span></div>
+                                <div class="drill-item-desc drill-xref">If ad requests dropped, impressions will follow — that's a supply-side problem.</div>
+                            </div>
+                            <div class="drill-item">
+                                <div><span class="drill-item-name">Fill Rate</span></div>
+                                <div class="drill-item-desc">Ads served / total ad requests. If ad requests are stable but impressions dropped, fill rate fell — either a demand gap (no matching campaign) or a pipeline failure (Serving Eval tab).</div>
+                            </div>
+                        </div>
                     </td>
-                    <td>Volume of ads actually shown to users. Function of fill rate × ad requests. A drop is either supply falling or fill rate falling.</td>
-                    <td class="drill-into">Ad requests dropped → supply. Fill rate dropped → demand gap or pipeline</td>
                 </tr>
                 <tr>
                     <td>
-                        <div class="metric-name">Share of Voice</div>
-                        <div class="metric-sub">Advertiser's impressions / Total impressions available</div>
+                        <div class="metric-row-main has-drill" onclick="toggleDrill(this)">
+                            <div class="metric-name">Share of Voice<span class="metric-sub">Advertiser's impressions / Total impressions available</span></div>
+                            <div class="metric-desc">Per-advertiser metric. How much of available inventory a given advertiser is capturing. A drop signals increasing competition or budget exhaustion.</div>
+                            <div class="metric-ref"></div>
+                        </div>
+                        <div class="drill-panel">
+                            <div class="drill-panel-title">If this drops, look at</div>
+                            <div class="drill-item">
+                                <div><span class="drill-item-name">Budget utilisation rate</span><span class="drill-item-sub">→ Ability section below</span></div>
+                                <div class="drill-item-desc drill-xref">Shared metric — if budget is exhausting early, the advertiser is hitting a cap and losing impressions to others. See Ability section.</div>
+                            </div>
+                            <div class="drill-item">
+                                <div><span class="drill-item-name">Active competitors in the same category</span></div>
+                                <div class="drill-item-desc">An increase in competing campaigns will naturally compress any individual advertiser's share of voice.</div>
+                            </div>
+                        </div>
                     </td>
-                    <td>How much of available ad inventory a given advertiser is capturing. Per-advertiser metric. A drop signals increasing competition or budget exhaustion.</td>
-                    <td class="drill-into">Budget exhausted early → Ability section. More competitors → competitive context</td>
                 </tr>
             </tbody>
         </table>
@@ -538,351 +449,258 @@
         <span class="section-tag tag-ability">Ability</span>
         <span class="section-title">Are advertisers set up to spend effectively?</span>
     </div>
-
-    <div class="section-desc">
-        Even motivated advertisers can't spend if they're not set up correctly — too few campaigns, exhausted budgets, sparse keyword coverage, or a product that's hard to manage. A healthy motivation score with weak ability metrics means the platform is leaving money on the table.
-    </div>
+    <div class="section-desc">Even motivated advertisers can't spend if they're not set up correctly. A healthy motivation score with weak ability metrics means the platform is leaving money on the table.</div>
 
     <div class="metric-card">
         <div class="metric-card-header header-ability">Ability Metrics</div>
         <table>
-            <thead>
-                <tr>
-                    <th>Metric</th>
-                    <th>What it tells you</th>
-                    <th>If it drops / is low</th>
-                </tr>
-            </thead>
+            <thead><tr><th style="min-width:220px;">Metric</th><th>What it tells you</th><th style="min-width:160px; text-align:right;"></th></tr></thead>
             <tbody>
                 <tr>
                     <td>
-                        <div class="metric-name">Active advertisers</div>
-                        <div class="metric-sub">Brands with at least one live campaign</div>
+                        <div class="metric-row-main has-drill" onclick="toggleDrill(this)">
+                            <div class="metric-name">Active advertisers<span class="metric-sub">Brands with at least one live campaign</span></div>
+                            <div class="metric-desc">Breadth of demand. If low or shrinking, revenue is fragile and concentrated.</div>
+                            <div class="metric-ref"></div>
+                        </div>
+                        <div class="drill-panel">
+                            <div class="drill-panel-title">If this drops, look at</div>
+                            <div class="drill-item">
+                                <div><span class="drill-item-name">New advertisers added vs. deactivations</span></div>
+                                <div class="drill-item-desc">Is the drop from churn or a slowdown in onboarding? Different fixes.</div>
+                            </div>
+                            <div class="drill-item">
+                                <div><span class="drill-item-name">Time to set up a campaign</span><span class="drill-item-sub">→ see below</span></div>
+                                <div class="drill-item-desc drill-xref">Shared metric — high setup friction reduces new advertiser conversion. See below.</div>
+                            </div>
+                        </div>
                     </td>
-                    <td>Breadth of demand. If low or shrinking, the revenue base is fragile — too concentrated in too few advertisers.</td>
-                    <td class="drill-into">Onboarding gap or churn — check new advertiser additions vs. deactivations</td>
                 </tr>
                 <tr>
                     <td>
-                        <div class="metric-name">Active campaigns</div>
-                        <div class="metric-sub">Campaigns in live / running state</div>
+                        <div class="metric-row-main has-drill" onclick="toggleDrill(this)">
+                            <div class="metric-name">Active campaigns<span class="metric-sub">Campaigns in live / running state</span></div>
+                            <div class="metric-desc">Depth of demand. An advertiser with one campaign is fragile. More campaigns across more categories = more robust demand.</div>
+                            <div class="metric-ref"></div>
+                        </div>
+                        <div class="drill-panel">
+                            <div class="drill-panel-title">If this drops, look at</div>
+                            <div class="drill-item">
+                                <div><span class="drill-item-name">Budget utilisation rate</span><span class="drill-item-sub">→ see below</span></div>
+                                <div class="drill-item-desc drill-xref">Shared metric — campaigns pausing early due to budget exhaustion will show as a drop here. See below.</div>
+                            </div>
+                            <div class="drill-item">
+                                <div><span class="drill-item-name">ROAS</span><span class="drill-item-sub">→ Motivation section above</span></div>
+                                <div class="drill-item-desc drill-xref">If ROAS is low, advertisers may be deliberately pausing campaigns. Check motivation metrics first.</div>
+                            </div>
+                        </div>
                     </td>
-                    <td>Depth of demand. An advertiser with one campaign is fragile. More campaigns across more categories = more robust demand.</td>
-                    <td class="drill-into">Paused or ended campaigns — check budget exhaustion rate</td>
                 </tr>
                 <tr>
                     <td>
-                        <div class="metric-name">Active keywords</div>
-                        <div class="metric-sub">Keywords triggered at least once in last 7 days</div>
+                        <div class="metric-row-main has-drill" onclick="toggleDrill(this)">
+                            <div class="metric-name">Active keywords<span class="metric-sub">Keywords triggered at least once in last 7 days</span></div>
+                            <div class="metric-desc">How much of configured keyword inventory is actually live. High idle rate reduces coverage and fill rate.</div>
+                            <div class="metric-ref"></div>
+                        </div>
+                        <div class="drill-panel">
+                            <div class="drill-panel-title">If this is low, look at</div>
+                            <div class="drill-item">
+                                <div><span class="drill-item-name">Total search volume by keyword</span><span class="drill-item-sub">→ Supply section above</span></div>
+                                <div class="drill-item-desc drill-xref">Keywords may be idle because the queries they're configured for have low or zero search volume on the platform.</div>
+                            </div>
+                            <div class="drill-item">
+                                <div><span class="drill-item-name">Keyword-query match rate</span><span class="drill-item-sub">→ Serving Eval tab, Level 3</span></div>
+                                <div class="drill-item-desc drill-xref">Keywords may be configured correctly but failing to match queries due to pipeline issues.</div>
+                            </div>
+                        </div>
                     </td>
-                    <td>How much of configured keyword inventory is actually live. High idle rate reduces coverage and fill rate.</td>
-                    <td class="drill-into">Keyword-query mismatch or low search volume for configured terms</td>
                 </tr>
                 <tr>
                     <td>
-                        <div class="metric-name">Total keywords configured</div>
-                        <div class="metric-sub">Across all live campaigns</div>
+                        <div class="metric-row-main has-drill" onclick="toggleDrill(this)">
+                            <div class="metric-name">Total keywords configured<span class="metric-sub">Across all live campaigns</span></div>
+                            <div class="metric-desc">Coverage of demand. Low keyword count relative to search volume = large share of queries with no campaign match.</div>
+                            <div class="metric-ref"></div>
+                        </div>
+                        <div class="drill-panel">
+                            <div class="drill-panel-title">If this is low, look at</div>
+                            <div class="drill-item">
+                                <div><span class="drill-item-name">Top search queries with no matching campaign</span></div>
+                                <div class="drill-item-desc">Identify head-term gaps — high-volume queries where no advertiser has configured a keyword. These are the highest-impact keyword coverage opportunities.</div>
+                            </div>
+                        </div>
                     </td>
-                    <td>Coverage of demand. Low keyword count relative to search volume = large share of queries with no campaign match.</td>
-                    <td class="drill-into">Compare against top search queries — identify uncovered head terms</td>
                 </tr>
                 <tr>
                     <td>
-                        <div class="metric-name">Total listings in campaigns</div>
-                        <div class="metric-sub">Unique products across all live campaigns</div>
+                        <div class="metric-row-main has-drill" onclick="toggleDrill(this)">
+                            <div class="metric-name">Total listings in campaigns<span class="metric-sub">Unique products across all live campaigns</span></div>
+                            <div class="metric-desc">Product coverage in ads. Low listing count = narrow advertiser participation or sparse catalogue coverage.</div>
+                            <div class="metric-ref"></div>
+                        </div>
+                        <div class="drill-panel">
+                            <div class="drill-panel-title">If this is low, look at</div>
+                            <div class="drill-item">
+                                <div><span class="drill-item-name">% of Nahdi catalogue covered by at least one campaign</span></div>
+                                <div class="drill-item-desc">What share of the total available product catalogue has ad coverage? Low coverage = monetisation gap.</div>
+                            </div>
+                        </div>
                     </td>
-                    <td>Product coverage in ads. Low listing count = narrow advertiser participation or sparse catalogue coverage.</td>
-                    <td class="drill-into">Check % of Nahdi catalogue covered by at least one campaign</td>
                 </tr>
                 <tr>
                     <td>
-                        <div class="metric-name">Budget utilisation rate</div>
-                        <div class="metric-sub">Spend / Configured budget</div>
+                        <div class="metric-row-main has-drill" onclick="toggleDrill(this)">
+                            <div class="metric-name">Budget utilisation rate<span class="metric-sub">Spend / Configured budget</span></div>
+                            <div class="metric-desc">Are advertisers spending their full allocated budget? Low = bids too low or keywords not matching. High with early exhaustion = budget cap is limiting spend.</div>
+                            <div class="metric-ref"></div>
+                        </div>
+                        <div class="drill-panel">
+                            <div class="drill-panel-title">If low, look at</div>
+                            <div class="drill-item">
+                                <div><span class="drill-item-name">Active keywords / keyword-query match rate</span><span class="drill-item-sub">→ see above / Serving Eval tab</span></div>
+                                <div class="drill-item-desc drill-xref">Low utilisation often means keywords aren't matching queries — budget can't be spent if ads aren't being served.</div>
+                            </div>
+                            <div class="drill-panel-title" style="margin-top: 10px;">If high with early exhaustion, look at</div>
+                            <div class="drill-item">
+                                <div><span class="drill-item-name">Share of Voice</span><span class="drill-item-sub">→ Motivation section above</span></div>
+                                <div class="drill-item-desc drill-xref">Early budget exhaustion compresses share of voice. Advertiser needs to raise the budget cap or bid more efficiently.</div>
+                            </div>
+                        </div>
                     </td>
-                    <td>Are advertisers spending their full allocated budget? Low utilisation = bids too low or keywords not matching. High utilisation early = budget cap limiting spend.</td>
-                    <td class="drill-into">Low → bid or keyword gap. High with early exhaustion → budget cap too tight</td>
                 </tr>
                 <tr>
                     <td>
-                        <div class="metric-name">Time to set up a campaign</div>
-                        <div class="metric-sub">Median time from creation to first impression</div>
+                        <div class="metric-row-main has-drill" onclick="toggleDrill(this)">
+                            <div class="metric-name">Time to set up a campaign<span class="metric-sub">Median time from creation to first impression</span></div>
+                            <div class="metric-desc">Ease of onboarding. Long setup time signals product friction suppressing demand before it even starts.</div>
+                            <div class="metric-ref"></div>
+                        </div>
+                        <div class="drill-panel">
+                            <div class="drill-panel-title">If high, look at</div>
+                            <div class="drill-item">
+                                <div><span class="drill-item-name">Onboarding funnel drop-off</span></div>
+                                <div class="drill-item-desc">Where in the campaign creation flow are advertisers taking the most time or abandoning? Step-level drop-off data will isolate the friction point.</div>
+                            </div>
+                        </div>
                     </td>
-                    <td>Ease of onboarding. Long setup time signals product friction suppressing demand before it starts.</td>
-                    <td class="drill-into">Review onboarding flow for drop-off points</td>
                 </tr>
                 <tr>
                     <td>
-                        <div class="metric-name">Time to edit / manage a campaign</div>
-                        <div class="metric-sub">Median time for common management actions</div>
+                        <div class="metric-row-main has-drill" onclick="toggleDrill(this)">
+                            <div class="metric-name">Time to edit / manage a campaign<span class="metric-sub">Median time for common management actions</span></div>
+                            <div class="metric-desc">Ease of ongoing use. High management time discourages active optimisation, leading to idle budgets and stale keywords.</div>
+                            <div class="metric-ref"></div>
+                        </div>
+                        <div class="drill-panel">
+                            <div class="drill-panel-title">If high, look at</div>
+                            <div class="drill-item">
+                                <div><span class="drill-item-name">Active keywords idle rate</span><span class="drill-item-sub">→ see above</span></div>
+                                <div class="drill-item-desc drill-xref">High management friction leads to keyword staleness. Advertisers stop optimising, budgets sit idle.</div>
+                            </div>
+                        </div>
                     </td>
-                    <td>Ease of ongoing use. High management time discourages active optimisation, leading to idle budgets and stale keywords.</td>
-                    <td class="drill-into">Review campaign management flows for friction</td>
                 </tr>
             </tbody>
         </table>
     </div>
 
     <div class="flag info" style="margin-top: 8px;">
-        <strong>Reading motivation and ability together:</strong> Motivation dropping with ability stable → product isn't delivering returns, focus on relevance and conversion. Ability dropping with motivation stable → advertisers want to spend but can't, focus on onboarding and campaign tooling. Both dropping → structural demand problem, needs coordinated fix.
+        <strong>Reading motivation and ability together:</strong> Motivation dropping, ability stable → product isn't delivering returns; focus on relevance and conversion. Ability dropping, motivation stable → advertisers want to spend but can't; focus on onboarding and campaign tooling. Both dropping → structural demand problem, needs coordinated fix.
     </div>
 
 </div>
 </div>
 
-<!-- ═══════════════════════════════════════════
-     TAB 2 — SERVING EVAL FRAMEWORK
-═══════════════════════════════════════════ -->
+<!-- ═══════════════════ TAB 2 — SERVING EVAL ═══════════════════ -->
 <div id="tab-eval" class="tab-content">
 <div class="page">
 
     <div class="page-title">FCC Ads — Serving Eval Framework</div>
     <div class="page-meta">Oct 2026 &nbsp;·&nbsp; <strong style="color:#666;">Scope:</strong> Ad serving only — campaign setup, attribution, and reporting are out of scope of this document.</div>
 
-    <!-- North Star -->
     <div class="card">
         <div class="card-step">North Star</div>
         <div class="card-title">What Are We Measuring?</div>
-        <div class="card-body">
-            The objective of an ad is to increase monetisation within the limits of relevance. The mechanism is visibility — getting the right ad in front of the right user at the right moment. ROAS is the business outcome that captures whether this is working end-to-end.
-        </div>
-
+        <div class="card-body">The objective of an ad is to increase monetisation within the limits of relevance. The mechanism is visibility — getting the right ad in front of the right user at the right moment. ROAS is the business outcome that captures whether this is working end-to-end.</div>
         <div class="formula-box">
             ROAS = Revenue attributed to ad clicks / Ad spend
             <div class="sub">Equivalently: ROAS = CVR &times; ASP / CPC &nbsp;|&nbsp; CVR = conversion rate &nbsp;|&nbsp; ASP = avg selling price &nbsp;|&nbsp; CPC = cost per click</div>
         </div>
-
         <div class="flag info" style="margin-top: 12px;">
-            <strong>FCC's operational metric — Fill Rate:</strong> Of the levers in ROAS (CVR, ASP, CPC), FCC Serving controls none of them directly. What FCC controls is whether an ad is served at all. Fill Rate = ads served / total ad requests. It is the upstream input that determines how many clicks are even possible. This framework tracks ROAS as the business north star and Fill Rate as the primary FCC-owned operational metric beneath it.
+            <strong>FCC's operational metric — Fill Rate:</strong> Of the levers in ROAS (CVR, ASP, CPC), FCC Serving controls none of them directly. What FCC controls is whether an ad is served at all. Fill Rate = ads served / total ad requests. This framework tracks ROAS as the business north star and Fill Rate as the primary FCC-owned operational metric beneath it.
         </div>
-
         <div class="flag note" style="margin-top: 8px;">
             <strong>Incrementality caveat:</strong> ROAS here is <em>attributed</em> ROAS — revenue from orders placed after an ad click. Whether those buyers would have converted without the ad requires organic conversion data and holdout experiments. Known limitation, deferred.
         </div>
     </div>
 
-    <!-- Decomposition -->
     <div class="card">
         <div class="card-step">Decomposition</div>
         <div class="card-title">When ROAS Shows a Gap — Where to Look</div>
-        <div class="card-body">
-            Clicks — the bridge between serving and revenue — are a function of four factors. FCC Serving directly owns one of them.
-        </div>
-
+        <div class="card-body">Clicks — the bridge between serving and revenue — are a function of four factors. FCC Serving directly owns one of them.</div>
         <div class="formula-box">
             # Clicks = Traffic &times; Ad Slots &times; Fill Rate &times; CTR
             <div class="sub">Traffic &amp; Ad Slots = retailer-controlled (Nahdi) &nbsp;|&nbsp; Fill Rate = FCC Serving &nbsp;|&nbsp; CTR = shared (FCC relevance + advertiser creative)</div>
         </div>
-
         <div class="stats">
-            <div class="stat">
-                <div class="stat-val">Traffic &amp; Slots</div>
-                <div class="stat-label">Set by the retailer. Monitored as context — not a serving fix target.</div>
-            </div>
-            <div class="stat warn">
-                <div class="stat-val">Fill Rate drops</div>
-                <div class="stat-label">FCC is not serving ads for queries it should be serving. Primary FCC-owned metric. Diagnosed in Level 3 below.</div>
-            </div>
-            <div class="stat warn">
-                <div class="stat-val">CTR drops</div>
-                <div class="stat-label">Ads served but users not clicking. Partially FCC-owned (which product surfaces) and partially advertiser-owned (creative). Diagnosed in Level 2 below.</div>
-            </div>
+            <div class="stat"><div class="stat-val">Traffic &amp; Slots</div><div class="stat-label">Set by the retailer. Monitored as context — not a serving fix target.</div></div>
+            <div class="stat warn"><div class="stat-val">Fill Rate drops</div><div class="stat-label">FCC is not serving ads for queries it should be serving. Primary FCC-owned metric. Diagnosed in Level 3 below.</div></div>
+            <div class="stat warn"><div class="stat-val">CTR drops</div><div class="stat-label">Ads served but users not clicking. Partially FCC-owned (which product surfaces) and partially advertiser-owned (creative). Diagnosed in Level 2 below.</div></div>
         </div>
-
         <div class="flag note" style="margin-top: 8px;">
-            <strong>Conversion Rate — deferred:</strong> Even with Fill Rate and CTR healthy, ROAS can drop if clicks don't convert. CVR is post-click and advertiser-controlled. This framework does not diagnose CVR. If ROAS drops while Fill Rate and CTR are stable, conversion is the likely cause — tracked as a signal but not drilled into here.
+            <strong>Conversion Rate — deferred:</strong> Even with Fill Rate and CTR healthy, ROAS can drop if clicks don't convert. CVR is post-click and advertiser-controlled. If ROAS drops while Fill Rate and CTR are stable, conversion is the likely cause — tracked as a signal but not drilled into here.
         </div>
     </div>
 
-    <!-- Level 2: CTR / Relevance -->
     <div class="card">
         <div class="card-step">Level 2 — Relevance</div>
         <div class="card-title">Was What We Served Relevant?</div>
-        <div class="card-body">
-            When CTR is low, ads are being served but users aren't clicking. The goal is to identify which segment of queries is driving the low CTR — not to audit every served ad.
-        </div>
-
-        <div class="step-row">
-            <div class="step-num">1</div>
-            <div class="step-content">
-                <div class="step-title">Overall CTR — baseline</div>
-                <div class="step-body">Track weekly. Any sustained drop triggers investigation.</div>
-                <div class="step-next"><strong>Next:</strong> Segment by query volume tier.</div>
-            </div>
-        </div>
+        <div class="card-body">When CTR is low, ads are being served but users aren't clicking. The goal is to identify which segment of queries is driving the low CTR — not to audit every served ad.</div>
+        <div class="step-row"><div class="step-num">1</div><div class="step-content"><div class="step-title">Overall CTR — baseline</div><div class="step-body">Track weekly. Any sustained drop triggers investigation.</div><div class="step-next"><strong>Next:</strong> Segment by query volume tier.</div></div></div>
         <div class="arrow">↓</div>
-
-        <div class="step-row">
-            <div class="step-num">2</div>
-            <div class="step-content">
-                <div class="step-title">CTR by query volume tier</div>
-                <div class="step-body">Segment queries into head (top 20% by volume), torso, and tail. Head queries drive ~80% of traffic — a drop there is systemic. A drop only in tail is more contained.</div>
-                <div class="step-next"><strong>Next:</strong> Break down the flagged tier(s) by match type.</div>
-            </div>
-        </div>
+        <div class="step-row"><div class="step-num">2</div><div class="step-content"><div class="step-title">CTR by query volume tier</div><div class="step-body">Segment into head (top 20% by volume), torso, and tail. Head queries drive ~80% of traffic — a drop there is systemic.</div><div class="step-next"><strong>Next:</strong> Break down the flagged tier(s) by match type.</div></div></div>
         <div class="arrow">↓</div>
-
-        <div class="step-row">
-            <div class="step-num">3</div>
-            <div class="step-content">
-                <div class="step-title">CTR by match type</div>
-                <div class="step-body">Exact match should have higher CTR than phrase match. If exact match CTR is low, the served product isn't matching the keyword well. If phrase match CTR is low, matching is too broad.</div>
-                <div class="step-next"><strong>Next:</strong> Break down the flagged match type(s) by ad position.</div>
-            </div>
-        </div>
+        <div class="step-row"><div class="step-num">3</div><div class="step-content"><div class="step-title">CTR by match type</div><div class="step-body">Exact match should have higher CTR than phrase match. If exact match CTR is low, the served product isn't matching the keyword well. If phrase match CTR is low, matching is too broad.</div><div class="step-next"><strong>Next:</strong> Break down the flagged match type(s) by ad position.</div></div></div>
         <div class="arrow">↓</div>
-
-        <div class="step-row">
-            <div class="step-num">4</div>
-            <div class="step-content">
-                <div class="step-title">CTR by position</div>
-                <div class="step-body">Position 1 should get significantly more clicks than positions 2, 3, etc. If CTR across positions is flat, ranking isn't putting the right product first.</div>
-                <div class="step-next"><strong>Next:</strong> Relevance Reviewer — weekly sample of (query, served product) pairs from the segment(s) flagged above.</div>
-            </div>
-        </div>
+        <div class="step-row"><div class="step-num">4</div><div class="step-content"><div class="step-title">CTR by position</div><div class="step-body">Position 1 should get significantly more clicks than positions 2, 3, etc. If CTR across positions is flat, ranking isn't putting the right product first.</div><div class="step-next"><strong>Next:</strong> Relevance Reviewer — weekly sample of (query, served product) pairs from the segment(s) flagged above.</div></div></div>
     </div>
 
-    <!-- Level 3: Fill Rate -->
     <div class="card">
         <div class="card-step">Level 3 — Fill Rate</div>
         <div class="card-title">Should We Have Served Something But Didn't?</div>
-        <div class="card-body">
-            When Fill Rate is low, the question is: for the queries where nothing was served, was there a relevant campaign that should have matched? This decomposition separates pipeline failures (FCC's problem) from demand gaps (advertiser's problem).
-        </div>
-
-        <div class="step-row">
-            <div class="step-num">1</div>
-            <div class="step-content">
-                <div class="step-title">Take all no-ad queries from the query log</div>
-                <div class="step-body">Every search that returned no served ad is the starting universe. This is the full Fill Rate miss set.</div>
-                <div class="step-next"><strong>Next:</strong> Run offline keyword match against active campaigns.</div>
-            </div>
-        </div>
+        <div class="card-body">When Fill Rate is low, the question is: for the queries where nothing was served, was there a relevant campaign that should have matched? This separates pipeline failures (FCC's problem) from demand gaps (advertiser's problem).</div>
+        <div class="step-row"><div class="step-num">1</div><div class="step-content"><div class="step-title">Take all no-ad queries from the query log</div><div class="step-body">Every search that returned no served ad is the starting universe. This is the full Fill Rate miss set.</div><div class="step-next"><strong>Next:</strong> Run offline keyword match against active campaigns.</div></div></div>
         <div class="arrow">↓</div>
-
-        <div class="step-row">
-            <div class="step-num">2</div>
-            <div class="step-content">
-                <div class="step-title">Run keyword matching logic offline against active campaigns</div>
-                <div class="step-body">For each no-ad query, check whether an active campaign has a keyword that should match (exact or phrase). Use a snapshot of campaigns at query time.</div>
-                <div class="step-next"><strong>Next:</strong> Bucket each query into one of two outcomes.</div>
-            </div>
-        </div>
+        <div class="step-row"><div class="step-num">2</div><div class="step-content"><div class="step-title">Run keyword matching logic offline against active campaigns</div><div class="step-body">For each no-ad query, check whether an active campaign has a keyword that should match (exact or phrase). Use a snapshot of campaigns at query time.</div><div class="step-next"><strong>Next:</strong> Bucket each query into one of two outcomes.</div></div></div>
         <div class="arrow">↓</div>
-
-        <div class="step-row">
-            <div class="step-num">3</div>
-            <div class="step-content">
-                <div class="step-title">Bucket the results</div>
-                <div class="step-body">
-                    <strong>Keyword should have matched, no ad served</strong> — confirmed pipeline failure. Demand existed; FCC did not serve. Volume here is the false negative rate — the primary serving health signal.<br><br>
-                    <strong>No keyword matched</strong> — either a demand gap (advertiser hasn't configured this keyword) or a genuine no-match (no relevant product in catalogue). Distinguishing these requires a catalogue-level relevance check — deferred.
-                </div>
-                <div class="step-next"><strong>Next:</strong> Relevance Reviewer on confirmed false negatives to validate whether a relevant ad should have been served.</div>
-            </div>
-        </div>
+        <div class="step-row"><div class="step-num">3</div><div class="step-content"><div class="step-title">Bucket the results</div><div class="step-body"><strong>Keyword should have matched, no ad served</strong> — confirmed pipeline failure. Demand existed; FCC did not serve. Volume here is the false negative rate.<br><br><strong>No keyword matched</strong> — either a demand gap (advertiser hasn't configured this keyword) or a genuine no-match. Distinguishing these requires a catalogue-level relevance check — deferred.</div><div class="step-next"><strong>Next:</strong> Relevance Reviewer on confirmed false negatives.</div></div></div>
         <div class="arrow">↓</div>
-
-        <div class="step-row">
-            <div class="step-num">4</div>
-            <div class="step-content">
-                <div class="step-title">Track false negative rate weekly</div>
-                <div class="step-body">False negative rate = confirmed pipeline failures / total no-ad queries. An upward trend means the serving pipeline is dropping queries it should be catching.</div>
-                <div class="step-next"><strong>Next:</strong> Continue sampling into the Relevance Reviewer while this rate is elevated.</div>
-            </div>
-        </div>
+        <div class="step-row"><div class="step-num">4</div><div class="step-content"><div class="step-title">Track false negative rate weekly</div><div class="step-body">False negative rate = confirmed pipeline failures / total no-ad queries. An upward trend means the pipeline is dropping queries it should be catching.</div><div class="step-next"><strong>Next:</strong> Continue sampling into the Relevance Reviewer while this rate is elevated.</div></div></div>
     </div>
 
-    <!-- Relevance Reviewer -->
     <div class="card">
         <div class="card-step">Relevance Reviewer</div>
         <div class="card-title">External Relevance Check</div>
-        <div class="card-body">
-            Offline check using the search query and catalogue data (product name, description, category), independent of the system's internal relevance score. Supports two checks: whether a relevant ad <em>should have been served</em> for a no-ad query (Level 3), and whether a <em>served</em> product was relevant (Level 2). Same four approaches; the input pairs differ by case.
-        </div>
-
-        <div class="step-row">
-            <div class="step-num">1</div>
-            <div class="step-content">
-                <div class="step-title">Lexical match — baseline filter</div>
-                <div class="step-body">Check whether query terms appear in the product name, description, or category. Fast floor check before deeper review.</div>
-                <div class="step-next"><strong>Next:</strong> Embedding similarity on pairs that pass or need scoring.</div>
-            </div>
-        </div>
-
-        <div class="step-row" style="margin-top: 16px;">
-            <div class="step-num">2</div>
-            <div class="step-content">
-                <div class="step-title">Embedding similarity — primary signal</div>
-                <div class="step-body">Multilingual vectors for query and product text (Arabic + English). Score similarity; flag pairs below threshold for review.</div>
-                <div class="step-next"><strong>Next:</strong> LLM review on flagged or borderline pairs.</div>
-            </div>
-        </div>
-
-        <div class="step-row" style="margin-top: 16px;">
-            <div class="step-num">3</div>
-            <div class="step-content">
-                <div class="step-title">LLM-as-judge — ambiguous cases</div>
-                <div class="step-body">Structured relevance rating (1–3) with a short reason for pairs that embedding similarity did not resolve.</div>
-                <div class="step-next"><strong>Next:</strong> Track trend on the golden set.</div>
-            </div>
-        </div>
-
-        <div class="step-row" style="margin-top: 16px;">
-            <div class="step-num">4</div>
-            <div class="step-content">
-                <div class="step-title">Golden set + NDCG — trend metric</div>
-                <div class="step-body">~100 high-traffic queries with human-labelled correct products. Run weekly; NDCG@5 shows whether retrieval and ranking improve over time.</div>
-                <div class="step-next"><strong>Next:</strong> Publish weekly: should-serve miss rate (no-ad / false-negative samples), irrelevance rate (served samples), and NDCG@5.</div>
-            </div>
-        </div>
+        <div class="card-body">Offline check using the search query and catalogue data, independent of the system's internal relevance score. Supports two checks: whether a relevant ad <em>should have been served</em> for a no-ad query (Level 3), and whether a <em>served</em> product was relevant (Level 2).</div>
+        <div class="step-row"><div class="step-num">1</div><div class="step-content"><div class="step-title">Lexical match — baseline filter</div><div class="step-body">Check whether query terms appear in the product name, description, or category. Fast floor check before deeper review.</div><div class="step-next"><strong>Next:</strong> Embedding similarity on pairs that pass or need scoring.</div></div></div>
+        <div class="step-row" style="margin-top:16px;"><div class="step-num">2</div><div class="step-content"><div class="step-title">Embedding similarity — primary signal</div><div class="step-body">Multilingual vectors for query and product text (Arabic + English). Score similarity; flag pairs below threshold for review.</div><div class="step-next"><strong>Next:</strong> LLM review on flagged or borderline pairs.</div></div></div>
+        <div class="step-row" style="margin-top:16px;"><div class="step-num">3</div><div class="step-content"><div class="step-title">LLM-as-judge — ambiguous cases</div><div class="step-body">Structured relevance rating (1–3) with a short reason for pairs that embedding similarity did not resolve.</div><div class="step-next"><strong>Next:</strong> Track trend on the golden set.</div></div></div>
+        <div class="step-row" style="margin-top:16px;"><div class="step-num">4</div><div class="step-content"><div class="step-title">Golden set + NDCG — trend metric</div><div class="step-body">~100 high-traffic queries with human-labelled correct products. Run weekly; NDCG@5 shows whether retrieval and ranking improve over time.</div><div class="step-next"><strong>Next:</strong> Publish weekly: should-serve miss rate, irrelevance rate, and NDCG@5.</div></div></div>
     </div>
 
-    <!-- Summary -->
     <div class="card">
         <div class="card-step">Summary</div>
         <div class="card-title">Metrics to Track, In Order</div>
-        <div class="card-body">Track these weekly. Each metric only requires investigation when it moves — you don't audit everything all the time.</div>
-
+        <div class="card-body">Track these weekly. Each metric only requires investigation when it moves.</div>
         <table>
-            <thead>
-                <tr>
-                    <th>Metric</th>
-                    <th>Owner</th>
-                    <th>What It Tells You</th>
-                    <th>Triggers Investigation When</th>
-                </tr>
-            </thead>
+            <thead><tr><th>Metric</th><th>Owner</th><th>What It Tells You</th><th>Triggers Investigation When</th></tr></thead>
             <tbody>
-                <tr>
-                    <td><strong>ROAS</strong></td>
-                    <td>Business</td>
-                    <td>Overall advertiser value — revenue per unit of spend</td>
-                    <td>Drops week-over-week; decompose into Fill Rate, CTR, Conv. Rate</td>
-                </tr>
-                <tr>
-                    <td><strong>Fill Rate</strong></td>
-                    <td>FCC Serving</td>
-                    <td>Share of ad requests that result in a served ad</td>
-                    <td>Drops — then Level 3 false negative analysis</td>
-                </tr>
-                <tr>
-                    <td><strong>CTR</strong></td>
-                    <td>FCC + Advertiser</td>
-                    <td>Whether served ads are relevant enough for users to click</td>
-                    <td>Drops — then segment by tier, match type, position (Level 2)</td>
-                </tr>
-                <tr>
-                    <td><strong>Conversion Rate</strong></td>
-                    <td>Advertiser</td>
-                    <td>Whether clicks result in orders. Post-click — outside Levels 2–3. If ROAS drops while Fill Rate and CTR are stable, this is the likely cause.</td>
-                    <td>Drops while Fill Rate and CTR are stable</td>
-                </tr>
-                <tr>
-                    <td><strong>False Negative Rate</strong></td>
-                    <td>FCC Serving</td>
-                    <td>Share of no-ad queries where a campaign existed and should have matched</td>
-                    <td>Rises — pipeline is dropping queries it should be serving</td>
-                </tr>
+                <tr><td><strong>ROAS</strong></td><td>Business</td><td>Overall advertiser value — revenue per unit of spend</td><td>Drops week-over-week; decompose into Fill Rate, CTR, Conv. Rate</td></tr>
+                <tr><td><strong>Fill Rate</strong></td><td>FCC Serving</td><td>Share of ad requests that result in a served ad</td><td>Drops — then Level 3 false negative analysis</td></tr>
+                <tr><td><strong>CTR</strong></td><td>FCC + Advertiser</td><td>Whether served ads are relevant enough for users to click</td><td>Drops — then segment by tier, match type, position (Level 2)</td></tr>
+                <tr><td><strong>Conversion Rate</strong></td><td>Advertiser</td><td>Whether clicks result in orders. Post-click — outside Levels 2–3.</td><td>Drops while Fill Rate and CTR are stable</td></tr>
+                <tr><td><strong>False Negative Rate</strong></td><td>FCC Serving</td><td>Share of no-ad queries where a campaign existed and should have matched</td><td>Rises — pipeline is dropping queries it should be serving</td></tr>
             </tbody>
         </table>
     </div>
@@ -896,6 +714,13 @@
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         document.getElementById('tab-' + id).classList.add('active');
         btn.classList.add('active');
+    }
+
+    function toggleDrill(el) {
+        const panel = el.nextElementSibling;
+        const isOpen = panel.classList.contains('open');
+        el.classList.toggle('open', !isOpen);
+        panel.classList.toggle('open', !isOpen);
     }
 </script>
 </body>
