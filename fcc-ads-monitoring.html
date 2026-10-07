@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FCC Ads — Business Monitoring</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f4f6f9;
+            color: #2c2c2c;
+            line-height: 1.65;
+            font-size: 14px;
+        }
+
+        .page {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 48px 24px 80px;
+        }
+
+        .page-title {
+            font-size: 26px;
+            font-weight: 700;
+            color: #1a3460;
+            margin-bottom: 4px;
+        }
+
+        .page-meta {
+            font-size: 13px;
+            color: #999;
+            margin-bottom: 40px;
+        }
+
+        /* ── Top metric ── */
+        .top-metric {
+            background: #1a3460;
+            border-radius: 12px;
+            padding: 28px 36px;
+            margin-bottom: 28px;
+            color: white;
+        }
+
+        .top-metric-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            opacity: 0.65;
+            margin-bottom: 6px;
+        }
+
+        .top-metric-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .top-metric-body {
+            font-size: 13px;
+            opacity: 0.8;
+            line-height: 1.7;
+            max-width: 680px;
+        }
+
+        .metric-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .chip {
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 20px;
+            padding: 4px 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        /* ── Section header ── */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 32px 0 16px;
+        }
+
+        .section-tag {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        .tag-supply { background: #dbeafe; color: #1e40af; }
+        .tag-demand { background: #fef3c7; color: #92400e; }
+        .tag-motivation { background: #ede9fe; color: #5b21b6; }
+        .tag-ability { background: #d1fae5; color: #065f46; }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a3460;
+        }
+
+        .section-desc {
+            font-size: 13px;
+            color: #555;
+            margin-bottom: 16px;
+            line-height: 1.7;
+        }
+
+        /* ── Drill path ── */
+        .drill-path {
+            background: white;
+            border-radius: 10px;
+            padding: 20px 24px;
+            margin-bottom: 16px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+        }
+
+        .drill-path-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #1a3460;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .drill-arrow {
+            color: #aaa;
+            font-size: 11px;
+            margin: 0 4px;
+        }
+
+        /* ── Metric table ── */
+        .metric-card {
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 16px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+            overflow: hidden;
+        }
+
+        .metric-card-header {
+            padding: 14px 20px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+        }
+
+        .header-supply { background: #eff6ff; color: #1e40af; border-bottom: 1px solid #dbeafe; }
+        .header-motivation { background: #f5f3ff; color: #5b21b6; border-bottom: 1px solid #ede9fe; }
+        .header-ability { background: #f0fdf4; color: #065f46; border-bottom: 1px solid #d1fae5; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        th {
+            background: #f8f9fb;
+            color: #666;
+            padding: 10px 20px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        td {
+            padding: 11px 20px;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: top;
+        }
+
+        tr:last-child td { border-bottom: none; }
+
+        .metric-name {
+            font-weight: 600;
+            color: #1a3460;
+        }
+
+        .metric-sub {
+            font-size: 12px;
+            color: #888;
+            margin-top: 2px;
+        }
+
+        .drill-into {
+            font-size: 12px;
+            color: #4361ee;
+            font-style: italic;
+        }
+
+        /* ── Flag ── */
+        .flag {
+            border-radius: 6px;
+            padding: 12px 16px;
+            font-size: 13px;
+            margin: 12px 0;
+            line-height: 1.6;
+        }
+
+        .flag.note {
+            background: #fffbf0;
+            border-left: 4px solid #d97706;
+            color: #4a2e00;
+        }
+
+        .flag.info {
+            background: #f0f4ff;
+            border-left: 4px solid #4361ee;
+            color: #1a2a60;
+        }
+
+        .flag strong { font-weight: 600; }
+
+        /* ── Divider ── */
+        .divider {
+            border: none;
+            border-top: 2px solid #eee;
+            margin: 36px 0;
+        }
+
+        /* ── Revenue equation ── */
+        .equation {
+            background: #f4f6f9;
+            border-radius: 8px;
+            padding: 18px 24px;
+            margin: 16px 0;
+            text-align: center;
+            font-size: 15px;
+            font-weight: 600;
+            color: #1a3460;
+        }
+
+        .equation .sub {
+            font-size: 12px;
+            font-weight: 400;
+            color: #666;
+            margin-top: 6px;
+        }
+
+        /* ── "If drops" callout ── */
+        .if-drops {
+            display: flex;
+            gap: 12px;
+            margin: 16px 0;
+            flex-wrap: wrap;
+        }
+
+        .if-drop-card {
+            flex: 1;
+            min-width: 180px;
+            background: white;
+            border-radius: 8px;
+            padding: 14px 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.07);
+            border-top: 3px solid #d97706;
+        }
+
+        .if-drop-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #92400e;
+            margin-bottom: 4px;
+        }
+
+        .if-drop-body {
+            font-size: 12px;
+            color: #666;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+
+    <div class="page-title">FCC Ads — Business Monitoring</div>
+    <div class="page-meta">Oct 2026 &nbsp;·&nbsp; <strong style="color:#666;">Scope:</strong> Business and reporting RCA for FCC and Client (Nahdi) — technical RCA is out of scope of this document.</div>
+
+    <!-- AD REVENUE -->
+    <div class="top-metric">
+        <div class="top-metric-label">The One Number</div>
+        <div class="top-metric-title">Ad Revenue</div>
+        <div class="top-metric-body">
+            The top-line outcome of the ads business. Ad Revenue = f(Supply, Demand) — it is bounded by whichever side is the limiting constraint. High supply with low demand leaves inventory unfilled. High demand with low supply means advertisers can't reach audiences. Growth requires both sides to scale together.
+        </div>
+        <div class="metric-chips">
+            <span class="chip">Total ad revenue — Nahdi platform</span>
+            <span class="chip">Total ad revenue — FCC view</span>
+            <span class="chip">WoW / MoM trend</span>
+            <span class="chip">Revenue per 1,000 ad requests (RPM)</span>
+        </div>
+    </div>
+
+    <div class="equation">
+        Ad Revenue = min(Supply, Demand)
+        <div class="sub">A drop in Ad Revenue means either supply has contracted, demand has weakened, or both. The sections below diagnose which.</div>
+    </div>
+
+    <div class="if-drops">
+        <div class="if-drop-card">
+            <div class="if-drop-title">If Supply is the constraint</div>
+            <div class="if-drop-body">Traffic exists on the platform but there isn't enough reach for advertisers to buy against. Ad requests are low. Impressions available are low. → See Supply section.</div>
+        </div>
+        <div class="if-drop-card">
+            <div class="if-drop-title">If Demand is the constraint</div>
+            <div class="if-drop-body">Traffic exists but advertisers aren't buying or aren't able to. Could be motivation (low ROAS, low CTR) or ability (low campaigns, idle budgets). → See Demand section.</div>
+        </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- SUPPLY -->
+    <div class="section-header">
+        <span class="section-tag tag-supply">Supply</span>
+        <span class="section-title">Is there enough traffic for ads to run against?</span>
+    </div>
+
+    <div class="section-desc">
+        Supply is the attention base — the searches and page views that create ad opportunities. The drill path starts at platform traffic, then narrows to what FCC actually sees (ad requests), then to how much of that is being filled.
+    </div>
+
+    <div class="flag note">
+        <strong>Platform traffic — out of scope for now:</strong> Upstream supply metrics (total search volume, page views, sessions, active users on Nahdi) are not currently trackable by FCC. These are owned by Nahdi. Ideally these would be visible in this dashboard to give full supply context — flagged as a data access dependency to resolve.
+    </div>
+
+    <div class="metric-card">
+        <div class="metric-card-header header-supply">Ad Requests — what FCC sees</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Metric</th>
+                    <th>What it tells you</th>
+                    <th>If it drops, drill into</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="metric-name">Total ad requests</div>
+                        <div class="metric-sub">PLA + Display combined</div>
+                    </td>
+                    <td>Volume of ad opportunities reaching FCC. Proxy for platform supply when upstream traffic data isn't available.</td>
+                    <td class="drill-into">Split by product type below</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="metric-name">Ad requests — PLA</div>
+                        <div class="metric-sub">Product Listing Ads (CPC)</div>
+                    </td>
+                    <td>Search-driven ad requests. A drop here means fewer searches are triggering PLA calls — either search volume dropped or the integration broke.</td>
+                    <td class="drill-into">Check platform search volume (Nahdi-side); check serving error rate (technical tab)</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="metric-name">Ad requests — Display</div>
+                        <div class="metric-sub">Display Ads (CPM)</div>
+                    </td>
+                    <td>Page-view-driven ad requests. A drop here means fewer page views are generating display impressions opportunities.</td>
+                    <td class="drill-into">Check platform page view volume (Nahdi-side); check display placement config</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="metric-name">Fill Rate</div>
+                        <div class="metric-sub">Ads served / Total ad requests</div>
+                    </td>
+                    <td>Of the requests FCC receives, how many result in a served ad. The bridge between supply and demand — low fill rate means either no matching campaign (demand gap) or pipeline failure (technical). Industry benchmark: ~54% outside top-tier RMNs.</td>
+                    <td class="drill-into">If demand-side gap → Demand section. If pipeline failure → Serving Eval tab (technical)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <hr class="divider">
+
+    <!-- DEMAND -->
+    <div class="section-header">
+        <span class="section-tag tag-demand">Demand</span>
+        <span class="section-title">Are advertisers buying, and are they able to?</span>
+    </div>
+
+    <div class="section-desc">
+        Demand is driven by advertiser behaviour — whether they're motivated to spend and whether they're set up to do so. A drop in demand is either a motivation problem (ads aren't delivering value) or an ability problem (advertisers can't configure or scale campaigns). Diagnose which before acting.
+    </div>
+
+    <!-- MOTIVATION -->
+    <div class="section-header" style="margin-top: 8px;">
+        <span class="section-tag tag-motivation">Motivation</span>
+        <span class="section-title">Are advertisers getting value from their spend?</span>
+    </div>
+
+    <div class="section-desc">
+        Motivation metrics answer whether the ads are actually working for advertisers. If motivation is low, advertisers reduce budgets or stop campaigning. The drill path follows the value chain — from top-line return down to the individual components that drive it.
+    </div>
+
+    <div class="metric-card">
+        <div class="metric-card-header header-motivation">Motivation Metrics — drill top-down</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Metric</th>
+                    <th>What it tells you</th>
+                    <th>If it drops, drill into</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="metric-name">ROAS</div>
+                        <div class="metric-sub">Revenue attributed to ad clicks / Ad spend</div>
+                    </td>
+                    <td>Top-line return for advertisers. The primary motivation signal — if ROAS is strong, advertisers increase budgets. If weak, they pull back.</td>
+                    <td class="drill-into">CVR or Clicks dropping?</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="metric-name">Incremental Sales</div>
+                        <div class="metric-sub">Sales caused by the ad, not organic</div>
+                    </td>
+                    <td>True ad-driven revenue lift above what would have happened without the ad. Stronger motivation signal than ROAS — proves causality, not just correlation. <em>Methodology TBD.</em></td>
+                    <td class="drill-into">Requires holdout measurement — deferred</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="metric-name">CVR (Conversion Rate)</div>
+                        <div class="metric-sub">Orders / Clicks</div>
+                    </td>
+                    <td>Are clicks leading to purchases? A drop here with stable CTR means the product or landing experience isn't converting — advertiser-side issue.</td>
+                    <td class="drill-into">Product-query relevance, landing page, pricing</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="metric-name">CTR (Click-Through Rate)</div>
+                        <div class="metric-sub">Clicks / Impressions served</div>
+                    </td>
+                    <td>Are users engaging with the ads shown? A drop here means the served ad isn't relevant or compelling enough for users to act.</td>
+                    <td class="drill-into">Impressions stable? → relevance problem. Impressions dropped? → fill rate / supply problem</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="metric-name">Total Clicks</div>
+                        <div class="metric-sub">PLA + Display</div>
+                    </td>
+                    <td>Raw click volume. A drop here can come from fewer impressions (supply) or lower CTR (relevance). Decompose before concluding.</td>
+                    <td class="drill-into">Impressions dropped → supply. CTR dropped → relevance (Serving Eval tab)</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="metric-name">Total Impressions Served</div>
+                        <div class="metric-sub">PLA + Display</div>
+                    </td>
+                    <td>Volume of ads actually shown to users. Function of fill rate × ad requests. A drop here is either supply falling or fill rate falling.</td>
+                    <td class="drill-into">Ad requests dropped → supply. Fill rate dropped → demand gap or pipeline</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="metric-name">Share of Voice</div>
+                        <div class="metric-sub">Advertiser's impressions / Total impressions available</div>
+                    </td>
+                    <td>How much of the available ad inventory a given advertiser is capturing. A drop signals increasing competition or budget exhaustion. Relevant per-advertiser, not platform-wide.</td>
+                    <td class="drill-into">Budget exhausted early? → Ability section. More competitors? → competitive context</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- ABILITY -->
+    <div class="section-header" style="margin-top: 8px;">
+        <span class="section-tag tag-ability">Ability</span>
+        <span class="section-title">Are advertisers set up to spend effectively?</span>
+    </div>
+
+    <div class="section-desc">
+        Even motivated advertisers can't spend if they're not set up correctly — too few campaigns, exhausted budgets, sparse keyword coverage, or a product that's hard to manage. Ability metrics identify structural gaps in advertiser readiness. A healthy motivation score with weak ability metrics means the platform is leaving money on the table.
+    </div>
+
+    <div class="metric-card">
+        <div class="metric-card-header header-ability">Ability Metrics</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Metric</th>
+                    <th>What it tells you</th>
+                    <th>If it drops / is low</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="metric-name">Active advertisers</div>
+                        <div class="metric-sub">Brands with at least one live campaign</div>
+                    </td>
+                    <td>Breadth of demand. If this is low or shrinking, the revenue base is fragile — too concentrated in too few advertisers.</td>
+                    <td class="drill-into">Onboarding gap or churn — check new advertiser additions vs. deactivations</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="metric-name">Active campaigns</div>
+                        <div class="metric-sub">Campaigns in live / running state</div>
+                    </td>
+                    <td>Depth of demand. An advertiser with one campaign is fragile. More campaigns across more categories = more robust demand.</td>
+                    <td class="drill-into">Paused or ended campaigns — check budget exhaustion rate</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="metric-name">Active keywords</div>
+                        <div class="metric-sub">Keywords triggered at least once in last 7 days</div>
+                    </td>
+                    <td>How much of the configured keyword inventory is actually live. Idle keywords reduce coverage and fill rate.</td>
+                    <td class="drill-into">High idle rate → keyword-query mismatch or low search volume for those terms</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="metric-name">Total keywords configured</div>
+                        <div class="metric-sub">Across all live campaigns</div>
+                    </td>
+                    <td>Coverage of demand. Low keyword count relative to search volume = large share of queries with no campaign match.</td>
+                    <td class="drill-into">Compare against top search queries — identify uncovered head terms</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="metric-name">Total listings in campaigns</div>
+                        <div class="metric-sub">Unique products across all live campaigns</div>
+                    </td>
+                    <td>Product coverage in ads. Low listing count = narrow advertiser participation or sparse catalogue coverage.</td>
+                    <td class="drill-into">Check % of Nahdi catalogue covered by at least one campaign</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="metric-name">Budget utilisation rate</div>
+                        <div class="metric-sub">Spend / Configured budget</div>
+                    </td>
+                    <td>Are advertisers spending their full allocated budget? Low utilisation = bids too low or keywords not matching. High utilisation early in the period = budget caps are limiting spend.</td>
+                    <td class="drill-into">Low → bid or keyword gap. High with early exhaustion → budget cap too tight</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="metric-name">Time to set up a campaign</div>
+                        <div class="metric-sub">Median time from creation to first impression</div>
+                    </td>
+                    <td>Ease of onboarding. A long setup time signals product friction that's suppressing demand before it even starts.</td>
+                    <td class="drill-into">Review onboarding flow for drop-off points</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="metric-name">Time to edit / manage a campaign</div>
+                        <div class="metric-sub">Median time for common management actions</div>
+                    </td>
+                    <td>Ease of ongoing use. High management time discourages active optimisation, which leads to idle budgets and stale keywords.</td>
+                    <td class="drill-into">Review campaign management flows for friction</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="flag info" style="margin-top: 8px;">
+        <strong>Reading motivation and ability together:</strong> Motivation dropping with ability stable → the product isn't delivering returns, focus on relevance and conversion. Ability dropping with motivation stable → advertisers want to spend but can't, focus on onboarding and campaign tooling. Both dropping → structural demand problem, needs coordinated fix.
+    </div>
+
+</div>
+</body>
+</html>
