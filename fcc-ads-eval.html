@@ -362,6 +362,17 @@
                     </div></td>
                 </tr>
                 <tr>
+                    <td><div class="metric-name clickable" onclick="toggleDrill('a9')">Campaign overburn<span class="metric-sub">Campaigns where actual spend exceeded budget cap</span></div></td>
+                    <td>Counts campaigns where spend ran past the configured cap. Each instance is an opportunity cost — the advertiser wanted to spend more but the system didn't stop in time, eroding trust and potentially causing them to lower budgets as a buffer.</td>
+                </tr>
+                <tr id="a9" class="drill-row">
+                    <td colspan="2"><div class="drill-panel-inner">
+                        <div class="drill-panel-title">Deep dive</div>
+                        <div class="drill-item"><div><span class="drill-item-name">Overburn amount per campaign <span class="drill-item-sub">(actual spend − budget cap)</span></span></div><div class="drill-item-desc">Magnitude matters — small overruns are noise; large ones are a billing trust issue.</div></div>
+                        <div class="drill-item"><div><span class="drill-item-name">Budget utilisation rate <span class="drill-item-sub">(→ see above)</span></span></div><div class="drill-item-desc drill-xref">Overburn is the tail of high utilisation — same campaigns that exhaust budgets fast are most likely to overrun.</div></div>
+                    </div></td>
+                </tr>
+                <tr>
                     <td><div class="metric-name clickable" onclick="toggleDrill('a2')">Active campaigns<span class="metric-sub">Campaigns in live / running state</span></div></td>
                     <td>Depth of demand. An advertiser with one campaign is fragile. More campaigns across more categories = more robust demand.</td>
                 </tr>
