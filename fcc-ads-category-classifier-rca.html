@@ -247,9 +247,9 @@
       <tbody>
         <tr><td><b>Covers</b></td><td class="l">What the category is about, from its name and its main sub-categories</td><td class="l">Decides whether the category can be relevant</td></tr>
         <tr><td><b>Also contains</b></td><td class="l">Sub-categories that sit here in the tree but fall outside what the name implies (e.g. coffee makers under Sport Supplements)</td><td class="l">Can make the category somewhat relevant at most</td></tr>
-        <tr><td><b>Overlaps</b></td><td class="l">Other top-level categories with the same or similar sub-categories</td><td class="l">Prompts the grader to check those categories too, and flags tree overlap for the catalog owner. Does not by itself make a category relevant</td></tr>
       </tbody>
     </table>
+    <div class="note">Overlaps between categories (e.g. Deodorant under Men Care and Bath &amp; Body) are not used in grading: every query is graded against all 34 categories anyway. They are reported to the catalog owner (section 7).</div>
 
     <h3>Query → category grades</h3>
     <table>
@@ -307,6 +307,8 @@
       </tbody>
     </table>
     <div class="note">Every relevant ad the classifier filters out is either a classifier error or a catalog error, and each shows up in its own metric.</div>
+    <h3>Tree overlap report</h3>
+    <div class="sub">Also for the catalog owner: category names that appear under more than one top-level category, found by comparing names across the tree. 50 at Nahdi today, e.g. Deodorant under Men Care, Bath &amp; Body and Kids Care; Digestive Care, Laxatives and Antidiarrheal under OTC Treatments and Vitamin &amp; Supplement; two top-level categories, Vitamin &amp; Supplement and Vitamins &amp; Supplements. Being name-based, it also catches some generic names with different meanings (e.g. "Liquid" under Makeup and Home Care).</div>
   </div>
 
   <!-- 8 -->
