@@ -94,7 +94,7 @@
       </tbody>
     </table>
     <ul>
-      <li><b>Relevant</b> = the LLM judged the ad right for the search; any product not labelled counts as not relevant. How relevance is graded is in section 5.</li>
+      <li><b>Relevant</b> = the LLM judged the ad right for the search; any product not labelled counts as not relevant. How relevance is graded is in section 6.</li>
       <li><b>Each query counts equally.</b> Search volume mix differs by client and changes over time, so it is not used as a weight. Head, Torso and Tail are reported separately instead.</li>
       <li>A query with no relevant ad that still shows ads scores 0% Precision@8. That is how irrelevant serving is penalised.</li>
       <li>Fill rate@8 is the counterweight to precision: showing nothing on hard queries keeps precision high but leaves slots empty.</li>
@@ -115,7 +115,7 @@
   <!-- 3 -->
   <div class="card">
     <h2>3. FCC vs LLM</h2>
-    <div class="sub">The LLM is the benchmark, so it scores 100% on precision, recall and correct no-ad rate. Fill rate has no benchmark figure: the best possible fill rate depends on the relevance setting (section 7).</div>
+    <div class="sub">The LLM is the benchmark, so it scores 100% on precision, recall and correct no-ad rate. Fill rate has no benchmark figure: the best possible fill rate depends on the relevance setting (section 8).</div>
     <div class="tiles">
       <div class="tile"><div class="k">Precision@8</div><div class="v">24.2%</div><div class="c">3,002 queries</div></div>
       <div class="tile"><div class="k">Recall@8</div><div class="v">31.4%</div><div class="c">2,828 queries</div></div>
@@ -150,7 +150,7 @@
     <h3>Where it sits</h3>
     <div class="flow"><span>Query clean-up &amp; spell check</span>→<span>Brand detection</span>→<span class="hl">Category classifier</span>→<span>Product retrieval (ad products only)</span>→<span>Ranking</span>→<span>Top 8 shown</span></div>
     <ul>
-      <li>It scores all 29 top-level categories for the query, using every product in Nahdi's catalog (~70k), not just the ad products.</li>
+      <li>It scores 29 of Nahdi's 34 top-level categories for the query, using every product in Nahdi's catalog (~80k), not just the ad products. It never scores Home Care, Shopping Bags, Vitamins &amp; Supplements, Medical Clothing or Medicines &amp; Treatment.</li>
       <li>It keeps the categories scoring ≥ 0.35 (at most 3). Retrieval then looks for ad products only inside those categories. A relevant ad outside them can never be shown.</li>
     </ul>
     <table>
@@ -182,7 +182,7 @@
   <!-- 5 -->
   <div class="card">
     <h2>5. Measuring the category classifier</h2>
-    <div class="sub">The right categories come from the query alone. Where the relevant ads are filed is measured separately (section 6).</div>
+    <div class="sub">The right categories come from the query alone. Where the relevant ads are filed is measured separately (section 7).</div>
 
     <h3>Metrics</h3>
     <table>
@@ -203,47 +203,89 @@
       <thead><tr><th>Decision</th><th class="l">Rule</th></tr></thead>
       <tbody>
         <tr><td>Counting</td><td class="l"><b>Each right category counts equally.</b> Weighting by the number of relevant ads would give a right category with no ads zero weight, which brings back the ad-pool dependence described in section 4.</td></tr>
-        <tr><td>No category kept</td><td class="l"><b>Kept out of category recall and precision, and reported as the no-decision rate.</b> Scoring it as "all 29 kept" would give 100% recall for not deciding; leaving it out silently would hide it.</td></tr>
+        <tr><td>No category kept</td><td class="l"><b>Kept out of category recall and precision, and reported as the no-decision rate.</b> Scoring it as "all categories kept" would give 100% recall for not deciding; leaving it out silently would hide it.</td></tr>
         <tr><td>Brand-only queries</td><td class="l"><b>Kept out of all classifier metrics</b> and reported as a count. The classifier is skipped by design, so there is no decision to judge.</td></tr>
       </tbody>
     </table>
     <div class="note">The two all-category paths look the same in today's output and are told apart from the brand fields. FCC should log which path each query took (kept / no decision / skipped), so they are explicit rather than inferred.</div>
 
-    <h3>How right categories are labelled <span class="tag">For team discussion</span></h3>
-    <div class="sub">One method for every retailer, with no retailer-specific rules: the LLM learns each category from the retailer's own catalog.</div>
+    <h3>How right categories are labelled</h3>
+    <div class="sub">One method for every retailer, with no retailer-specific rules: the LLM learns each category from the retailer's own category tree. Products are not used, because a retailer's tree can be crooked: Nahdi's has the same node under several top-level categories (e.g. Deodorant under Men Care and Bath &amp; Body) and products filed on non-leaf nodes, so the products in a category don't reliably show what it means.</div>
     <table>
       <thead><tr><th>Step</th><th class="l">What happens</th><th class="l">Input</th></tr></thead>
       <tbody>
-        <tr><td>1. Profile each category</td><td class="l">The LLM reads each top-level category's name, path, product count and a sample of product titles, and writes a short description of what it holds. Reviewed once.</td><td class="l">Catalog extract: every product (~70k) with title and category path, from Jaivin</td></tr>
-        <tr><td>2. Grade every category for every query</td><td class="l">Each category is judged on its own, so overlapping categories don't compete. The LLM doesn't see FCC's output or which products are ads.</td><td class="l">The 12,311 queries</td></tr>
-      </tbody>
-    </table>
-    <h3>Grades</h3>
-    <div class="sub">The same three grades are used for categories and for products (replacing today's relevant / not relevant product labels).</div>
-    <table>
-      <thead><tr><th>Grade</th><th class="l">Meaning</th><th class="l">Category example: "مزيل عرق رجالي" (men's deodorant)</th><th class="l">Product example: "head and shoulders shampoo"</th></tr></thead>
-      <tbody>
-        <tr><td><b>Relevant</b></td><td class="l">What the user is mainly looking for</td><td class="l">Men Care</td><td class="l">Anti-dandruff shampoo</td></tr>
-        <tr><td><b>Somewhat relevant</b></td><td class="l">A shopper could reasonably expect it here</td><td class="l">Bath &amp; Body, Fragrances</td><td class="l">Johnson's baby shampoo</td></tr>
-        <tr><td><b>Irrelevant</b></td><td class="l">Not what the user is looking for</td><td class="l">Baby Care, Lenses, …</td><td class="l">Face cream</td></tr>
+        <tr><td>1. Describe each category</td><td class="l">For each of the 34 top-level categories, the LLM reads its name and the names of all its sub-categories, and writes a description in the fields defined in section 6. Reviewed once, and again whenever the tree changes.</td><td class="l">Category tree (Nahdi category tree API)</td></tr>
+        <tr><td>2. Grade all 34 categories for every query</td><td class="l">Grades as defined in section 6.</td><td class="l">The 12,311 queries</td></tr>
       </tbody>
     </table>
     <ul>
-      <li>Which grades count as right is set by the relevance setting (section 7).</li>
       <li>Category level: top level (L1) for now. Later L2 and L3, labelled level by level: L1 first, then only the children of the right L1 categories.</li>
     </ul>
-    <h3>Open questions</h3>
+    <h3>Checks before the labels are trusted</h3>
     <ul>
-      <li><b>Sample per category:</b> how many product titles go into each profile, and how they are picked (random, or spread across sub-categories)?</li>
-      <li><b>Which query text:</b> the raw query, or the version after FCC's clean-up and spell check? The raw query judges the whole pipeline; the cleaned query isolates the classifier.</li>
-      <li><b>Consistency:</b> how often the LLM gives the same grade when run twice.</li>
+      <li><b>Consistency:</b> a sample is graded twice; the share of identical grades is reported.</li>
       <li><b>Manual check:</b> a person reviews grades for top queries.</li>
     </ul>
   </div>
 
   <!-- 6 -->
   <div class="card">
-    <h2>6. Catalog fit</h2>
+    <h2>6. Labelling definitions <span class="tag">Locked</span></h2>
+    <div class="sub">The single reference for what each label means. Every labelling run, for every retailer, follows these definitions. Changes are made here first.</div>
+
+    <h3>General rules</h3>
+    <ul>
+      <li>Grade the query <b>exactly as the user typed it</b>, including misspellings and Arabic. FCC's clean-up and spell check are part of what is being judged.</li>
+      <li>Grade each category, and each product, <b>on its own</b>. There is no limit on how many get a grade, and all can be irrelevant.</li>
+      <li>The grader never sees FCC's output or which products are ads. For categories, it never sees products either.</li>
+      <li>When torn between two grades, <b>choose the lower one</b>.</li>
+    </ul>
+
+    <h3>Category description fields</h3>
+    <table>
+      <thead><tr><th>Field</th><th class="l">Meaning</th><th class="l">How it is used in grading</th></tr></thead>
+      <tbody>
+        <tr><td><b>Covers</b></td><td class="l">What the category is about, from its name and its main sub-categories</td><td class="l">Decides whether the category can be relevant</td></tr>
+        <tr><td><b>Also contains</b></td><td class="l">Sub-categories that sit here in the tree but fall outside what the name implies (e.g. coffee makers under Sport Supplements)</td><td class="l">Can make the category somewhat relevant at most</td></tr>
+        <tr><td><b>Overlaps</b></td><td class="l">Other top-level categories with the same or similar sub-categories</td><td class="l">Prompts the grader to check those categories too, and flags tree overlap for the catalog owner. Does not by itself make a category relevant</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Query → category grades</h3>
+    <table>
+      <thead><tr><th>Grade</th><th class="l">Definition</th></tr></thead>
+      <tbody>
+        <tr><td><b>Relevant</b></td><td class="l">The category's <b>Covers</b> includes what the user is looking for, and nothing in the query rules it out. If several categories' Covers include it, all of them are relevant; a category is not marked down for being less specific.</td></tr>
+        <tr><td><b>Somewhat relevant</b></td><td class="l">The query matches only the category's <b>Also contains</b>; or the category covers a less likely meaning of an ambiguous query; or it covers a close substitute a shopper might accept instead.</td></tr>
+        <tr><td><b>Irrelevant</b></td><td class="l">None of the above.</td></tr>
+      </tbody>
+    </table>
+    <div class="note"><b>Example: "مزيل عرق رجالي" (men's deodorant).</b> Men Care: relevant (covers men's deodorant). Bath &amp; Body: relevant (covers deodorant, not limited to women). Fragrances: somewhat relevant (close substitute). Kids Care: irrelevant (covers kids deodorant; "men's" rules it out).</div>
+
+    <h3>Query → product grades</h3>
+    <table>
+      <thead><tr><th>Grade</th><th class="l">Definition</th></tr></thead>
+      <tbody>
+        <tr><td><b>Relevant</b></td><td class="l">The product is the type of product searched for <b>and</b> fits every attribute the query states: brand, product line, variant, audience (men, women, kids, baby), form, size, or concern (e.g. dandruff, sensitive skin).</td></tr>
+        <tr><td><b>Somewhat relevant</b></td><td class="l">The right type of product for the same need, but it misses <b>one</b> stated attribute, so a shopper could reasonably accept it instead.</td></tr>
+        <tr><td><b>Irrelevant</b></td><td class="l">A different type of product or need, or it misses more than one stated attribute. Products used together with what was searched (e.g. conditioner for a shampoo search) are irrelevant.</td></tr>
+      </tbody>
+    </table>
+    <div class="note"><b>Example: "head and shoulders shampoo".</b> Any Head &amp; Shoulders shampoo: relevant. Another brand's anti-dandruff shampoo: somewhat relevant (misses brand). Johnson's baby shampoo: irrelevant (misses brand, concern and audience). Head &amp; Shoulders conditioner: irrelevant (different product type).</div>
+
+    <h3>Query types</h3>
+    <table>
+      <thead><tr><th>Query type</th><th class="l">Rule</th></tr></thead>
+      <tbody>
+        <tr><td>Brand only (e.g. "nivea")</td><td class="l">Products: any product of that brand is relevant; other brands are irrelevant. Categories: those covering what the brand mainly sells are relevant.</td></tr>
+        <tr><td>Product type only (e.g. "shampoo")</td><td class="l">Any product of that type is relevant, whatever the brand.</td></tr>
+        <tr><td>Ambiguous (e.g. "غسول" = face, body or mouth wash)</td><td class="l">Grade against the most likely meaning; the other plausible meanings are somewhat relevant.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>7. Catalog fit</h2>
     <div class="sub">Compares where the relevant ads are filed with the categories the query is about. It shows ads that no classifier could reach, because they are filed under a category the query isn't about.</div>
     <table>
       <thead><tr><th>Metric</th><th class="l">Definition</th><th class="l">Measured on</th></tr></thead>
@@ -267,9 +309,9 @@
     <div class="note">Every relevant ad the classifier filters out is either a classifier error or a catalog error, and each shows up in its own metric.</div>
   </div>
 
-  <!-- 7 -->
+  <!-- 8 -->
   <div class="card">
-    <h2>7. Relevance setting</h2>
+    <h2>8. Relevance setting</h2>
     <div class="sub">Many cases are neither clearly right nor clearly wrong, so the retailer decides how strict FCC should be. Counting only relevant ads keeps precision high but leaves more slots empty; also counting somewhat relevant ads fills more slots with less clear-cut ads.</div>
     <table>
       <thead><tr><th>Setting</th><th class="l">Counts as right, for products and categories alike</th></tr></thead>
