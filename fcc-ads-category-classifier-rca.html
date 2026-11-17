@@ -94,7 +94,7 @@
       </tbody>
     </table>
     <ul>
-      <li><b>Relevant</b> = the LLM judged the ad right for the search; any product not labelled counts as not relevant. How relevance is graded is in section 6.</li>
+      <li><b>Relevant</b> = the LLM judged the ad right for the search; any product not labelled counts as not relevant. How relevance is graded, and the retailer relevance setting (future scope), are in section 6.</li>
       <li><b>Each query counts equally.</b> Search volume mix differs by client and changes over time, so it is not used as a weight. Head, Torso and Tail are reported separately instead.</li>
       <li>A query with no relevant ad that still shows ads scores 0% Precision@8. That is how irrelevant serving is penalised.</li>
       <li>Fill rate@8 is the counterweight to precision: showing nothing on hard queries keeps precision high but leaves slots empty.</li>
@@ -115,7 +115,7 @@
   <!-- 3 -->
   <div class="card">
     <h2>3. FCC vs LLM</h2>
-    <div class="sub">The LLM is the benchmark, so it scores 100% on precision, recall and correct no-ad rate. Fill rate has no benchmark figure: the best possible fill rate depends on the relevance setting (section 8).</div>
+    <div class="sub">The LLM is the benchmark, so it scores 100% on precision, recall and correct no-ad rate. Fill rate has no benchmark figure: the best possible fill rate depends on the relevance setting (section 6).</div>
     <div class="tiles">
       <div class="tile"><div class="k">Precision@8</div><div class="v">24.2%</div><div class="c">3,002 queries</div></div>
       <div class="tile"><div class="k">Recall@8</div><div class="v">31.4%</div><div class="c">2,828 queries</div></div>
@@ -282,6 +282,20 @@
         <tr><td>Ambiguous (e.g. "غسول" = face, body or mouth wash)</td><td class="l">Grade against the most likely meaning; the other plausible meanings are somewhat relevant.</td></tr>
       </tbody>
     </table>
+
+    <h3>Relevance setting <span class="tag">Future scope</span></h3>
+    <div class="sub">Many cases are neither clearly right nor clearly wrong, so the retailer will decide how strict FCC should be. Counting only relevant ads keeps precision high but leaves more slots empty; also counting somewhat relevant ads fills more slots with less clear-cut ads.</div>
+    <table>
+      <thead><tr><th>Setting</th><th class="l">Counts as right, for products and categories alike</th></tr></thead>
+      <tbody>
+        <tr><td><b>Strict</b></td><td class="l">Relevant only</td></tr>
+        <tr><td><b>Broad</b></td><td class="l">Relevant + somewhat relevant</td></tr>
+      </tbody>
+    </table>
+    <ul>
+      <li>Labels are graded once, so every metric can be reported under both settings from the same labels. Until a retailer setting exists, both are reported.</li>
+      <li>To be checked against clicks: if somewhat relevant ads earn clicks close to relevant ones, the broad setting is worth it.</li>
+    </ul>
   </div>
 
   <div class="card">
@@ -313,19 +327,16 @@
 
   <!-- 8 -->
   <div class="card">
-    <h2>8. Relevance setting</h2>
-    <div class="sub">Many cases are neither clearly right nor clearly wrong, so the retailer decides how strict FCC should be. Counting only relevant ads keeps precision high but leaves more slots empty; also counting somewhat relevant ads fills more slots with less clear-cut ads.</div>
+    <h2>8. Next steps</h2>
     <table>
-      <thead><tr><th>Setting</th><th class="l">Counts as right, for products and categories alike</th></tr></thead>
+      <thead><tr><th>Step</th><th class="l">What</th><th class="l">Owner</th></tr></thead>
       <tbody>
-        <tr><td><b>Strict</b></td><td class="l">Relevant only</td></tr>
-        <tr><td><b>Broad</b></td><td class="l">Relevant + somewhat relevant</td></tr>
+        <tr><td>A. Build the LLM checkers</td><td class="l">Product and category labelling, following sections 5 and 6. Run manually for now; later automated at a set frequency.</td><td class="l">Tech</td></tr>
+        <tr><td>B. Manual review</td><td class="l">Agree with Ops how labels are reviewed by hand (which queries, how often, how disagreements are resolved).</td><td class="l">Product, with Ops</td></tr>
+        <tr><td>C. Classifier impact</td><td class="l">Once the category classifier numbers exist, measure how much of the overall Precision@8 and Recall@8 gap the classifier causes. Then break the gap down by cause and stack-rank the fixes.</td><td class="l">Product</td></tr>
+        <tr><td>D. Ideal catalog</td><td class="l">Define the success metric for what a good catalog looks like (building on catalog fit and the tree overlap report).</td><td class="l">Product</td></tr>
       </tbody>
     </table>
-    <ul>
-      <li>Labels are graded once; each setting is evaluated from the same labels with the same metrics, so settings can be compared side by side.</li>
-      <li>To be checked against clicks: if somewhat relevant ads earn clicks close to relevant ones, the broad setting is worth it.</li>
-    </ul>
   </div>
 </div>
 
