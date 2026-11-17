@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Category Classifier RCA</title>
+<style>
+  .viz-root {
+    color-scheme: light;
+    --surface-0: #f4f4f2; --surface-1: #fcfcfb;
+    --text-primary: #0b0b0b; --text-secondary: #52514e; --text-muted: #7a7974;
+    --grid: #e6e5e1; --axis: #c9c8c2;
+    --series-1: #2a78d6; --series-2: #eb6834;
+    --tag-bg: #fff4e0; --tag-fg: #7a4a00;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) .viz-root {
+      color-scheme: dark;
+      --surface-0: #111110; --surface-1: #1a1a19;
+      --text-primary: #f0efec; --text-secondary: #c3c2b7; --text-muted: #8f8e86;
+      --grid: #2c2c2a; --axis: #45443f;
+      --series-1: #3987e5; --series-2: #d95926;
+      --tag-bg: #3a2a10; --tag-fg: #f2c27a;
+    }
+  }
+  :root[data-theme="dark"] .viz-root {
+    color-scheme: dark;
+    --surface-0: #111110; --surface-1: #1a1a19; --text-primary: #f0efec; --text-secondary: #c3c2b7; --text-muted: #8f8e86;
+    --grid: #2c2c2a; --axis: #45443f; --series-1: #3987e5; --series-2: #d95926; --tag-bg: #3a2a10; --tag-fg: #f2c27a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body.viz-root { background: var(--surface-0); color: var(--text-primary);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 14px; line-height: 1.55; }
+  .page { max-width: 960px; margin: 0 auto; padding: 40px 24px 80px; }
+  h1 { font-size: 24px; font-weight: 700; }
+  .meta { color: var(--text-muted); font-size: 13px; margin: 4px 0 28px; }
+  .card { background: var(--surface-1); border-radius: 10px; padding: 24px 28px; margin-bottom: 24px; }
+  .card h2 { font-size: 17px; font-weight: 700; margin-bottom: 4px; }
+  .card h3 { font-size: 14px; font-weight: 700; margin: 20px 0 6px; }
+  .sub { color: var(--text-secondary); font-size: 13px; margin-bottom: 14px; }
+  .note { color: var(--text-secondary); font-size: 13px; margin-top: 12px; }
+  .tag { display: inline-block; background: var(--tag-bg); color: var(--tag-fg); font-size: 11px; font-weight: 700;
+    letter-spacing: .4px; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
+  table { border-collapse: collapse; width: 100%; font-size: 13px; margin-top: 6px; }
+  th, td { text-align: right; padding: 7px 10px; border-bottom: 1px solid var(--grid); vertical-align: top; }
+  th:first-child, td:first-child { text-align: left; }
+  th { color: var(--text-secondary); font-weight: 600; }
+  td.l, th.l { text-align: left; }
+  ul { margin: 6px 0 0 18px; color: var(--text-secondary); font-size: 13px; }
+  li { margin-bottom: 4px; }
+  .tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 8px 0 4px; }
+  .tile { border: 1px solid var(--grid); border-radius: 8px; padding: 14px 16px; }
+  .tile .k { font-size: 12px; color: var(--text-secondary); }
+  .tile .v { font-size: 26px; font-weight: 700; margin-top: 2px; }
+  .tile .c { font-size: 12px; color: var(--text-muted); }
+  .flow { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; font-size: 12px; color: var(--text-secondary); margin: 8px 0 4px; }
+  .flow span { border: 1px solid var(--axis); border-radius: 6px; padding: 4px 8px; }
+  .flow span.hl { border: 2px solid var(--text-primary); color: var(--text-primary); font-weight: 600; }
+  .controls { display: flex; margin: 4px 0 12px; }
+  .seg { border: 1px solid var(--axis); background: var(--surface-1); color: var(--text-secondary); padding: 6px 16px; font-size: 13px; cursor: pointer; }
+  .seg:first-child { border-radius: 6px 0 0 6px; } .seg:last-child { border-radius: 0 6px 6px 0; border-left: 0; }
+  .seg[aria-pressed="true"] { background: var(--text-primary); color: var(--surface-1); border-color: var(--text-primary); }
+  .seg:focus-visible { outline: 2px solid var(--series-1); outline-offset: 2px; }
+  .legend { display: flex; gap: 20px; font-size: 12px; color: var(--text-secondary); margin-bottom: 6px; }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .sw { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+  .chart { position: relative; }
+  svg text { fill: var(--text-secondary); font-size: 12px; }
+  svg .tick-n { fill: var(--text-muted); font-size: 11px; }
+  svg .val { fill: var(--text-primary); font-size: 12px; font-weight: 600; }
+  .bar { fill: var(--series-1); } .bar.s2 { fill: var(--series-2); } .bar.hl { opacity: .85; }
+  .hit { fill: transparent; }
+  .tip { position: absolute; pointer-events: none; background: var(--surface-1); color: var(--text-primary); border: 1px solid var(--axis);
+    border-radius: 6px; padding: 8px 10px; font-size: 12px; white-space: nowrap; box-shadow: 0 2px 8px rgba(0,0,0,.12); opacity: 0; }
+  details { margin-top: 12px; } summary { cursor: pointer; color: var(--text-secondary); font-size: 13px; }
+</style>
+</head>
+<body class="viz-root">
+<div class="page">
+  <h1>Category Classifier RCA</h1>
+  <div class="meta">Nahdi · PLA ad serving · Top 12k search queries · LLM as benchmark</div>
+
+  <!-- 1 -->
+  <div class="card">
+    <h2>1. Ad-serving metrics</h2>
+    <div class="sub">The goalpost for ad serving, focused on the first page (8 ad slots). Results beyond page 1 come later.</div>
+    <table>
+      <thead><tr><th>Metric</th><th class="l">Definition</th><th class="l">Measured on</th></tr></thead>
+      <tbody>
+        <tr><td><b>Precision@8</b></td><td class="l">Relevant ads in the first 8 shown ÷ ads shown (up to 8)</td><td class="l">Queries where FCC showed ≥1 ad</td></tr>
+        <tr><td><b>Recall@8</b></td><td class="l">Relevant ads in the first 8 shown ÷ the smaller of (relevant ads, 8)</td><td class="l">Queries with ≥1 relevant ad</td></tr>
+        <tr><td><b>Correct no-ad rate</b></td><td class="l">Share of queries where FCC correctly showed nothing</td><td class="l">Queries with no relevant ad</td></tr>
+        <tr><td><b>Fill rate@8</b></td><td class="l">Ad slots filled in the first 8 ÷ 8</td><td class="l">All queries</td></tr>
+      </tbody>
+    </table>
+    <ul>
+      <li><b>Relevant</b> = the LLM judged the ad right for the search; any product not labelled counts as not relevant. How relevance is graded is in section 5.</li>
+      <li><b>Each query counts equally.</b> Search volume mix differs by client and changes over time, so it is not used as a weight. Head, Torso and Tail are reported separately instead.</li>
+      <li>A query with no relevant ad that still shows ads scores 0% Precision@8. That is how irrelevant serving is penalised.</li>
+      <li>Fill rate@8 is the counterweight to precision: showing nothing on hard queries keeps precision high but leaves slots empty.</li>
+    </ul>
+    <div class="note"><b>Not included yet:</b> NDCG, which measures whether the best ads are ranked first, will also be tracked. This exercise is about whether the ads served are relevant, so it is left out for now.</div>
+  </div>
+
+  <!-- 2 -->
+  <div class="card">
+    <h2>2. Approach</h2>
+    <ul>
+      <li><b>Queries:</b> Nahdi's top 12,311 search queries, split into Head, Torso and Tail by search volume (~4.1k each).</li>
+      <li><b>Benchmark:</b> an LLM judged which of Nahdi's 417 ad products are relevant to each query. 2,828 queries have at least one relevant ad; 9,483 have none.</li>
+      <li><b>FCC:</b> the ads FCC actually served for the same queries, compared against the benchmark.</li>
+    </ul>
+  </div>
+
+  <!-- 3 -->
+  <div class="card">
+    <h2>3. FCC vs LLM</h2>
+    <div class="sub">The LLM is the benchmark, so it scores 100% on precision, recall and correct no-ad rate. Fill rate has no benchmark figure: the best possible fill rate depends on the relevance setting (section 7).</div>
+    <div class="tiles">
+      <div class="tile"><div class="k">Precision@8</div><div class="v">24.2%</div><div class="c">3,002 queries</div></div>
+      <div class="tile"><div class="k">Recall@8</div><div class="v">31.4%</div><div class="c">2,828 queries</div></div>
+      <div class="tile"><div class="k">Correct no-ad rate</div><div class="v">83.7%</div><div class="c">9,483 queries</div></div>
+      <div class="tile"><div class="k">Fill rate@8</div><div class="v">19.7%</div><div class="c">12,311 queries</div></div>
+    </div>
+    <h3>By search volume tier</h3>
+    <table>
+      <thead><tr><th>Tier</th><th>Queries</th><th>Precision@8</th><th>Recall@8</th><th>Correct no-ad rate</th><th>Fill rate@8</th></tr></thead>
+      <tbody>
+        <tr><td>Head</td><td>4,092</td><td>32.6%</td><td>47.5%</td><td>78.1%</td><td>29.2%</td></tr>
+        <tr><td>Torso</td><td>4,095</td><td>18.8%</td><td>21.0%</td><td>86.2%</td><td>15.5%</td></tr>
+        <tr><td>Tail</td><td>4,124</td><td>14.4%</td><td>20.5%</td><td>86.5%</td><td>14.2%</td></tr>
+        <tr><td><b>All</b></td><td><b>12,311</b></td><td><b>24.2%</b></td><td><b>31.4%</b></td><td><b>83.7%</b></td><td><b>19.7%</b></td></tr>
+      </tbody>
+    </table>
+
+    <h3>By number of relevant ads the LLM found</h3>
+    <div class="controls" role="group" aria-label="Metric">
+      <button class="seg" data-metric="P" aria-pressed="true">Precision@8</button>
+      <button class="seg" data-metric="R" aria-pressed="false">Recall@8</button>
+    </div>
+    <div class="sub" id="sub3"></div>
+    <div class="legend"><span><i class="sw" style="background:var(--series-1)"></i>LLM</span><span><i class="sw" style="background:var(--series-2)"></i>FCC</span></div>
+    <div class="chart" id="chart3"></div>
+    <details><summary>Show data table</summary><table id="table3"></table></details>
+  </div>
+
+  <!-- 4 -->
+  <div class="card">
+    <h2>4. Category classifier</h2>
+    <h3>Where it sits</h3>
+    <div class="flow"><span>Query clean-up &amp; spell check</span>→<span>Brand detection</span>→<span class="hl">Category classifier</span>→<span>Product retrieval (ad products only)</span>→<span>Ranking</span>→<span>Top 8 shown</span></div>
+    <ul>
+      <li>It scores all 29 top-level categories for the query, using every product in Nahdi's catalog (~70k), not just the ad products.</li>
+      <li>It keeps the categories scoring ≥ 0.35 (at most 3). Retrieval then looks for ad products only inside those categories. A relevant ad outside them can never be shown.</li>
+    </ul>
+    <table>
+      <thead><tr><th>Path</th><th class="l">What retrieval searches</th><th>Queries</th></tr></thead>
+      <tbody>
+        <tr><td>Kept ≥1 category</td><td class="l">Ad products in the kept categories</td><td>7,447</td></tr>
+        <tr><td>Ran, kept no category</td><td class="l">Ad products in all categories</td><td>3,186</td></tr>
+        <tr><td>Skipped (brand-only query)</td><td class="l">Ad products in all categories</td><td>1,678</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Objective</h3>
+    <div class="sub" style="color:var(--text-primary)">Keep the categories the query is about, <b>and only those</b>.</div>
+
+    <h3>What the earlier approach got wrong</h3>
+    <ul>
+      <li>It never asked which categories a query is about. A category counted as right only if one of the LLM's relevant ads was filed under it.</li>
+      <li>So the right answer depended on the ad pool and on how the catalog files products, not on the query:
+        <ul>
+          <li>If the right category had no ad products, the classifier was marked wrong by default. In 530 of the 896 queries where the classifier and the LLM shared no category, the classifier's category holds no ad products at all.</li>
+          <li>A relevant ad filed under an unexpected category made that category "right". "مرطب جسم" (body moisturiser) is about Bath &amp; Body, but NIVEA Soft cream filed under Skin Care made Skin Care right, and a classifier that kept Bath &amp; Body was penalised.</li>
+        </ul>
+      </li>
+      <li>Catalog and ad-pool gaps were blamed on the classifier, and there was no way to see them separately.</li>
+    </ul>
+  </div>
+
+  <!-- 5 -->
+  <div class="card">
+    <h2>5. Measuring the category classifier</h2>
+    <div class="sub">The right categories come from the query alone. Where the relevant ads are filed is measured separately (section 6).</div>
+
+    <h3>Metrics</h3>
+    <table>
+      <thead><tr><th>Metric</th><th class="l">Question it answers</th><th class="l">Definition</th></tr></thead>
+      <tbody>
+        <tr><td><b>Category recall</b> (primary)</td><td class="l">Did the classifier keep every category the query is about?</td><td class="l">Right categories kept ÷ all right categories</td></tr>
+        <tr><td><b>Category precision</b> (secondary)</td><td class="l">Did it keep only those categories?</td><td class="l">Right categories kept ÷ all categories kept</td></tr>
+        <tr><td><b>No-decision rate</b></td><td class="l">How often did the classifier run but keep nothing?</td><td class="l">Queries where it ran and kept no category ÷ queries where it ran</td></tr>
+      </tbody>
+    </table>
+    <ul>
+      <li><b>Recall comes first:</b> a right category that is dropped loses its ads for good. Precision stops the classifier from scoring well by keeping everything.</li>
+      <li>Measured on all queries, each counting equally. The right categories don't depend on whether a relevant ad exists.</li>
+    </ul>
+
+    <h3>How they are counted</h3>
+    <table>
+      <thead><tr><th>Decision</th><th class="l">Rule</th></tr></thead>
+      <tbody>
+        <tr><td>Counting</td><td class="l"><b>Each right category counts equally.</b> Weighting by the number of relevant ads would give a right category with no ads zero weight, which brings back the ad-pool dependence described in section 4.</td></tr>
+        <tr><td>No category kept</td><td class="l"><b>Kept out of category recall and precision, and reported as the no-decision rate.</b> Scoring it as "all 29 kept" would give 100% recall for not deciding; leaving it out silently would hide it.</td></tr>
+        <tr><td>Brand-only queries</td><td class="l"><b>Kept out of all classifier metrics</b> and reported as a count. The classifier is skipped by design, so there is no decision to judge.</td></tr>
+      </tbody>
+    </table>
+    <div class="note">The two all-category paths look the same in today's output and are told apart from the brand fields. FCC should log which path each query took (kept / no decision / skipped), so they are explicit rather than inferred.</div>
+
+    <h3>How right categories are labelled <span class="tag">For team discussion</span></h3>
+    <div class="sub">One method for every retailer, with no retailer-specific rules: the LLM learns each category from the retailer's own catalog.</div>
+    <table>
+      <thead><tr><th>Step</th><th class="l">What happens</th><th class="l">Input</th></tr></thead>
+      <tbody>
+        <tr><td>1. Profile each category</td><td class="l">The LLM reads each top-level category's name, path, product count and a sample of product titles, and writes a short description of what it holds. Reviewed once.</td><td class="l">Catalog extract: every product (~70k) with title and category path, from Jaivin</td></tr>
+        <tr><td>2. Grade every category for every query</td><td class="l">Each category is judged on its own, so overlapping categories don't compete. The LLM doesn't see FCC's output or which products are ads.</td><td class="l">The 12,311 queries</td></tr>
+      </tbody>
+    </table>
+    <h3>Grades</h3>
+    <div class="sub">The same three grades are used for categories and for products (replacing today's relevant / not relevant product labels).</div>
+    <table>
+      <thead><tr><th>Grade</th><th class="l">Meaning</th><th class="l">Category example: "مزيل عرق رجالي" (men's deodorant)</th><th class="l">Product example: "head and shoulders shampoo"</th></tr></thead>
+      <tbody>
+        <tr><td><b>Relevant</b></td><td class="l">What the user is mainly looking for</td><td class="l">Men Care</td><td class="l">Anti-dandruff shampoo</td></tr>
+        <tr><td><b>Somewhat relevant</b></td><td class="l">A shopper could reasonably expect it here</td><td class="l">Bath &amp; Body, Fragrances</td><td class="l">Johnson's baby shampoo</td></tr>
+        <tr><td><b>Irrelevant</b></td><td class="l">Not what the user is looking for</td><td class="l">Baby Care, Lenses, …</td><td class="l">Face cream</td></tr>
+      </tbody>
+    </table>
+    <ul>
+      <li>Which grades count as right is set by the relevance setting (section 7).</li>
+      <li>Category level: top level (L1) for now. Later L2 and L3, labelled level by level: L1 first, then only the children of the right L1 categories.</li>
+    </ul>
+    <h3>Open questions</h3>
+    <ul>
+      <li><b>Sample per category:</b> how many product titles go into each profile, and how they are picked (random, or spread across sub-categories)?</li>
+      <li><b>Which query text:</b> the raw query, or the version after FCC's clean-up and spell check? The raw query judges the whole pipeline; the cleaned query isolates the classifier.</li>
+      <li><b>Consistency:</b> how often the LLM gives the same grade when run twice.</li>
+      <li><b>Manual check:</b> a person reviews grades for top queries.</li>
+    </ul>
+  </div>
+
+  <!-- 6 -->
+  <div class="card">
+    <h2>6. Catalog fit</h2>
+    <div class="sub">Compares where the relevant ads are filed with the categories the query is about. It shows ads that no classifier could reach, because they are filed under a category the query isn't about.</div>
+    <table>
+      <thead><tr><th>Metric</th><th class="l">Definition</th><th class="l">Measured on</th></tr></thead>
+      <tbody>
+        <tr><td><b>Catalog fit</b></td><td class="l">Relevant ads filed under a right category ÷ all relevant ads</td><td class="l">Queries with ≥1 relevant ad</td></tr>
+      </tbody>
+    </table>
+    <ul>
+      <li>Counted per ad, because filing is decided product by product: each misfiled ad is one filing error.</li>
+      <li>Example: for "مرطب جسم" (body moisturiser), the right category is Bath &amp; Body. Of 10 relevant ads, 8 are filed under Bath &amp; Body and 2 under Skin Care, so catalog fit = 80%. The 2 Skin Care ads are lost whatever the classifier does.</li>
+      <li>The fix is in the catalog: re-file the product, or file it under more than one category.</li>
+    </ul>
+    <h3>How it connects to the classifier</h3>
+    <table>
+      <thead><tr><th>Relevant ad is…</th><th class="l">Classifier kept its category</th><th class="l">Classifier didn't keep it</th></tr></thead>
+      <tbody>
+        <tr><td>Filed under a right category</td><td class="l">Passes to retrieval</td><td class="l">Lost: classifier error</td></tr>
+        <tr><td>Filed under a wrong category</td><td class="l">Passes by luck</td><td class="l">Lost: catalog error</td></tr>
+      </tbody>
+    </table>
+    <div class="note">Every relevant ad the classifier filters out is either a classifier error or a catalog error, and each shows up in its own metric.</div>
+  </div>
+
+  <!-- 7 -->
+  <div class="card">
+    <h2>7. Relevance setting</h2>
+    <div class="sub">Many cases are neither clearly right nor clearly wrong, so the retailer decides how strict FCC should be. Counting only relevant ads keeps precision high but leaves more slots empty; also counting somewhat relevant ads fills more slots with less clear-cut ads.</div>
+    <table>
+      <thead><tr><th>Setting</th><th class="l">Counts as right, for products and categories alike</th></tr></thead>
+      <tbody>
+        <tr><td><b>Strict</b></td><td class="l">Relevant only</td></tr>
+        <tr><td><b>Broad</b></td><td class="l">Relevant + somewhat relevant</td></tr>
+      </tbody>
+    </table>
+    <ul>
+      <li>Labels are graded once; each setting is evaluated from the same labels with the same metrics, so settings can be compared side by side.</li>
+      <li>To be checked against clicks: if somewhat relevant ads earn clicks close to relevant ones, the broad setting is worth it.</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+const byCount = [
+  { x: "1",  q: 515,  nP: 228, P: 22.8, R: 27.2 },
+  { x: "2",  q: 256,  nP: 136, P: 26.2, R: 27.0 },
+  { x: "3",  q: 222,  nP: 120, P: 36.1, R: 30.6 },
+  { x: "4",  q: 151,  nP: 95,  P: 40.6, R: 38.7 },
+  { x: "5",  q: 123,  nP: 62,  P: 34.0, R: 21.8 },
+  { x: "6",  q: 125,  nP: 55,  P: 34.6, R: 19.7 },
+  { x: "7",  q: 156,  nP: 61,  P: 67.6, R: 25.5 },
+  { x: "8+", q: 1280, nP: 704, P: 67.6, R: 36.1 },
+];
+const NAME = { P: "Precision@8", R: "Recall@8" };
+const SUB = {
+  P: "Precision@8 on the 1,461 queries that had ≥1 relevant ad and where FCC showed ≥1 ad (n under each column).",
+  R: "Recall@8 on all 2,828 queries with ≥1 relevant ad (n under each column). A query where FCC showed nothing scores 0%.",
+};
+
+function draw(metric) {
+  document.getElementById("sub3").textContent = SUB[metric];
+  const host = document.getElementById("chart3"); host.innerHTML = "";
+  const W = 880, H = 360, m = { t: 24, r: 12, b: 64, l: 64 }, iw = W - m.l - m.r, ih = H - m.t - m.b;
+  const band = iw / byCount.length, bw = Math.min(30, band * 0.3), gap = 2;
+  const y = v => m.t + ih - (v / 100) * ih, ns = "http://www.w3.org/2000/svg";
+  const svg = document.createElementNS(ns, "svg");
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.setAttribute("width", "100%"); svg.setAttribute("role", "img");
+  svg.setAttribute("aria-label", `Grouped bars: LLM 100% vs FCC ${NAME[metric]} by number of relevant ads the LLM found.`);
+  const el = (n, a, txt) => { const e = document.createElementNS(ns, n); for (const k in a) e.setAttribute(k, a[k]); if (txt != null) e.textContent = txt; svg.appendChild(e); return e; };
+  const bar = (x0, v) => { const top = y(v), r = Math.min(4, y(0) - top); return `M${x0},${y(0)} V${top + r} Q${x0},${top} ${x0 + r},${top} H${x0 + bw - r} Q${x0 + bw},${top} ${x0 + bw},${top + r} V${y(0)} Z`; };
+  [0, 25, 50, 75, 100].forEach(v => { el("line", { x1: m.l, x2: W - m.r, y1: y(v), y2: y(v), stroke: v === 0 ? "var(--axis)" : "var(--grid)" }); el("text", { x: m.l - 8, y: y(v) + 4, "text-anchor": "end" }, v + "%"); });
+  el("text", { x: 18, y: m.t + ih / 2, transform: `rotate(-90 18 ${m.t + ih / 2})`, "text-anchor": "middle" }, NAME[metric]);
+  const tip = document.createElement("div"); tip.className = "tip"; host.appendChild(tip);
+  byCount.forEach((d, i) => {
+    const v = d[metric], n = metric === "P" ? d.nP : d.q, cx = m.l + band * i + band / 2;
+    const hit = el("rect", { class: "hit", x: m.l + band * i, y: m.t, width: band, height: ih });
+    const b1 = el("path", { class: "bar", d: bar(cx - bw - gap / 2, 100) });
+    const b2 = el("path", { class: "bar s2", d: bar(cx + gap / 2, v) });
+    el("text", { class: "val", x: cx + gap / 2 + bw / 2, y: y(v) - 6, "text-anchor": "middle" }, v.toFixed(0) + "%");
+    el("text", { x: cx, y: y(0) + 18, "text-anchor": "middle" }, d.x);
+    el("text", { class: "tick-n", x: cx, y: y(0) + 34, "text-anchor": "middle" }, "n=" + n.toLocaleString());
+    hit.addEventListener("mousemove", ev => {
+      b1.classList.add("hl"); b2.classList.add("hl");
+      tip.innerHTML = `<b>${d.x} relevant ad${d.x === "1" ? "" : "s"}</b><br>Queries: ${n.toLocaleString()}<br>LLM 100% · FCC ${v.toFixed(1)}%`;
+      const b = host.getBoundingClientRect(); tip.style.left = Math.min(ev.clientX - b.left + 12, b.width - 180) + "px"; tip.style.top = (ev.clientY - b.top - 10) + "px"; tip.style.opacity = 1;
+    });
+    hit.addEventListener("mouseleave", () => { b1.classList.remove("hl"); b2.classList.remove("hl"); tip.style.opacity = 0; });
+  });
+  el("text", { x: m.l + iw / 2, y: H - 4, "text-anchor": "middle" }, "# of relevant ads the LLM found");
+  host.insertBefore(svg, tip);
+  let h = `<thead><tr><th># relevant (LLM)</th><th>Queries</th><th>LLM</th><th>FCC ${NAME[metric]}</th></tr></thead><tbody>`;
+  byCount.forEach(d => h += `<tr><td>${d.x}</td><td>${(metric === "P" ? d.nP : d.q).toLocaleString()}</td><td>100%</td><td>${d[metric].toFixed(1)}%</td></tr>`);
+  document.getElementById("table3").innerHTML = h + "</tbody>";
+}
+document.querySelectorAll(".seg").forEach(b => b.addEventListener("click", () => {
+  document.querySelectorAll(".seg").forEach(x => x.setAttribute("aria-pressed", x === b)); draw(b.dataset.metric);
+}));
+const init = location.hash === "#recall" ? "R" : "P";
+document.querySelectorAll(".seg").forEach(x => x.setAttribute("aria-pressed", x.dataset.metric === init));
+draw(init);
+</script>
+</body>
+</html>
