@@ -82,8 +82,9 @@
 
   <!-- 1 -->
   <div class="card">
-    <h2>1. Ad-serving metrics</h2>
-    <div class="sub">The goalpost for ad serving, focused on the first page (8 ad slots). Results beyond page 1 come later.</div>
+    <h2>1. Serving metrics</h2>
+    <div class="sub">Serving has two parts: <b>retrieval</b> (finding the candidate ads) and <b>ranking</b> (ordering them). Both are measured on the first page (8 ad slots); results beyond page 1 come later.</div>
+    <h3>Retrieval</h3>
     <table>
       <thead><tr><th>Metric</th><th class="l">Definition</th><th class="l">Measured on</th></tr></thead>
       <tbody>
@@ -99,7 +100,15 @@
       <li>A query with no relevant ad that still shows ads scores 0% Precision@8. That is how irrelevant serving is penalised.</li>
       <li>Fill rate@8 is the counterweight to precision: showing nothing on hard queries keeps precision high but leaves slots empty.</li>
     </ul>
-    <div class="note"><b>Not included yet:</b> NDCG, which measures whether the best ads are ranked first, will also be tracked. This exercise is about whether the ads served are relevant, so it is left out for now.</div>
+    <h3>Ranking</h3>
+    <table>
+      <thead><tr><th>Metric</th><th class="l">Definition</th><th class="l">Measured on</th></tr></thead>
+      <tbody>
+        <tr><td><b>NDCG@8</b></td><td class="l">How close the order of the first 8 ads is to the ideal order (most relevant first), using the grades in section 6</td><td class="l">Queries where FCC showed ≥1 ad</td></tr>
+        <tr><td><b>MRR</b></td><td class="l">Average of 1 ÷ the position of the first relevant ad (1 if it is in slot 1, ½ in slot 2, …; 0 if none)</td><td class="l">Queries where FCC showed ≥1 ad</td></tr>
+      </tbody>
+    </table>
+    <div class="note">Retrieval is the burning issue: every issue found so far is relevant ads not shown, or irrelevant ads shown. So this exercise focuses on retrieval first. Ranking metrics are monitored from now on.</div>
   </div>
 
   <!-- 2 -->
@@ -152,6 +161,7 @@
       <li><b>Category classifier:</b> which categories a query is sent to. Measured in sections 4–7.</li>
       <li><b>Taxonomy (category tree):</b> how categories and products are organised. Measured in section 8.</li>
     </ul>
+    <div class="note"><b>Note:</b> these are the known issues, and they are significantly critical. We fix these first, then move on to other enhancements.</div>
   </div>
 
   <!-- 4 -->
@@ -336,7 +346,7 @@
   <!-- 8 -->
   <div class="card">
     <h2>8. Catalog health</h2>
-    <div class="sub">How well the catalog itself is built, independent of queries, ads and the classifier.</div>
+    <div class="sub">How well the catalog itself is built, independent of queries, ads and the classifier. These are the metrics we want to start tracking. One part of the fix is already under way: Nahdi has been asked to fix known gaps in its catalog. The rest of the fixes will follow once these metrics are tracked.</div>
     <table>
       <thead><tr><th>Area</th><th class="l">Metric</th><th class="l">Definition</th><th class="l">Nahdi today</th><th class="l">How measured</th></tr></thead>
       <tbody>
