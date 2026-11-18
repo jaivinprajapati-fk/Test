@@ -72,6 +72,7 @@
   .hit { fill: transparent; }
   .tip { position: absolute; pointer-events: none; background: var(--surface-1); color: var(--text-primary); border: 1px solid var(--axis);
     border-radius: 6px; padding: 8px 10px; font-size: 12px; white-space: nowrap; box-shadow: 0 2px 8px rgba(0,0,0,.12); opacity: 0; }
+  .callout { margin-top: 16px; padding: 12px 16px; border-left: 4px solid var(--text-primary); background: var(--surface-0); color: var(--text-primary); font-size: 15px; line-height: 1.6; border-radius: 4px; }
   details { margin-top: 12px; } summary { cursor: pointer; color: var(--text-secondary); font-size: 13px; }
 </style>
 </head>
@@ -108,7 +109,7 @@
         <tr><td><b>MRR</b></td><td class="l">Average of 1 ÷ the position of the first relevant ad (1 if it is in slot 1, ½ in slot 2, …; 0 if none)</td><td class="l">Queries where FCC showed ≥1 ad</td></tr>
       </tbody>
     </table>
-    <div class="note">Retrieval is the burning issue: every issue found so far is relevant ads not shown, or irrelevant ads shown. So this exercise focuses on retrieval first. Ranking metrics are monitored from now on.</div>
+    <div class="callout"><b>Retrieval is the burning issue:</b> every issue found so far is relevant ads not shown, or irrelevant ads shown.<br><b>So this exercise focuses on retrieval first. Ranking metrics are monitored from now on.</b></div>
   </div>
 
   <!-- 2 -->
