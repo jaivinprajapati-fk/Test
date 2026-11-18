@@ -349,8 +349,26 @@
     </table>
     <ul>
       <li>Kept as separate metrics, not one score: each points to a different fix (re-parent a node, merge duplicates, prune empty categories, move products to a leaf, re-file a product).</li>
-      <li>Reported by top-level category. Not every defect is equally serious: a product on a top-level node is worse than one on a mid-level node with no suitable leaf, and an empty category may be intentional.</li>
+      <li>Reported by top-level category.</li>
     </ul>
+
+    <h3>Guardrails for an ads taxonomy <span class="tag">Directional</span></h3>
+    <div class="sub">A browse tree helps shoppers explore and mixes themes (Back to School, Gift Sets, Korean Beauty). An ads taxonomy has to decide which products compete for the same query and what advertisers bid on and report against. These are guardrails for what it should look like, not metrics; the metrics are the ones defined above.</div>
+    <table>
+      <thead><tr><th>#</th><th class="l">Guardrail</th><th class="l">Why it matters for ads</th><th class="l">Where Nahdi's tree breaks it</th></tr></thead>
+      <tbody>
+        <tr><td colspan="4" class="l"><b>Critical</b></td></tr>
+        <tr><td>1</td><td class="l"><b>A category is a set of competing products:</b> products in the same leaf are substitutes for each other</td><td class="l">The auction and category bids only make sense among products a shopper would choose between</td><td class="l">Sport Supplements holds protein powder alongside mugs and coffee makers</td></tr>
+        <tr><td>2</td><td class="l"><b>Classify by what the product is, not by theme.</b> Themes, concerns, audience, brand and ingredients become attributes, not categories</td><td class="l">Otherwise one product fits several places and its ads are split across them</td><td class="l">Skin Care mixes product types (Serum, Masks) with concerns (Acne &amp; Blemishes) and themes (Korean Beauty) as siblings</td></tr>
+        <tr><td>3</td><td class="l"><b>Each level splits on one thing</b>, e.g. L1 = need, L2 = product type, L3 = sub-type or form</td><td class="l">Mixed levels make the classifier's choice ambiguous</td><td class="l">Vitamin &amp; Supplement splits by ingredient (Vitamins, Herbs) and by goal (Immunity, Sleep) at the same level</td></tr>
+        <tr><td>4</td><td class="l"><b>Every product sits on exactly one leaf</b></td><td class="l">A product on a broad node can't be matched precisely; a product in two places competes with itself</td><td class="l">18.5% of products sit on non-leaf nodes, 2,602 directly on a top-level category</td></tr>
+        <tr><td>5</td><td class="l"><b>No duplicate categories.</b> Where audience matters, it is an attribute (deodorant + men), not a separate branch</td><td class="l">Duplicates split one product type, and its ads, across categories</td><td class="l">Deodorant under Men Care, Bath &amp; Body and Kids Care; two vitamin top-level categories</td></tr>
+        <tr><td colspan="4" class="l"><b>Good to have</b></td></tr>
+        <tr><td>6</td><td class="l"><b>Leaves are big enough</b> to hold a real auction, and narrow enough not to mix non-substitutes</td><td class="l">Too small: empty auctions. Too broad: irrelevant matches</td><td class="l">71 leaf categories have no products</td></tr>
+        <tr><td>7</td><td class="l"><b>Stable and versioned</b>, with a mapping whenever it changes</td><td class="l">Advertiser targeting and historical reports depend on categories staying put</td><td class="l">The First Aid &amp; Splints split left 702 products with outdated category chains</td></tr>
+        <tr><td>8</td><td class="l"><b>Ad eligibility set per category</b></td><td class="l">Some categories may not be advertisable</td><td class="l">Rx Treatments: whether prescription medicines can be advertised needs a policy check</td></tr>
+      </tbody>
+    </table>
   </div>
 
   <!-- 9 -->
