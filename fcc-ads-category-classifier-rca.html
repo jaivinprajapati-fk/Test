@@ -144,6 +144,16 @@
     <details><summary>Show data table</summary><table id="table3"></table></details>
   </div>
 
+  <!-- bridge -->
+  <div class="card">
+    <h2>Where the gap comes from</h2>
+    <div class="sub" style="margin-bottom:0">The gap in sections 1–3 traces back to two sub-systems, and each needs its own way of being measured:</div>
+    <ul>
+      <li><b>Category classifier:</b> which categories a query is sent to. Measured in sections 4–6.</li>
+      <li><b>Taxonomy (category tree):</b> how categories and products are organised. Measured in sections 7–8.</li>
+    </ul>
+  </div>
+
   <!-- 4 -->
   <div class="card">
     <h2>4. Category classifier</h2>
@@ -249,7 +259,7 @@
         <tr><td><b>Also contains</b></td><td class="l">Sub-categories that sit here in the tree but fall outside what the name implies (e.g. coffee makers under Sport Supplements)</td><td class="l">Can make the category somewhat relevant at most</td></tr>
       </tbody>
     </table>
-    <div class="note">Overlaps between categories (e.g. Deodorant under Men Care and Bath &amp; Body) are not used in grading: every query is graded against all 34 categories anyway. They are reported to the catalog owner (section 7).</div>
+    <div class="note">Overlaps between categories (e.g. Deodorant under Men Care and Bath &amp; Body) are not used in grading: every query is graded against all 34 categories anyway. They are reported to the catalog owner as duplicate nodes (section 8).</div>
 
     <h3>Query → category grades</h3>
     <table>
@@ -321,20 +331,38 @@
       </tbody>
     </table>
     <div class="note">Every relevant ad the classifier filters out is either a classifier error or a catalog error, and each shows up in its own metric.</div>
-    <h3>Tree overlap report</h3>
-    <div class="sub">Also for the catalog owner: category names that appear under more than one top-level category, found by comparing names across the tree. 50 at Nahdi today, e.g. Deodorant under Men Care, Bath &amp; Body and Kids Care; Digestive Care, Laxatives and Antidiarrheal under OTC Treatments and Vitamin &amp; Supplement; two top-level categories, Vitamin &amp; Supplement and Vitamins &amp; Supplements. Being name-based, it also catches some generic names with different meanings (e.g. "Liquid" under Makeup and Home Care).</div>
   </div>
 
   <!-- 8 -->
   <div class="card">
-    <h2>8. Next steps</h2>
+    <h2>8. Catalog health</h2>
+    <div class="sub">How well the catalog itself is built, independent of queries and ads. Catalog fit (section 7) shows how much the catalog's problems hurt serving; catalog health shows where they are.</div>
+    <table>
+      <thead><tr><th>Area</th><th class="l">Metric</th><th class="l">Definition</th><th class="l">Nahdi today</th><th class="l">How measured</th></tr></thead>
+      <tbody>
+        <tr><td>Tree</td><td class="l"><b>Node fit</b></td><td class="l">Sub-categories that belong under their parent ÷ all sub-categories</td><td class="l">Not measured yet</td><td class="l">LLM judge on each node's name and path: fits / partly fits / doesn't fit (e.g. Coffee Makers under Sport Supplements doesn't fit)</td></tr>
+        <tr><td>Tree</td><td class="l"><b>Duplicate nodes</b></td><td class="l">Nodes whose name also appears under another top-level category ÷ all nodes</td><td class="l"><b>9.4%</b> (109 of 1,159)</td><td class="l">From the tree, by name (e.g. Deodorant under Men Care, Bath &amp; Body and Kids Care; two top-level vitamin categories). Being name-based, it also catches a few generic names with different meanings, e.g. "Liquid"</td></tr>
+        <tr><td>Tree</td><td class="l"><b>Empty categories</b></td><td class="l">Leaf categories with no products ÷ all leaf categories</td><td class="l"><b>7.5%</b> (71 of 953), incl. 2 empty top-level categories</td><td class="l">From the tree and the product list</td></tr>
+        <tr><td>Products</td><td class="l"><b>Leaf placement</b></td><td class="l">Products filed on a leaf category ÷ all products</td><td class="l"><b>81.5%</b>; 2,602 products sit directly on a top-level category</td><td class="l">From the product list</td></tr>
+        <tr><td>Products</td><td class="l"><b>Product fit</b></td><td class="l">Products whose title fits their category ÷ products checked</td><td class="l">Not measured yet</td><td class="l">LLM judge on a sample (~50 per top-level category). E.g. two NARS cushion foundation cases are filed under Braces, Supports &amp; Recovery &gt; Cushions &amp; Pillows</td></tr>
+      </tbody>
+    </table>
+    <ul>
+      <li>Kept as separate metrics, not one score: each points to a different fix (re-parent a node, merge duplicates, prune empty categories, move products to a leaf, re-file a product).</li>
+      <li>Reported by top-level category. Not every defect is equally serious: a product on a top-level node is worse than one on a mid-level node with no suitable leaf, and an empty category may be intentional.</li>
+    </ul>
+  </div>
+
+  <!-- 9 -->
+  <div class="card">
+    <h2>9. Next steps</h2>
     <table>
       <thead><tr><th>Step</th><th class="l">What</th><th class="l">Owner</th></tr></thead>
       <tbody>
         <tr><td>A. Build the LLM checkers</td><td class="l">Product and category labelling, following sections 5 and 6. Run manually for now; later automated at a set frequency.</td><td class="l">Tech</td></tr>
         <tr><td>B. Manual review</td><td class="l">Agree with Ops how labels are reviewed by hand (which queries, how often, how disagreements are resolved).</td><td class="l">Product, with Ops</td></tr>
         <tr><td>C. Classifier impact</td><td class="l">Once the category classifier numbers exist, measure how much of the overall Precision@8 and Recall@8 gap the classifier causes. Then break the gap down by cause and stack-rank the fixes.</td><td class="l">Product</td></tr>
-        <tr><td>D. Ideal catalog</td><td class="l">Define the success metric for what a good catalog looks like (building on catalog fit and the tree overlap report).</td><td class="l">Product</td></tr>
+        <tr><td>D. Ideal catalog</td><td class="l">Define the success metric for what a good catalog looks like (building on catalog fit and catalog health, sections 7–8).</td><td class="l">Product</td></tr>
       </tbody>
     </table>
   </div>
